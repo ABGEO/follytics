@@ -1,0 +1,46 @@
+services:
+  traefik:
+    image: 'traefik:v3.3'
+    command:
+      - '--api.insecure=true'
+      - '--providers.docker=true'
+      - '--providers.file.filename=/config.yaml'
+    ports:
+      - '80:80'
+      - '8080:8080'
+    volumes:
+      - './traefik.yaml:/config.yaml:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    networks:
+      main:
+        ipv4_address: 172.20.0.2
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  postgres:
+    image: postgres:17.4
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_DB: follytics
+      POSTGRES_USER: follytics
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U follytics']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      main:
+        ipv4_address: 172.20.0.3
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  main:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/28

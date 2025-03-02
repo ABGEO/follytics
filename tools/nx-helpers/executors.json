@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "swag": {
+      "implementation": "./src/executors/swag/executor",
+      "schema": "./src/executors/swag/schema.json",
+      "description": "swag executor"
+    },
+    "openapi-generator": {
+      "implementation": "./src/executors/openapi-generator/executor",
+      "schema": "./src/executors/openapi-generator/schema.json",
+      "description": "openapi-generator executor"
+    }
+  }
+}

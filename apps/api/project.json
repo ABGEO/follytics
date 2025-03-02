@@ -1,0 +1,63 @@
+{
+  "name": "api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/api",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx-go/nx-go:build",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go"
+      }
+    },
+    "serve": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["serve", "-c", "../../follytics.yaml"]
+      }
+    },
+    "worker": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["worker", "-c", "../../follytics.yaml"]
+      }
+    },
+    "test": {
+      "executor": "@nx-go/nx-go:test"
+    },
+    "lint": {
+      "executor": "@nx-go/nx-go:lint",
+      "options": {
+        "linter": "golangci-lint",
+        "args": ["run", "--config=../../.golangci.yaml"]
+      }
+    },
+    "lint:fix": {
+      "executor": "@nx-go/nx-go:lint",
+      "options": {
+        "linter": "golangci-lint",
+        "args": ["run", "--config=../../.golangci.yaml", "--fix"]
+      }
+    },
+    "tidy": {
+      "executor": "@nx-go/nx-go:tidy"
+    },
+    "swag": {
+      "executor": "@follytics/nx-helpers:swag",
+      "options": {
+        "output": "apps/api/api/openapi",
+        "outputTypes": ["go", "json"],
+        "dirs": [
+          "apps/api/internal/docs",
+          "apps/api/internal/handler",
+          "apps/api/internal/domain/dto/request",
+          "apps/api/internal/domain/dto/response"
+        ],
+        "generalInfo": "docs.go"
+      }
+    }
+  }
+}

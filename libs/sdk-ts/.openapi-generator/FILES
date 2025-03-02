@@ -1,0 +1,12 @@
+.gitignore
+.npmignore
+api.ts
+api/user-api.ts
+base.ts
+common.ts
+configuration.ts
+index.ts
+model/index.ts
+model/response-httperror.ts
+model/response-httpresponse-response-user.ts
+model/response-user.ts

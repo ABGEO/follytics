@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "OpenAPI Generator executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "specFile": {
+      "type": "string",
+      "description": ""
+    },
+    "generator": {
+      "type": "string",
+      "description": ""
+    },
+    "output": {
+      "type": "string",
+      "description": ""
+    },
+    "config": {
+      "type": "string",
+      "description": ""
+    }
+  },
+  "required": ["specFile", "generator", "output", "config"]
+}

@@ -1,0 +1,39 @@
+env: prod
+
+logger:
+  level: info
+  format: json
+
+server:
+  address: 0.0.0.0
+  port: 8000
+  trusted_proxies: []
+
+swagger:
+  enabled: true
+  path: /swagger
+
+healthcheck:
+  enabled: true
+  path: /healthz
+
+database:
+  host: 172.20.0.3
+  port: 5432
+  user: follytics
+  password: password
+  database: follytics
+  batch_size: 100
+  skip_default_transaction: true
+
+github:
+  app_client_id:
+  app_private_key_path:
+  app_installation_id:
+  jwt_expiration: 1
+
+worker:
+  job:
+    sync_followers:
+      batch_size: 10
+      github_page_size: 100

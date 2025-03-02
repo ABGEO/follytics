@@ -1,0 +1,11 @@
+npmName: 'sdk'
+npmVersion: 0.0.0
+axiosVersion: ^1.7.9
+licenseName: MIT
+supportsES6: true
+ensureUniqueParams: true
+disallowAdditionalPropertiesIfNotPresent: false
+useSingleRequestParameter: true
+withSeparateModelsAndApi: true
+apiPackage: api
+modelPackage: model

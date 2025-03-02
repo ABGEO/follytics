@@ -1,0 +1,8 @@
+{
+  "eslint.validate": [
+    "json"
+  ],
+  "cSpell.words": [
+    "follytics"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "sdk-ts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/sdk-ts/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sdk-ts",
+        "main": "libs/sdk-ts/src/index.ts",
+        "tsConfig": "libs/sdk-ts/tsconfig.lib.json",
+        "assets": ["libs/sdk-ts/*.md"]
+      }
+    },
+    "generate-package": {
+      "executor": "@follytics/nx-helpers:openapi-generator",
+      "options": {
+        "specFile": "apps/api/api/openapi/swagger.json",
+        "generator": "typescript-axios",
+        "output": "./libs/sdk-ts",
+        "config": ".openapi-generator/config/typescript-axios.yaml"
+      }
+    }
+  },
+  "tags": []
+}

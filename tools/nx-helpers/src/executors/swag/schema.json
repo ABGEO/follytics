@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Swag executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "outputTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "",
+      "default": ["go", "json", "yaml"]
+    },
+    "output": {
+      "type": "string",
+      "description": "",
+      "default": "./docs"
+    },
+    "dirs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "",
+      "default": ["./"]
+    },
+    "generalInfo": {
+      "type": "string",
+      "description": "",
+      "default": "main.go"
+    }
+  },
+  "required": []
+}
