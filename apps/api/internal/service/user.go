@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/google/go-github/v68/github"
+	"github.com/google/uuid"
 
 	"github.com/abgeo/follytics/internal/helper"
 	"github.com/abgeo/follytics/internal/model"
@@ -17,6 +18,7 @@ type UserService interface {
 	Sync(ctx context.Context) (*model.User, error)
 	GetRegularUsers(ctx context.Context, offset int, limit int) ([]*model.User, error)
 	StoreGitHubFollowers(ctx context.Context, user *model.User, followers []*github.User) error
+	GetFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int) ([]*model.User, error)
 }
 
 type User struct {
@@ -202,4 +204,18 @@ func (s *User) processRemovedFollowers(
 	}
 
 	return nil
+}
+
+func (s *User) GetFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int) ([]*model.User, error) {
+	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load user: %w", err)
+	}
+
+	followers, err := s.userRepo.ListFollowers(ctx, userID, offset, limit)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load followers: %w", err)
+	}
+
+	return followers, nil
 }

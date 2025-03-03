@@ -42,6 +42,11 @@ linters-settings:
     keywords:
       - '@todo'
 
+  forbidigo:
+    forbid:
+      - "^(fmt\\.Print(|f|ln)|print|println)$"
+      - "^(repository\\.)?WithDebug$"
+
 linters:
   enable-all: true
   disable:

@@ -11,4 +11,5 @@ const (
 	HTTPErrorCodeUnknown        = "UNKNOWN"
 	HTTPErrorCodeInvalidPayload = "INVALID_PAYLOAD"
 	HTTPErrorCodeUnauthorized   = "UNAUTHORIZED"
+	HTTPErrorCodeNotFound       = "NOT_FOUND"
 )

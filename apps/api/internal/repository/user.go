@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
@@ -12,11 +13,14 @@ import (
 
 type UserRepository interface {
 	List(ctx context.Context, opts ...Option) ([]*model.User, error)
+	Get(ctx context.Context, opts ...Option) (*model.User, error)
+	GetByID(ctx context.Context, id uuid.UUID, opts ...Option) (*model.User, error)
 	GetByGitHubID(ctx context.Context, gitHubID int64, opts ...Option) (*model.User, error)
 	Upsert(ctx context.Context, entity *model.User, opts ...Option) error
 	UpsertMany(ctx context.Context, entities []*model.User, opts ...Option) error
 	AddFollowers(ctx context.Context, entity *model.User, followers []*model.User, opts ...Option) error
 	RemoveFollowers(ctx context.Context, entity *model.User, followers []*model.User, opts ...Option) error
+	ListFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int, opts ...Option) ([]*model.User, error)
 }
 
 type User struct {
@@ -53,16 +57,27 @@ func (r *User) List(ctx context.Context, opts ...Option) ([]*model.User, error) 
 		Error
 }
 
-func (r *User) GetByGitHubID(ctx context.Context, gitHubID int64, opts ...Option) (*model.User, error) {
+func (r *User) Get(ctx context.Context, opts ...Option) (*model.User, error) {
 	var user *model.User
 
 	tx := WithOptions(r.db, opts...)
 
 	return user, tx.
 		WithContext(ctx).
-		Where("gh_id = ?", gitHubID).
-		Find(&user).
+		First(&user).
 		Error
+}
+
+func (r *User) GetByID(ctx context.Context, id uuid.UUID, opts ...Option) (*model.User, error) {
+	opts = append(opts, WithWhere(id))
+
+	return r.Get(ctx, opts...)
+}
+
+func (r *User) GetByGitHubID(ctx context.Context, gitHubID int64, opts ...Option) (*model.User, error) {
+	opts = append(opts, WithWhere("gh_id = ?", gitHubID))
+
+	return r.Get(ctx, opts...)
 }
 
 func (r *User) Upsert(ctx context.Context, entity *model.User, opts ...Option) error {
@@ -131,4 +146,23 @@ func (r *User) RemoveFollowers(
 	}
 
 	return nil
+}
+
+func (r *User) ListFollowers(
+	ctx context.Context,
+	userID uuid.UUID,
+	offset int,
+	limit int,
+	opts ...Option,
+) ([]*model.User, error) {
+	opts = append(
+		opts,
+		WithSelect(`"user".*`),
+		WithJoins(`JOIN user_followers uf on "user".id = uf.follower_id`),
+		WithWhere("uf.user_id = ?", userID),
+		WithOrder("id"),
+		WithPagination(offset, limit),
+	)
+
+	return r.List(ctx, opts...)
 }

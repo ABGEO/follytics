@@ -37,7 +37,7 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Update the user or create new one if it does not exist",
+                "description": "Creates a new user if they do not exist or updates an existing user upon login",
                 "tags": [
                     "User"
                 ],
@@ -45,25 +45,19 @@ const docTemplate = `{
                 "operationId": "trackLogin",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successfully created or updated user",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPResponse-response_User"
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.HTTPError"
-                        }
-                    },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Unauthorized: authentication required",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
@@ -78,27 +72,98 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Get current authenticated account",
+                "description": "Returns details of the currently authenticated account",
                 "tags": [
                     "User"
                 ],
-                "summary": "Get current account",
+                "summary": "Retrieve the current authenticated user",
                 "operationId": "getCurrentUser",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successfully retrieved the authenticated user",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPResponse-response_User"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Unauthorized: authentication required",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/followers": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Returns a paginated list of followers for the specified user ID",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Retrieve followers for a user",
+                "operationId": "getUserFollowers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "int",
+                        "description": "Page number for pagination (default: 1)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "int",
+                        "description": "Number of results per page (default: 10)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "User ID to retrieve followers for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list of followers",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPResponse-array_response_User"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized: authentication required",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
@@ -122,6 +187,20 @@ const docTemplate = `{
                 "message": {
                     "type": "string",
                     "example": "some unknown error"
+                }
+            }
+        },
+        "response.HTTPResponse-array_response_User": {
+            "type": "object",
+            "required": [
+                "data"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.User"
+                    }
                 }
             }
         },
