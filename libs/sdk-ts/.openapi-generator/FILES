@@ -6,7 +6,9 @@ base.ts
 common.ts
 configuration.ts
 index.ts
+model/get-user-followers200-response.ts
 model/index.ts
+model/pagination-metadata.ts
 model/response-httperror.ts
 model/response-httpresponse-array-response-user.ts
 model/response-httpresponse-response-user.ts

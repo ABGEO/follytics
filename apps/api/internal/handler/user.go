@@ -4,7 +4,6 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/abgeo/follytics/internal/domain/constant"
 	"github.com/abgeo/follytics/internal/domain/dto/response"
+	"github.com/abgeo/follytics/internal/pagination"
 	"github.com/abgeo/follytics/internal/service"
 )
 
@@ -57,9 +57,9 @@ func NewUser(
 //
 //	@Security		ApiKeyAuth
 //
-//	@Success		200	{object}	response.HTTPResponse[response.User]	"Successfully retrieved the authenticated user"
-//	@Failure		401	{object}	response.HTTPError						"Unauthorized: authentication required"
-//	@Failure		500	{object}	response.HTTPError						"Internal server error"
+//	@Success		200	{object}	response.HTTPResponse[response.User]
+//	@Failure		401	{object}	response.HTTPError
+//	@Failure		500	{object}	response.HTTPError
 //
 //	@Router			/users/me [get]
 func (h *User) Me(ctx *gin.Context) {
@@ -90,9 +90,9 @@ func (h *User) Me(ctx *gin.Context) {
 //
 //	@Security		ApiKeyAuth
 //
-//	@Success		200	{object}	response.HTTPResponse[response.User]	"Successfully created or updated user"
-//	@Failure		401	{object}	response.HTTPError						"Unauthorized: authentication required"
-//	@Failure		500	{object}	response.HTTPError						"Internal server error"
+//	@Success		200	{object}	response.HTTPResponse[response.User]
+//	@Failure		401	{object}	response.HTTPError
+//	@Failure		500	{object}	response.HTTPError
 //
 //	@Router			/users/login-events [post]
 func (h *User) TrackLogin(ctx *gin.Context) {
@@ -123,19 +123,21 @@ func (h *User) TrackLogin(ctx *gin.Context) {
 //
 //	@Security		ApiKeyAuth
 //
-//	@Param			page	query		string									false	"Page number for pagination (default: 1)"	Format(int)
-//	@Param			limit	query		string									false	"Number of results per page (default: 10)"	Format(int)
-//	@Param			id		path		string									true	"User ID to retrieve followers for"			Format(uuid)
+//	@Param			page	query		string	false	"Page number for pagination (default: 1)"	Format(int)
+//	@Param			limit	query		string	false	"Number of results per page (default: 10)"	Format(int)
+//	@Param			id		path		string	true	"User ID to retrieve followers for"			Format(uuid)
 //
-//	@Success		200		{object}	response.HTTPResponse[[]response.User]	"Successfully retrieved list of followers"
-//	@Failure		400		{object}	response.HTTPError						"Invalid request parameters"
-//	@Failure		401		{object}	response.HTTPError						"Unauthorized: authentication required"
-//	@Failure		404		{object}	response.HTTPError						"User not found"
-//	@Failure		500		{object}	response.HTTPError						"Internal server error"
+//	@Success		200		{object}	response.HTTPResponse[[]response.User]{pagination=pagination.Metadata}
+//	@Failure		400		{object}	response.HTTPError
+//	@Failure		401		{object}	response.HTTPError
+//	@Failure		404		{object}	response.HTTPError
+//	@Failure		500		{object}	response.HTTPError
 //
 //	@Router			/users/{id}/followers [get]
 func (h *User) Followers(ctx *gin.Context) {
 	var resp response.HTTPResponse[[]response.User]
+
+	paginator := pagination.New().FromContext(ctx)
 
 	id, err := uuid.Parse(ctx.Param("id"))
 	if err != nil {
@@ -144,17 +146,7 @@ func (h *User) Followers(ctx *gin.Context) {
 		return
 	}
 
-	page, err := strconv.Atoi(ctx.Query("page"))
-	if err != nil || page < 1 {
-		page = 1
-	}
-
-	limit, err := strconv.Atoi(ctx.Query("limit"))
-	if err != nil || limit < 1 {
-		limit = 10
-	}
-
-	user, err := h.userSvc.GetFollowers(ctx, id, (page-1)*limit, limit)
+	user, err := h.userSvc.GetFollowers(ctx, id, paginator)
 	if err != nil {
 		statusCode := http.StatusInternalServerError
 		errorCode := constant.HTTPErrorCodeUnknown
@@ -169,7 +161,7 @@ func (h *User) Followers(ctx *gin.Context) {
 		return
 	}
 
-	if err = resp.Populate(user); err != nil {
+	if err = resp.PopulateWithPagination(user, paginator); err != nil {
 		h.httpSvc.HTTPError(ctx, http.StatusInternalServerError, constant.HTTPErrorCodeUnknown, err.Error())
 
 		return

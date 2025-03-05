@@ -10,15 +10,16 @@ import (
 
 	"github.com/abgeo/follytics/internal/helper"
 	"github.com/abgeo/follytics/internal/model"
+	"github.com/abgeo/follytics/internal/pagination"
 	"github.com/abgeo/follytics/internal/repository"
 )
 
 type UserService interface {
 	Me(ctx context.Context) (*model.User, error)
 	Sync(ctx context.Context) (*model.User, error)
-	GetRegularUsers(ctx context.Context, offset int, limit int) ([]*model.User, error)
+	GetRegularUsers(ctx context.Context, paginator pagination.Paginator) ([]*model.User, error)
 	StoreGitHubFollowers(ctx context.Context, user *model.User, followers []*github.User) error
-	GetFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int) ([]*model.User, error)
+	GetFollowers(ctx context.Context, userID uuid.UUID, paginator pagination.Paginator) ([]*model.User, error)
 }
 
 type User struct {
@@ -74,13 +75,13 @@ func (s *User) Sync(ctx context.Context) (*model.User, error) {
 	return entity, nil
 }
 
-func (s *User) GetRegularUsers(ctx context.Context, offset int, limit int) ([]*model.User, error) {
+func (s *User) GetRegularUsers(ctx context.Context, paginator pagination.Paginator) ([]*model.User, error) {
 	users, err := s.userRepo.List(
 		ctx,
-		repository.WithPagination(offset, limit),
 		repository.WithWhere("type = ?", model.UserTypeRegular),
 		repository.WithOrder("id"),
 		repository.WithPreload("Followers"),
+		repository.WithPagination(paginator),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load users: %w", err)
@@ -206,13 +207,17 @@ func (s *User) processRemovedFollowers(
 	return nil
 }
 
-func (s *User) GetFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int) ([]*model.User, error) {
+func (s *User) GetFollowers(
+	ctx context.Context,
+	userID uuid.UUID,
+	paginator pagination.Paginator,
+) ([]*model.User, error) {
 	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
 	if err != nil {
 		return nil, fmt.Errorf("failed to load user: %w", err)
 	}
 
-	followers, err := s.userRepo.ListFollowers(ctx, userID, offset, limit)
+	followers, err := s.userRepo.ListFollowers(ctx, userID, repository.WithPagination(paginator))
 	if err != nil {
 		return nil, fmt.Errorf("failed to load followers: %w", err)
 	}

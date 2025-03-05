@@ -2,6 +2,8 @@ package repository
 
 import (
 	"gorm.io/gorm"
+
+	"github.com/abgeo/follytics/internal/pagination"
 )
 
 type Option func(tx *gorm.DB) *gorm.DB
@@ -14,9 +16,9 @@ func WithOptions(tx *gorm.DB, opts ...Option) *gorm.DB {
 	return tx
 }
 
-func WithPagination(offset int, limit int) func(tx *gorm.DB) *gorm.DB {
+func WithPagination(paginator pagination.Paginator) func(tx *gorm.DB) *gorm.DB {
 	return func(tx *gorm.DB) *gorm.DB {
-		return tx.Offset(offset).Limit(limit)
+		return tx.Scopes(paginator.Apply)
 	}
 }
 

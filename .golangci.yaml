@@ -53,4 +53,4 @@ linters:
     - exhaustruct
 
     # Deprecated.
-    - exportloopref
+    - tenv

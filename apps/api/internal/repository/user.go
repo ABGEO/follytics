@@ -20,7 +20,7 @@ type UserRepository interface {
 	UpsertMany(ctx context.Context, entities []*model.User, opts ...Option) error
 	AddFollowers(ctx context.Context, entity *model.User, followers []*model.User, opts ...Option) error
 	RemoveFollowers(ctx context.Context, entity *model.User, followers []*model.User, opts ...Option) error
-	ListFollowers(ctx context.Context, userID uuid.UUID, offset int, limit int, opts ...Option) ([]*model.User, error)
+	ListFollowers(ctx context.Context, userID uuid.UUID, opts ...Option) ([]*model.User, error)
 }
 
 type User struct {
@@ -49,10 +49,10 @@ END $$;
 func (r *User) List(ctx context.Context, opts ...Option) ([]*model.User, error) {
 	var users []*model.User
 
-	tx := WithOptions(r.db, opts...)
+	tx := r.db.WithContext(ctx).
+		Model(&users)
 
-	return users, tx.
-		WithContext(ctx).
+	return users, WithOptions(tx, opts...).
 		Find(&users).
 		Error
 }
@@ -148,20 +148,13 @@ func (r *User) RemoveFollowers(
 	return nil
 }
 
-func (r *User) ListFollowers(
-	ctx context.Context,
-	userID uuid.UUID,
-	offset int,
-	limit int,
-	opts ...Option,
-) ([]*model.User, error) {
+func (r *User) ListFollowers(ctx context.Context, userID uuid.UUID, opts ...Option) ([]*model.User, error) {
 	opts = append(
 		opts,
 		WithSelect(`"user".*`),
 		WithJoins(`JOIN user_followers uf on "user".id = uf.follower_id`),
 		WithWhere("uf.user_id = ?", userID),
 		WithOrder("id"),
-		WithPagination(offset, limit),
 	)
 
 	return r.List(ctx, opts...)

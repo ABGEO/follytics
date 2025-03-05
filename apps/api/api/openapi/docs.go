@@ -45,19 +45,19 @@ const docTemplate = `{
                 "operationId": "trackLogin",
                 "responses": {
                     "200": {
-                        "description": "Successfully created or updated user",
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPResponse-response_User"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized: authentication required",
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
@@ -80,19 +80,19 @@ const docTemplate = `{
                 "operationId": "getCurrentUser",
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved the authenticated user",
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPResponse-response_User"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized: authentication required",
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
@@ -139,31 +139,43 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved list of followers",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.HTTPResponse-array_response_User"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.HTTPResponse-array_response_User"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "pagination": {
+                                            "$ref": "#/definitions/pagination.Metadata"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
-                        "description": "Invalid request parameters",
+                        "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "401": {
-                        "description": "Unauthorized: authentication required",
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/response.HTTPError"
                         }
@@ -173,6 +185,27 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "pagination.Metadata": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "totalItems": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
         "response.HTTPError": {
             "type": "object",
             "required": [

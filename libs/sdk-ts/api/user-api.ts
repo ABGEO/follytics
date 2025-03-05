@@ -22,9 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ResponseHTTPError } from '../model';
+import type { GetUserFollowers200Response } from '../model';
 // @ts-ignore
-import type { ResponseHTTPResponseArrayResponseUser } from '../model';
+import type { ResponseHTTPError } from '../model';
 // @ts-ignore
 import type { ResponseHTTPResponseResponseUser } from '../model';
 /**
@@ -177,7 +177,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserFollowers(id: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseHTTPResponseArrayResponseUser>> {
+        async getUserFollowers(id: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUserFollowers200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserFollowers(id, page, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.getUserFollowers']?.[localVarOperationServerIndex]?.url;
@@ -221,7 +221,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserFollowers(requestParameters: UserApiGetUserFollowersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseHTTPResponseArrayResponseUser> {
+        getUserFollowers(requestParameters: UserApiGetUserFollowersRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetUserFollowers200Response> {
             return localVarFp.getUserFollowers(requestParameters.id, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**

@@ -12,6 +12,7 @@ import (
 
 	"github.com/abgeo/follytics/internal/config"
 	"github.com/abgeo/follytics/internal/model"
+	"github.com/abgeo/follytics/internal/pagination"
 	"github.com/abgeo/follytics/internal/service"
 )
 
@@ -65,7 +66,7 @@ func (j *SyncFollowers) Run(ctx context.Context) error {
 
 	j.processUsers(ctx, users)
 
-	return j.storeJobOffset(ctx, offset+j.jobConfig.BatchSize)
+	return j.storeJobOffset(ctx, offset+len(users))
 }
 
 func (j *SyncFollowers) initializeGitHubToken(ctx context.Context) error {
@@ -118,7 +119,11 @@ func (j *SyncFollowers) getJobOffset(ctx context.Context, defaultValue int) int 
 func (j *SyncFollowers) loadUsers(ctx context.Context, offset int) ([]*model.User, int, error) {
 	j.logger.DebugContext(ctx, "loading users to process", slog.Int("offset", offset))
 
-	users, err := j.userSvc.GetRegularUsers(ctx, offset, j.jobConfig.BatchSize)
+	paginator := pagination.New().
+		WithLimit(j.jobConfig.BatchSize).
+		WithOffset(offset)
+
+	users, err := j.userSvc.GetRegularUsers(ctx, paginator)
 	if err != nil {
 		return nil, offset, fmt.Errorf("failed to load users: %w", err)
 	}
