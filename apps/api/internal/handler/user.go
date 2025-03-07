@@ -19,6 +19,7 @@ type UserHandler interface {
 	Me(ctx *gin.Context)
 	TrackLogin(ctx *gin.Context)
 	Followers(ctx *gin.Context)
+	FollowEvents(ctx *gin.Context)
 }
 
 type User struct {
@@ -148,15 +149,7 @@ func (h *User) Followers(ctx *gin.Context) {
 
 	user, err := h.userSvc.GetFollowers(ctx, id, paginator)
 	if err != nil {
-		statusCode := http.StatusInternalServerError
-		errorCode := constant.HTTPErrorCodeUnknown
-
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			statusCode = http.StatusNotFound
-			errorCode = constant.HTTPErrorCodeNotFound
-		}
-
-		h.httpSvc.HTTPError(ctx, statusCode, errorCode, err.Error())
+		h.handleError(ctx, err)
 
 		return
 	}
@@ -168,4 +161,64 @@ func (h *User) Followers(ctx *gin.Context) {
 	}
 
 	h.httpSvc.HTTPResponse(ctx, http.StatusOK, resp)
+}
+
+// FollowEvents handler.
+//
+//	@Summary		Retrieve follow events for a user
+//	@Description	Returns a paginated list of follow/unfollow events for the specified user ID
+//	@ID				getUserFollowEvents
+//	@Tags			User
+//
+//	@Security		ApiKeyAuth
+//
+//	@Param			page	query		string	false	"Page number for pagination (default: 1)"	Format(int)
+//	@Param			limit	query		string	false	"Number of results per page (default: 10)"	Format(int)
+//	@Param			id		path		string	true	"User ID to retrieve followers for"			Format(uuid)
+//
+//	@Success		200		{object}	response.HTTPResponse[[]response.EventWithUserReference]{pagination=pagination.Metadata}
+//	@Failure		400		{object}	response.HTTPError
+//	@Failure		401		{object}	response.HTTPError
+//	@Failure		404		{object}	response.HTTPError
+//	@Failure		500		{object}	response.HTTPError
+//
+//	@Router			/users/{id}/follow-events [get]
+func (h *User) FollowEvents(ctx *gin.Context) {
+	var resp response.HTTPResponse[[]response.EventWithUserReference]
+
+	paginator := pagination.New().FromContext(ctx)
+
+	id, err := uuid.Parse(ctx.Param("id"))
+	if err != nil {
+		h.httpSvc.HTTPValidationError(ctx, err)
+
+		return
+	}
+
+	events, err := h.userSvc.GetFollowEvents(ctx, id, paginator)
+	if err != nil {
+		h.handleError(ctx, err)
+
+		return
+	}
+
+	if err = resp.PopulateWithPagination(events, paginator); err != nil {
+		h.httpSvc.HTTPError(ctx, http.StatusInternalServerError, constant.HTTPErrorCodeUnknown, err.Error())
+
+		return
+	}
+
+	h.httpSvc.HTTPResponse(ctx, http.StatusOK, resp)
+}
+
+func (h *User) handleError(ctx *gin.Context, err error) {
+	statusCode := http.StatusInternalServerError
+	errorCode := constant.HTTPErrorCodeUnknown
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		statusCode = http.StatusNotFound
+		errorCode = constant.HTTPErrorCodeNotFound
+	}
+
+	h.httpSvc.HTTPError(ctx, statusCode, errorCode, err.Error())
 }

@@ -10,6 +10,7 @@ import (
 
 type EventRepository interface {
 	CreateMany(ctx context.Context, entities []*model.Event, opts ...Option) error
+	List(ctx context.Context, opts ...Option) ([]*model.Event, error)
 }
 
 type Event struct {
@@ -41,5 +42,16 @@ func (r *Event) CreateMany(ctx context.Context, entities []*model.Event, opts ..
 	return tx.
 		WithContext(ctx).
 		Create(&entities).
+		Error
+}
+
+func (r *Event) List(ctx context.Context, opts ...Option) ([]*model.Event, error) {
+	var events []*model.Event
+
+	tx := r.db.WithContext(ctx).
+		Model(&events)
+
+	return events, WithOptions(tx, opts...).
+		Find(&events).
 		Error
 }

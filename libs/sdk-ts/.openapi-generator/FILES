@@ -6,10 +6,14 @@ base.ts
 common.ts
 configuration.ts
 index.ts
+model/get-user-follow-events200-response.ts
 model/get-user-followers200-response.ts
 model/index.ts
 model/pagination-metadata.ts
+model/response-event-with-user-reference.ts
 model/response-httperror.ts
+model/response-httpresponse-array-response-event-with-user-reference.ts
 model/response-httpresponse-array-response-user.ts
 model/response-httpresponse-response-user.ts
+model/response-user-for-event-reference.ts
 model/response-user.ts

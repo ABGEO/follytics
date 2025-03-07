@@ -98,6 +98,89 @@
                 }
             }
         },
+        "/users/{id}/follow-events": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Returns a paginated list of follow/unfollow events for the specified user ID",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Retrieve follow events for a user",
+                "operationId": "getUserFollowEvents",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "int",
+                        "description": "Page number for pagination (default: 1)",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "int",
+                        "description": "Number of results per page (default: 10)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "User ID to retrieve followers for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.HTTPResponse-array_response_EventWithUserReference"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "pagination": {
+                                            "$ref": "#/definitions/pagination.Metadata"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/users/{id}/followers": {
             "get": {
                 "security": [
@@ -204,6 +287,32 @@
                 }
             }
         },
+        "response.EventWithUserReference": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "id",
+                "type"
+            ],
+            "properties": {
+                "createdAt": {
+                    "description": "nolint: lll",
+                    "type": "string",
+                    "example": "1970-01-01T00:00:00.000+04:00"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "01955908-d43b-7900-8f5c-5faa67dab4d3"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "FOLLOW"
+                },
+                "user": {
+                    "$ref": "#/definitions/response.UserForEventReference"
+                }
+            }
+        },
         "response.HTTPError": {
             "type": "object",
             "required": [
@@ -218,6 +327,20 @@
                 "message": {
                     "type": "string",
                     "example": "some unknown error"
+                }
+            }
+        },
+        "response.HTTPResponse-array_response_EventWithUserReference": {
+            "type": "object",
+            "required": [
+                "data"
+            ],
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.EventWithUserReference"
+                    }
                 }
             }
         },
@@ -268,6 +391,33 @@
                 "email": {
                     "type": "string",
                     "example": "john.doe@example.com"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "01955908-d43b-7900-8f5c-5faa67dab4d3"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "john.doe"
+                }
+            }
+        },
+        "response.UserForEventReference": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "id",
+                "name",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string",
+                    "example": "https://avatars.githubusercontent.com/u/123456?"
                 },
                 "id": {
                     "type": "string",

@@ -42,5 +42,6 @@ func (route *User) Register(router gin.IRouter) {
 		group.GET("me", route.handler.Me)
 		group.POST("login-events", route.handler.TrackLogin)
 		group.GET(":id/followers", route.handler.Followers)
+		group.GET(":id/follow-events", route.handler.FollowEvents)
 	}
 }

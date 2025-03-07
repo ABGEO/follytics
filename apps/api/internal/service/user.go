@@ -20,6 +20,7 @@ type UserService interface {
 	GetRegularUsers(ctx context.Context, paginator pagination.Paginator) ([]*model.User, error)
 	StoreGitHubFollowers(ctx context.Context, user *model.User, followers []*github.User) error
 	GetFollowers(ctx context.Context, userID uuid.UUID, paginator pagination.Paginator) ([]*model.User, error)
+	GetFollowEvents(ctx context.Context, userID uuid.UUID, paginator pagination.Paginator) ([]*model.Event, error)
 }
 
 type User struct {
@@ -223,4 +224,27 @@ func (s *User) GetFollowers(
 	}
 
 	return followers, nil
+}
+
+func (s *User) GetFollowEvents(
+	ctx context.Context,
+	userID uuid.UUID,
+	paginator pagination.Paginator,
+) ([]*model.Event, error) {
+	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load user: %w", err)
+	}
+
+	events, err := s.eventRepo.List(
+		ctx,
+		repository.WithWhere("user_id = ?", userID),
+		repository.WithPreload("ReferenceUser"),
+		repository.WithPagination(paginator),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load follow events: %w", err)
+	}
+
+	return events, nil
 }
