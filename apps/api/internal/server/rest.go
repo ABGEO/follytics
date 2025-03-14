@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -40,6 +41,17 @@ func NewRest(logger *slog.Logger, conf *config.Config, db *gorm.DB, routes []rou
 
 	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
+
+	if conf.CORS.Enabled {
+		engine.Use(cors.New(cors.Config{
+			AllowOrigins:     conf.CORS.AllowOrigins,
+			AllowMethods:     conf.CORS.AllowMethods,
+			AllowHeaders:     conf.CORS.AllowHeaders,
+			ExposeHeaders:    conf.CORS.ExposeHeaders,
+			AllowCredentials: conf.CORS.AllowCredentials,
+			MaxAge:           conf.CORS.MaxAge,
+		}))
+	}
 
 	route.RegisterRoutes(engine, routes...)
 

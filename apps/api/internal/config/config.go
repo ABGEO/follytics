@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/mcuadros/go-defaults"
@@ -19,6 +20,16 @@ type Server struct {
 	ListenAddr     string   `default:"0.0.0.0"              mapstructure:"address" validate:"ip"`
 	Port           string   `default:"8000"                 mapstructure:"port"    validate:"numeric"`
 	TrustedProxies []string `mapstructure:"trusted_proxies"`
+}
+
+type CORSConfig struct {
+	Enabled          bool          `default:"false" mapstructure:"enabled"           validate:"boolean"`
+	AllowOrigins     []string      `default:"[*]"   mapstructure:"allow_origins"`
+	AllowMethods     []string      `default:"[*]"   mapstructure:"allow_methods"`
+	AllowHeaders     []string      `default:"[*]"   mapstructure:"allow_headers"`
+	ExposeHeaders    []string      `default:"[*]"   mapstructure:"expose_headers"`
+	AllowCredentials bool          `default:"false" mapstructure:"allow_credentials"`
+	MaxAge           time.Duration `default:"12h"   mapstructure:"max_age"`
 }
 
 type Swagger struct {
@@ -64,6 +75,7 @@ type Config struct {
 
 	Logger      Logger
 	Server      Server
+	CORS        CORSConfig
 	Swagger     Swagger
 	Healthcheck Healthcheck
 	Database    Database

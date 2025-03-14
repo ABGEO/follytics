@@ -30,7 +30,7 @@ func NewGormWrapper(logger *slog.Logger) *GormWrapper {
 	}
 }
 
-func (w *GormWrapper) LogMode(level gormlogger.LogLevel) gormlogger.Interface {
+func (w *GormWrapper) LogMode(level gormlogger.LogLevel) gormlogger.Interface { //nolint: ireturn
 	w.config.LogLevel = level
 
 	return w
