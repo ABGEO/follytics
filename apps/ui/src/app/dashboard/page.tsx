@@ -1,5 +1,14 @@
-'use client';
+import Title from 'antd/lib/typography/Title';
 
-export default function Dashboard() {
-  return <p>Content</p>;
+import { UserFollowEvents } from '@self/components/UserFollowEvents';
+
+function Dashboard() {
+  return (
+    <>
+      <Title level={2}>Follow Events</Title>
+      <UserFollowEvents />
+    </>
+  );
 }
+
+export default Dashboard;

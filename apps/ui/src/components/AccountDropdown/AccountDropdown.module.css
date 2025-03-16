@@ -1,0 +1,12 @@
+.userWrapper {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.userName {
+  color: var(--ant-color-bg-container);
+}
+
+.logoutItem {
+  color: var(--ant-red) !important;
+}

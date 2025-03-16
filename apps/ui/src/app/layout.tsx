@@ -1,13 +1,13 @@
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
-
+import { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 
 import '@ant-design/v5-patch-for-react-19';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from 'antd';
 
-import theme from '@self/lib/theme';
+import theme from '@self/theme';
 
 import './globals.css';
 
@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   description: 'Follytics App',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type RootLayoutProps = {
+  children: ReactNode;
+};
+
+function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -35,3 +35,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout;

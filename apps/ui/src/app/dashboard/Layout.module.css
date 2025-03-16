@@ -1,0 +1,28 @@
+.rootLayout {
+  min-height: 100vh !important;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.accountDropdownWrapper {
+  width: 100%;
+}
+
+.contentLayout {
+  padding: 0 24px 24px;
+}
+
+.content {
+  padding: 1.5rem;
+  margin: 0;
+  margin-block: 1.5rem;
+  background: var(--ant-color-bg-container);
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.footer {
+  text-align: center;
+}

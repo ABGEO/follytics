@@ -2,10 +2,16 @@ import { AxiosError, HttpStatusCode, isAxiosError } from 'axios';
 import GitHub from 'next-auth/providers/github';
 import NextAuth from 'next-auth';
 
-import { Configuration, UserApi } from '@follytics/sdk';
+import { createApiFactory } from '../api/api-factory';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
+  providers: [
+    GitHub({
+      authorization: {
+        params: { prompt: 'consent' },
+      },
+    }),
+  ],
   pages: {
     error: '/error',
   },
@@ -29,12 +35,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async signIn({ account, profile }) {
       if (account && profile) {
-        const userApi = new UserApi(
-          new Configuration({ apiKey: account.access_token })
-        );
+        const apiFactory = createApiFactory({
+          apiKey: account.access_token,
+          baseOptions: {
+            headers: {
+              'X-Request-Origin': 'server',
+              'X-Component': 'nextauth',
+            },
+          },
+        });
 
         try {
-          await userApi.trackLogin();
+          await apiFactory.getUserApi().trackLogin();
         } catch (error) {
           if (isAxiosError(error)) {
             const axiosError = error as AxiosError;
