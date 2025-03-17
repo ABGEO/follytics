@@ -5,6 +5,7 @@
 .header {
   display: flex;
   align-items: center;
+  background: var(--ant-layout-header-bg) !important;
 }
 
 .accountDropdownWrapper {

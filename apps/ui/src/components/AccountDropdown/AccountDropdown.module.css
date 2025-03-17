@@ -4,9 +4,9 @@
 }
 
 .userName {
-  color: var(--ant-color-bg-container);
+  color: var(--ant-color-text-quaternary);
 }
 
 .logoutItem {
-  color: var(--ant-red) !important;
+  color: var(--ant-color-error) !important;
 }
