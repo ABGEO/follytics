@@ -3,12 +3,14 @@ import { redirect } from 'next/navigation';
 
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import { Flex, Layout } from 'antd';
+import Title from 'antd/lib/typography/Title';
 
 import { AccountDropdown } from '@self/components/AccountDropdown';
 import { ApiFactoryProvider } from '@self/providers/ApiFactoryProvider';
 import { AppBreadcrumb } from '@self/components/AppBreadcrumb/AppBreadcrumb';
 import { AppSider } from '@self/components/AppSider';
 import { AuthProvider } from '@self/providers/AuthProvider';
+import { Logo } from '@self/components/Logo';
 import { auth } from '@self/lib/auth';
 
 import classes from './Layout.module.css';
@@ -29,9 +31,18 @@ async function DashboardLayout({ children }: DashboardLayoutProps) {
       <AuthProvider>
         <Layout className={classes.rootLayout}>
           <Header className={classes.header}>
-            <div className="demo-logo" />
+            <Flex
+              className={classes.headerChildren}
+              align="center"
+              justify="space-between"
+            >
+              <Flex align="center">
+                <Logo width="3em" height="3em" />
 
-            <Flex className={classes.accountDropdownWrapper} justify="end">
+                <Title className={classes.appName} level={4}>
+                  Follytics
+                </Title>
+              </Flex>
               <AccountDropdown />
             </Flex>
           </Header>

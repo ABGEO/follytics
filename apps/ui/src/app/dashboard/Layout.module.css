@@ -8,6 +8,26 @@
   background: var(--ant-layout-header-bg) !important;
 }
 
+.headerChildren {
+  width: 100%;
+}
+
+.appName {
+  margin: 0 !important;
+  padding-left: 0.5rem;
+  color: var(--ant-color-text-quaternary) !important;
+}
+
+@media only screen and (max-width: 575px) {
+  .appName {
+    display: none;
+  }
+
+  .header {
+    padding: 1.2rem !important;
+  }
+}
+
 .accountDropdownWrapper {
   width: 100%;
 }

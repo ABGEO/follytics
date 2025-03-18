@@ -33,9 +33,6 @@ const theme: ThemeConfig = {
     colorFill: '#E4E8ED',
   },
   components: {
-    Spin: {
-      dotSizeLG: 50,
-    },
     Layout: {
       headerBg: '#023047',
       siderBg: '#023047',

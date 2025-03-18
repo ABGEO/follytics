@@ -15,6 +15,7 @@ import { Spin, message } from 'antd';
 
 import type { ResponseUser } from '@follytics/sdk';
 
+import { Logo } from '@self/components/Logo';
 import { getApiErrorMessage } from '@self/lib/api/error';
 import { useApiFactory } from '@self/providers/ApiFactoryProvider';
 
@@ -72,7 +73,14 @@ function AuthProvider({ children }: AuthProviderProps) {
   return (
     <AuthContext.Provider value={{ user }}>
       {contextHolder}
-      {authLoading && <Spin fullscreen size="large" tip="Loading" />}
+      {authLoading && (
+        <Spin
+          fullscreen
+          size="large"
+          tip="Loading"
+          indicator={<Logo height="6rem" animate />}
+        />
+      )}
       {children}
     </AuthContext.Provider>
   );
