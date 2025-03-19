@@ -1,12 +1,16 @@
 import useSWR from 'swr';
 
-import { fetchCurrentUser } from './fetcher';
+import { type ApiFactoryInterface } from '@self/lib/api/api-factory';
 import useApiFactory from '@self/hooks/use-api-factory';
+
+import { fetchCurrentUser } from './fetcher';
 
 function useCurrentUser() {
   const apiFactory = useApiFactory();
 
-  return useSWR(['userApi/getCurrentUser'], () => fetchCurrentUser(apiFactory));
+  const key = apiFactory ? ['userApi/getCurrentUser'] : null;
+
+  return useSWR(key, () => fetchCurrentUser(apiFactory as ApiFactoryInterface));
 }
 
 export default useCurrentUser;

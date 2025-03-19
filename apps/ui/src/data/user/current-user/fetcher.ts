@@ -1,17 +1,9 @@
 import type { ApiFactoryInterface } from '@self/lib/api/api-factory';
-import getServerApiFactory from '@self/lib/api/server-api-factory';
 
-export async function fetchCurrentUser(
-  apiFactory?: ApiFactoryInterface | null
-) {
-  if (!apiFactory) {
-    apiFactory = await getServerApiFactory();
-  }
+export async function fetchCurrentUser(apiFactory: ApiFactoryInterface) {
+  const { data } = await apiFactory.getUserApi().getCurrentUser();
 
-  return apiFactory
-    ?.getUserApi()
-    .getCurrentUser()
-    .then((res) => res.data);
+  return data;
 }
 
 export default fetchCurrentUser;

@@ -80,7 +80,7 @@ function UserFollowEvents() {
 
   const auth = useAuth();
   const { data, error, isLoading } = useUserFollowEvents({
-    id: auth?.user?.id ?? '',
+    id: auth.user?.id ?? '',
     page: tableParams.pagination?.current,
     limit: tableParams.pagination?.pageSize,
   });

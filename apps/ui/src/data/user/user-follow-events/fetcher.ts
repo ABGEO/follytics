@@ -1,20 +1,14 @@
 import type { UserApiGetUserFollowEventsRequest } from '@follytics/sdk';
 
 import type { ApiFactoryInterface } from '@self/lib/api/api-factory';
-import getServerApiFactory from '@self/lib/api/server-api-factory';
 
 export async function fetchUserFollowEvents(
-  request: UserApiGetUserFollowEventsRequest,
-  apiFactory?: ApiFactoryInterface | null
+  apiFactory: ApiFactoryInterface,
+  request: UserApiGetUserFollowEventsRequest
 ) {
-  if (!apiFactory) {
-    apiFactory = await getServerApiFactory();
-  }
+  const { data } = await apiFactory.getUserApi().getUserFollowEvents(request);
 
-  return apiFactory
-    ?.getUserApi()
-    .getUserFollowEvents(request)
-    .then((res) => res.data);
+  return data;
 }
 
 export default fetchUserFollowEvents;

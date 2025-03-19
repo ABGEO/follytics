@@ -7,7 +7,7 @@ import type { ApiFactoryInterface } from '@self/lib/api/api-factory';
 import { createApiFactory } from '@self/lib/api/api-factory';
 
 const useApiFactory = (config?: ConfigurationParameters) => {
-  const [api, setApi] = useState<ApiFactoryInterface>();
+  const [apiFactory, setApiFactory] = useState<ApiFactoryInterface>();
 
   const { data: session, status } = useSession();
 
@@ -20,10 +20,10 @@ const useApiFactory = (config?: ConfigurationParameters) => {
       baseOptions: { headers: {} },
     });
 
-    setApi(factory);
+    setApiFactory(factory);
   }, [config, session?.accessToken, status]);
 
-  return api;
+  return apiFactory;
 };
 
 export default useApiFactory;
