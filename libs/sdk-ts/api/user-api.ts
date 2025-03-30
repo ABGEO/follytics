@@ -28,6 +28,8 @@ import type { GetUserFollowers200Response } from '../model';
 // @ts-ignore
 import type { ResponseHTTPError } from '../model';
 // @ts-ignore
+import type { ResponseHTTPResponseResponseFollowersTimeline } from '../model';
+// @ts-ignore
 import type { ResponseHTTPResponseResponseUser } from '../model';
 /**
  * UserApi - axios parameter creator
@@ -163,6 +165,40 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Returns a timeline of user followers for the specified user ID
+         * @summary Retrieve followers timeline for a user
+         * @param {string} id User ID to retrieve timeline for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserFollowersTimeline: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getUserFollowersTimeline', 'id', id)
+            const localVarPath = `/users/{id}/followers/timeline`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Creates a new user if they do not exist or updates an existing user upon login
          * @summary Track user login
          * @param {*} [options] Override http request option.
@@ -248,6 +284,19 @@ export const UserApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns a timeline of user followers for the specified user ID
+         * @summary Retrieve followers timeline for a user
+         * @param {string} id User ID to retrieve timeline for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserFollowersTimeline(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseHTTPResponseResponseFollowersTimeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserFollowersTimeline(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.getUserFollowersTimeline']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Creates a new user if they do not exist or updates an existing user upon login
          * @summary Track user login
          * @param {*} [options] Override http request option.
@@ -297,6 +346,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          */
         getUserFollowers(requestParameters: UserApiGetUserFollowersRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetUserFollowers200Response> {
             return localVarFp.getUserFollowers(requestParameters.id, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a timeline of user followers for the specified user ID
+         * @summary Retrieve followers timeline for a user
+         * @param {UserApiGetUserFollowersTimelineRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserFollowersTimeline(requestParameters: UserApiGetUserFollowersTimelineRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseHTTPResponseResponseFollowersTimeline> {
+            return localVarFp.getUserFollowersTimeline(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new user if they do not exist or updates an existing user upon login
@@ -367,6 +426,20 @@ export interface UserApiGetUserFollowersRequest {
 }
 
 /**
+ * Request parameters for getUserFollowersTimeline operation in UserApi.
+ * @export
+ * @interface UserApiGetUserFollowersTimelineRequest
+ */
+export interface UserApiGetUserFollowersTimelineRequest {
+    /**
+     * User ID to retrieve timeline for
+     * @type {string}
+     * @memberof UserApiGetUserFollowersTimeline
+     */
+    readonly id: string
+}
+
+/**
  * UserApi - object-oriented interface
  * @export
  * @class UserApi
@@ -406,6 +479,18 @@ export class UserApi extends BaseAPI {
      */
     public getUserFollowers(requestParameters: UserApiGetUserFollowersRequest, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).getUserFollowers(requestParameters.id, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a timeline of user followers for the specified user ID
+     * @summary Retrieve followers timeline for a user
+     * @param {UserApiGetUserFollowersTimelineRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public getUserFollowersTimeline(requestParameters: UserApiGetUserFollowersTimelineRequest, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).getUserFollowersTimeline(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

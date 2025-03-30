@@ -11,9 +11,13 @@ model/get-user-followers200-response.ts
 model/index.ts
 model/pagination-metadata.ts
 model/response-event-with-user-reference.ts
+model/response-followers-timeline-item.ts
+model/response-followers-timeline.ts
 model/response-httperror.ts
 model/response-httpresponse-array-response-event-with-user-reference.ts
 model/response-httpresponse-array-response-user.ts
+model/response-httpresponse-response-followers-timeline.ts
 model/response-httpresponse-response-user.ts
 model/response-user-for-event-reference.ts
+model/response-user-for-timeline.ts
 model/response-user.ts
