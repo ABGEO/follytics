@@ -15,6 +15,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
+      "@follytics/chart": ["libs/chart/src/index.ts"],
       "@follytics/nx-helpers": ["tools/nx-helpers/src/index.ts"],
       "@follytics/sdk": ["libs/sdk-ts/index.ts"]
     }

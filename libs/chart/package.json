@@ -1,0 +1,13 @@
+{
+  "name": "@follytics/chart",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "d3": "^7.9.0",
+    "jsdom": "^26.0.0"
+  }
+}
