@@ -46,4 +46,5 @@
 
 .footer {
   text-align: center;
+  background: var(--ant-layout-body-bg) !important;
 }
