@@ -5,7 +5,7 @@ import type { UserApiGetUserFollowEventsRequest } from '@follytics/sdk';
 import { type ApiFactoryInterface } from '@self/lib/api/api-factory';
 import useApiFactory from '@self/hooks/use-api-factory';
 
-import { fetchUserFollowEvents } from './fetcher';
+import fetchUserFollowEvents from './fetcher';
 
 function useUserFollowEvents(request: UserApiGetUserFollowEventsRequest) {
   const apiFactory = useApiFactory();

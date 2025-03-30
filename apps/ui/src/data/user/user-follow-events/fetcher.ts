@@ -2,7 +2,7 @@ import type { UserApiGetUserFollowEventsRequest } from '@follytics/sdk';
 
 import type { ApiFactoryInterface } from '@self/lib/api/api-factory';
 
-export async function fetchUserFollowEvents(
+async function fetchUserFollowEvents(
   apiFactory: ApiFactoryInterface,
   request: UserApiGetUserFollowEventsRequest
 ) {
