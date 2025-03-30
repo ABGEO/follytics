@@ -265,6 +265,58 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users/{id}/followers/timeline": {
+            "get": {
+                "description": "Returns a timeline of user followers for the specified user ID",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Retrieve followers timeline for a user",
+                "operationId": "getUserFollowersTimeline",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "User ID to retrieve timeline for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPResponse-response_FollowersTimeline"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.HTTPError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -315,6 +367,51 @@ const docTemplate = `{
                 }
             }
         },
+        "response.FollowersTimeline": {
+            "type": "object",
+            "required": [
+                "timeline",
+                "user"
+            ],
+            "properties": {
+                "timeline": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.FollowersTimelineItem"
+                    }
+                },
+                "user": {
+                    "$ref": "#/definitions/response.UserForTimeline"
+                }
+            }
+        },
+        "response.FollowersTimelineItem": {
+            "type": "object",
+            "required": [
+                "date",
+                "follows",
+                "total",
+                "unfollows"
+            ],
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "example": "1970-01-01T00:00:00.000+04:00"
+                },
+                "follows": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 1500
+                },
+                "unfollows": {
+                    "type": "integer",
+                    "example": 20
+                }
+            }
+        },
         "response.HTTPError": {
             "type": "object",
             "required": [
@@ -360,6 +457,17 @@ const docTemplate = `{
                 }
             }
         },
+        "response.HTTPResponse-response_FollowersTimeline": {
+            "type": "object",
+            "required": [
+                "data"
+            ],
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/response.FollowersTimeline"
+                }
+            }
+        },
         "response.HTTPResponse-response_User": {
             "type": "object",
             "required": [
@@ -384,7 +492,7 @@ const docTemplate = `{
             "properties": {
                 "avatar": {
                     "type": "string",
-                    "example": "https://avatars.githubusercontent.com/u/123456?"
+                    "example": "https://avatars.githubusercontent.com/u/123456"
                 },
                 "createdAt": {
                     "type": "string",
@@ -419,7 +527,7 @@ const docTemplate = `{
             "properties": {
                 "avatar": {
                     "type": "string",
-                    "example": "https://avatars.githubusercontent.com/u/123456?"
+                    "example": "https://avatars.githubusercontent.com/u/123456"
                 },
                 "id": {
                     "type": "string",
@@ -428,6 +536,23 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "example": "John Doe"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "john.doe"
+                }
+            }
+        },
+        "response.UserForTimeline": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string",
+                    "example": "data:image/jpeg;base64,JCQgKDBQND="
                 },
                 "username": {
                     "type": "string",

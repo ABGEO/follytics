@@ -20,14 +20,16 @@ type UserHandler interface {
 	TrackLogin(ctx *gin.Context)
 	Followers(ctx *gin.Context)
 	FollowEvents(ctx *gin.Context)
+	Timeline(ctx *gin.Context)
 }
 
 type User struct {
 	logger *slog.Logger
 
-	authSvc service.AuthService
-	httpSvc service.HTTPService
-	userSvc service.UserService
+	authSvc  service.AuthService
+	eventSvc service.EventService
+	httpSvc  service.HTTPService
+	userSvc  service.UserService
 }
 
 var _ UserHandler = (*User)(nil)
@@ -35,6 +37,7 @@ var _ UserHandler = (*User)(nil)
 func NewUser(
 	logger *slog.Logger,
 	authSvc service.AuthService,
+	eventSvc service.EventService,
 	httpSvc service.HTTPService,
 	userSvc service.UserService,
 ) *User {
@@ -43,9 +46,10 @@ func NewUser(
 			slog.String("component", "handler"),
 			slog.String("handler", "user"),
 		),
-		authSvc: authSvc,
-		httpSvc: httpSvc,
-		userSvc: userSvc,
+		authSvc:  authSvc,
+		eventSvc: eventSvc,
+		httpSvc:  httpSvc,
+		userSvc:  userSvc,
 	}
 }
 
@@ -203,6 +207,48 @@ func (h *User) FollowEvents(ctx *gin.Context) {
 	}
 
 	if err = resp.PopulateWithPagination(events, paginator); err != nil {
+		h.httpSvc.HTTPError(ctx, http.StatusInternalServerError, constant.HTTPErrorCodeUnknown, err.Error())
+
+		return
+	}
+
+	h.httpSvc.HTTPResponse(ctx, http.StatusOK, resp)
+}
+
+// Timeline handler.
+//
+//	@Summary		Retrieve followers timeline for a user
+//	@Description	Returns a timeline of user followers for the specified user ID
+//	@ID				getUserFollowersTimeline
+//	@Tags			User
+//
+//	@Param			id	path		string	true	"User ID to retrieve timeline for"	Format(uuid)
+//
+//	@Success		200	{object}	response.HTTPResponse[response.FollowersTimeline]
+//	@Failure		400	{object}	response.HTTPError
+//	@Failure		401	{object}	response.HTTPError
+//	@Failure		404	{object}	response.HTTPError
+//	@Failure		500	{object}	response.HTTPError
+//
+//	@Router			/users/{id}/followers/timeline [get]
+func (h *User) Timeline(ctx *gin.Context) {
+	var resp response.HTTPResponse[response.FollowersTimeline]
+
+	id, err := uuid.Parse(ctx.Param("id"))
+	if err != nil {
+		h.httpSvc.HTTPValidationError(ctx, err)
+
+		return
+	}
+
+	timeline, err := h.eventSvc.FollowersTimeline(ctx, id)
+	if err != nil {
+		h.handleError(ctx, err)
+
+		return
+	}
+
+	if err = resp.Populate(timeline); err != nil {
 		h.httpSvc.HTTPError(ctx, http.StatusInternalServerError, constant.HTTPErrorCodeUnknown, err.Error())
 
 		return

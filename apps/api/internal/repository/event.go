@@ -11,6 +11,7 @@ import (
 type EventRepository interface {
 	CreateMany(ctx context.Context, entities []*model.Event, opts ...Option) error
 	List(ctx context.Context, opts ...Option) ([]*model.Event, error)
+	AggregateEventsByDateAndType(ctx context.Context, opts ...Option) ([]model.AggregatedEvent, error)
 }
 
 type Event struct {
@@ -53,5 +54,19 @@ func (r *Event) List(ctx context.Context, opts ...Option) ([]*model.Event, error
 
 	return events, WithOptions(tx, opts...).
 		Find(&events).
+		Error
+}
+
+func (r *Event) AggregateEventsByDateAndType(ctx context.Context, opts ...Option) ([]model.AggregatedEvent, error) {
+	var events []model.AggregatedEvent
+
+	tx := r.db.WithContext(ctx).
+		Model(&model.Event{})
+
+	return events, WithOptions(tx, opts...).
+		Select("DATE(created_at) AS date, COUNT(id) AS count, type").
+		Group("DATE(created_at)").
+		Group("type").
+		Scan(&events).
 		Error
 }

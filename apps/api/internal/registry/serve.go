@@ -29,6 +29,7 @@ type Serve struct {
 	userRepo  repository.UserRepository
 
 	authSvc   service.AuthService
+	eventSvc  service.EventService
 	githubSvc service.GithubService
 	httpSvc   service.HTTPService
 	userSvc   service.UserService
@@ -71,11 +72,12 @@ func (r *Serve) createDependencies() {
 	r.userRepo = repository.NewUser(r.GetDB())
 
 	r.authSvc = service.NewAuth()
+	r.eventSvc = service.NewEvent(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo)
 	r.githubSvc = service.NewGithub(r.GetConfig())
 	r.httpSvc = service.NewHTTP()
 	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc)
 
-	r.userHandler = handler.NewUser(r.GetLogger(), r.authSvc, r.httpSvc, r.userSvc)
+	r.userHandler = handler.NewUser(r.GetLogger(), r.authSvc, r.eventSvc, r.httpSvc, r.userSvc)
 
 	r.authMiddleware = middleware.NewAuth(r.GetLogger(), r.githubSvc, r.httpSvc)
 }

@@ -1,6 +1,10 @@
 package model
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type EventType string
 
@@ -17,4 +21,10 @@ type Event struct {
 	User            *User
 	ReferenceUserID uuid.UUID `gorm:"index"`
 	ReferenceUser   *User
+}
+
+type AggregatedEvent struct {
+	Date  time.Time
+	Type  EventType
+	Count int
 }
