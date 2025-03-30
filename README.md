@@ -27,6 +27,6 @@ Released under the [AGPL-3.0](LICENSE) license.
 
 ## Contributors
 
-<a href="https://github.com/ABGEO/follytics/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ABGEO/follytics" width="100%"/>
+<a href="https://github.com/abgeo/follytics/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=abgeo/follytics" />
 </a>
