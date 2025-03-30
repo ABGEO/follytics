@@ -18,6 +18,13 @@
         "args": ["serve", "-c", "../../follytics.yaml"]
       }
     },
+    "serve:live": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "air -c ../../.air.toml serve -c ../../follytics.yaml",
+        "cwd": "apps/api"
+      }
+    },
     "worker": {
       "executor": "@nx-go/nx-go:serve",
       "options": {
