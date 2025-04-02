@@ -1,1 +1,3 @@
-Dockerfile
+**/Dockerfile
+**/eslint.config.mjs
+**/jest.config.ts

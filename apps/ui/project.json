@@ -11,6 +11,22 @@
       "options": {
         "jestConfig": "apps/ui/jest.config.ts"
       }
+    },
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/ui"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/ui"
+        },
+        "production": {
+          "generateLockfile": true
+        }
+      }
     }
   }
 }

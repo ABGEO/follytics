@@ -92,11 +92,13 @@ function UserFollowEvents() {
       });
     };
 
+  // @ts-expect-error we have to fix the API Spec generation
   if (data && data.pagination.totalItems !== tableParams.pagination?.total) {
     setTableParams((prevState) => ({
       ...prevState,
       pagination: {
         ...prevState.pagination,
+        // @ts-expect-error we have to fix the API Spec generation
         total: data.pagination.totalItems,
       },
     }));
