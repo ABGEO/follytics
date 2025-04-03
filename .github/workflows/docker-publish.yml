@@ -57,7 +57,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          AFFECTED_PROJECTS=$(npx nx show projects --affected --projects "apps/*" --json)
+          NX_BASE=main
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            NX_BASE="HEAD^1"
+          fi
+
+          AFFECTED_PROJECTS=$(npx nx show projects --affected --projects "apps/*" --json --base="$NX_BASE")
 
           echo "Affected Projects are: $AFFECTED_PROJECTS"
           echo "affected_projects=$AFFECTED_PROJECTS" >> $GITHUB_OUTPUT
