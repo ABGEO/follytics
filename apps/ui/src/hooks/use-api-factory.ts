@@ -16,6 +16,7 @@ const useApiFactory = (config?: ConfigurationParameters) => {
 
     const factory = createApiFactory({
       ...config,
+      basePath: process.env.NEXT_PUBLIC_API_URL,
       apiKey: session.accessToken,
       baseOptions: { headers: {} },
     });

@@ -36,6 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ account, profile }) {
       if (account && profile) {
         const apiFactory = createApiFactory({
+          basePath: process.env.NEXT_PUBLIC_API_URL,
           apiKey: account.access_token,
           baseOptions: {
             headers: {
