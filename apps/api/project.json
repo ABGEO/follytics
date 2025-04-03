@@ -5,9 +5,6 @@
   "sourceRoot": "apps/api",
   "tags": [],
   "targets": {
-    "tidy": {
-      "executor": "@nx-go/nx-go:tidy"
-    },
     "build": {
       "executor": "@nx-go/nx-go:build",
       "options": {
@@ -51,6 +48,9 @@
         "linter": "golangci-lint",
         "args": ["run", "--config=../../.golangci.yaml", "--fix"]
       }
+    },
+    "tidy": {
+      "executor": "@nx-go/nx-go:tidy"
     },
     "swag": {
       "executor": "@follytics/nx-helpers:swag",
