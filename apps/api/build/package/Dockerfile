@@ -6,28 +6,28 @@ ARG UID=1001
 
 RUN apk update \
   && apk add --no-cache \
-    tzdata \
+  tzdata \
   && update-ca-certificates \
   && adduser \
-    --disabled-password \
-    --gecos "" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "follytics"
+  --disabled-password \
+  --gecos "" \
+  --shell "/sbin/nologin" \
+  --no-create-home \
+  --uid "${UID}" \
+  "follytics"
 
 RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-    --mount=type=bind,source=apps/api/go.mod,target=go.mod \
-    --mount=type=bind,source=apps/api/go.sum,target=go.sum \
-    go mod download
+  --mount=type=cache,target=/root/.cache/go-build \
+  --mount=type=bind,source=apps/api/go.mod,target=go.mod \
+  --mount=type=bind,source=apps/api/go.sum,target=go.sum \
+  go mod download
 
 COPY apps/api .
 COPY follytics.example.yaml follytics.yaml
 
 RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-    CGO_ENABLED=0 GOOS=linux go build -v -o follytics cmd/follytics/follytics.go
+  --mount=type=cache,target=/root/.cache/go-build \
+  CGO_ENABLED=0 GOOS=linux go build -v -o follytics cmd/follytics/follytics.go
 
 FROM scratch
 
