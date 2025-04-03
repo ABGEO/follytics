@@ -30,6 +30,7 @@ COPY --from=nx-deps /app/node_modules ./node_modules
 COPY nx.json package.json pnpm-lock.yaml tsconfig.base.json ./
 
 COPY apps/ui ./apps/ui/
+COPY apps/ui/.docker/.env ./apps/ui/.env
 
 COPY libs/chart/ ./libs/chart/
 COPY libs/sdk-ts/ ./libs/sdk-ts/
@@ -72,8 +73,11 @@ COPY --from=nx-builder --chown=follytics:follytics /app/dist/apps/ui/.next/stand
 COPY --from=nx-builder --chown=follytics:follytics /app/dist/apps/ui/public ./apps/ui/public
 COPY --from=nx-builder --chown=follytics:follytics /app/dist/apps/ui/.next/static ./dist/apps/ui/.next/static
 
+COPY apps/ui/.docker/entrypoint.sh /docker-entrypoint.sh
+
 USER follytics:follytics
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "apps/ui/server.js"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["node", "apps/ui/server.js"]
