@@ -57,9 +57,9 @@ jobs:
         run: |
           set -euo pipefail
 
-          NX_BASE=main
-          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
-            NX_BASE="HEAD^1"
+          NX_BASE="HEAD^1"
+          if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
+            NX_BASE=main
           fi
 
           AFFECTED_PROJECTS=$(npx nx show projects --affected --projects "apps/*" --json --base="$NX_BASE")
