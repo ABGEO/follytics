@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"slices"
 	"sort"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -68,10 +69,13 @@ func (s *Event) FollowersTimeline(ctx context.Context, userID uuid.UUID) (*dto.F
 		}
 	}
 
+	startDate, endDate := s.getTimelineRange()
+
 	// @todo: implement caching.
 	events, err := s.eventRepo.AggregateEventsByDateAndType(
 		ctx,
 		repository.WithWhere("user_id", userID),
+		repository.WithWhere("created_at BETWEEN ? AND ?", startDate, endDate),
 		repository.WithOrder("date"),
 	)
 	if err != nil {
@@ -117,6 +121,12 @@ func (s *Event) fetchAvatar(ctx context.Context, url string) (*http.Response, er
 	}
 
 	return response, nil
+}
+
+func (s *Event) getTimelineRange() (time.Time, time.Time) {
+	now := time.Now()
+
+	return now.AddDate(0, -1, 0), now
 }
 
 func (s *Event) calculateDailyFollowerChanges(events []model.AggregatedEvent) []dto.DailyFollowerChange {
