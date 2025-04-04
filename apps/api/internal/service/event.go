@@ -84,7 +84,7 @@ func (s *Event) FollowersTimeline(ctx context.Context, userID uuid.UUID) (*dto.F
 
 	return &dto.FollowersTimeline{
 		User:     user,
-		Timeline: s.calculateDailyFollowerChanges(events),
+		Timeline: s.calculateDailyFollowerChanges(startDate, endDate, events),
 	}, nil
 }
 
@@ -129,10 +129,15 @@ func (s *Event) getTimelineRange() (time.Time, time.Time) {
 	return now.AddDate(0, -1, 0), now
 }
 
-func (s *Event) calculateDailyFollowerChanges(events []model.AggregatedEvent) []dto.DailyFollowerChange {
+func (s *Event) calculateDailyFollowerChanges(
+	startDate time.Time,
+	endDate time.Time,
+	events []model.AggregatedEvent,
+) []dto.DailyFollowerChange {
 	dailyChangesMap := s.calculateDailyFollowerChangesMap(events)
+	fullChangesMap := s.fillDailyFollowerChangesGaps(startDate, endDate, dailyChangesMap)
 
-	result := slices.Collect(maps.Values(dailyChangesMap))
+	result := slices.Collect(maps.Values(fullChangesMap))
 	sort.Slice(result, func(i, j int) bool {
 		return result[i].Date.Before(result[j].Date)
 	})
@@ -140,12 +145,12 @@ func (s *Event) calculateDailyFollowerChanges(events []model.AggregatedEvent) []
 	return result
 }
 
-func (s *Event) calculateDailyFollowerChangesMap(events []model.AggregatedEvent) map[int64]dto.DailyFollowerChange {
+func (s *Event) calculateDailyFollowerChangesMap(events []model.AggregatedEvent) map[string]dto.DailyFollowerChange {
 	totalFollowers := 0
-	dailyChanges := make(map[int64]dto.DailyFollowerChange, len(events))
+	dailyChanges := make(map[string]dto.DailyFollowerChange, len(events))
 
 	for _, event := range events {
-		index := event.Date.Unix()
+		index := event.Date.Format("2006-01-02")
 
 		change, ok := dailyChanges[index]
 		if !ok {
@@ -168,4 +173,31 @@ func (s *Event) calculateDailyFollowerChangesMap(events []model.AggregatedEvent)
 	}
 
 	return dailyChanges
+}
+
+func (s *Event) fillDailyFollowerChangesGaps(
+	startDate time.Time,
+	endDate time.Time,
+	dailyChanges map[string]dto.DailyFollowerChange,
+) map[string]dto.DailyFollowerChange {
+	timeline := make(map[string]dto.DailyFollowerChange)
+	lastTotalFollowers := 0
+
+	for currentDate := startDate; !currentDate.After(endDate); currentDate = currentDate.AddDate(0, 0, 1) {
+		dateKey := currentDate.Format("2006-01-02")
+
+		if change, exists := dailyChanges[dateKey]; exists {
+			timeline[dateKey] = change
+			lastTotalFollowers = change.Total
+
+			continue
+		}
+
+		timeline[dateKey] = dto.DailyFollowerChange{
+			Date:  currentDate,
+			Total: lastTotalFollowers,
+		}
+	}
+
+	return timeline
 }
