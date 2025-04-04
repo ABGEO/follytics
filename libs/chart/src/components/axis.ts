@@ -18,15 +18,16 @@ function addAxis(
     .attr('transform', `translate(0,${height - margins.bottom})`)
     .call(
       d3
-        .axisBottom(xScale)
-        .ticks(width / 80)
+        .axisBottom<Date>(xScale)
+        .ticks(width / 50)
+        .tickFormat(d3.timeFormat('%d %b'))
         .tickSizeOuter(0)
     );
 
   svg
     .append('g')
     .attr('transform', `translate(${margins.left},0)`)
-    .call(d3.axisLeft(yScale).ticks(height / 40));
+    .call(d3.axisLeft(yScale).ticks(height / 50));
 }
 
 export { addAxis };
