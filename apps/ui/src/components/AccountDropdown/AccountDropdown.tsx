@@ -1,6 +1,7 @@
 'use client';
 
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 import { Avatar, Dropdown, Space, Spin } from 'antd';
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
@@ -29,9 +30,18 @@ function AccountDropdown() {
     <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
       <Space className={classes.userWrapper}>
         <Avatar
-          icon={<UserOutlined />}
-          src={session?.user?.image}
-          alt={session?.user?.name ?? 'Default User Avatar'}
+          icon={
+            !session?.user?.image ? (
+              <UserOutlined />
+            ) : (
+              <Image
+                src={session?.user?.image}
+                alt={session?.user?.name ?? 'Default User Avatar'}
+                layout="fill"
+                objectFit="cover"
+              />
+            )
+          }
         />
         <span className={classes.userName}>{session?.user?.name}</span>
       </Space>

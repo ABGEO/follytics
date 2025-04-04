@@ -1,9 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
 import { Avatar, Table, Tag } from 'antd';
 import type { GetProp, TableProps } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 import type { ResponseEventWithUserReference } from '@follytics/sdk';
 
@@ -60,11 +62,26 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
     title: 'Avatar',
     key: 'user',
     dataIndex: 'userAvatar',
-    render: (_, { user }) => (
-      <>
-        <Avatar src={user?.avatar} />
-      </>
-    ),
+    render: (_, { user }) => {
+      return (
+        <>
+          <Avatar
+            icon={
+              !user?.avatar ? (
+                <UserOutlined />
+              ) : (
+                <Image
+                  src={user?.avatar}
+                  alt={user?.name ?? 'Default User Avatar'}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )
+            }
+          />
+        </>
+      );
+    },
   },
 ];
 
