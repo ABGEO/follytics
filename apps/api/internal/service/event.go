@@ -69,13 +69,10 @@ func (s *Event) FollowersTimeline(ctx context.Context, userID uuid.UUID) (*dto.F
 		}
 	}
 
-	startDate, endDate := s.getTimelineRange()
-
 	// @todo: implement caching.
 	events, err := s.eventRepo.AggregateEventsByDateAndType(
 		ctx,
 		repository.WithWhere("user_id", userID),
-		repository.WithWhere("created_at BETWEEN ? AND ?", startDate, endDate),
 		repository.WithOrder("date"),
 	)
 	if err != nil {
@@ -84,7 +81,7 @@ func (s *Event) FollowersTimeline(ctx context.Context, userID uuid.UUID) (*dto.F
 
 	return &dto.FollowersTimeline{
 		User:     user,
-		Timeline: s.calculateDailyFollowerChanges(startDate, endDate, events),
+		Timeline: s.calculateDailyFollowerChanges(events),
 	}, nil
 }
 
@@ -123,18 +120,10 @@ func (s *Event) fetchAvatar(ctx context.Context, url string) (*http.Response, er
 	return response, nil
 }
 
-func (s *Event) getTimelineRange() (time.Time, time.Time) {
-	now := time.Now()
-
-	return now.AddDate(0, -1, 0), now
-}
-
-func (s *Event) calculateDailyFollowerChanges(
-	startDate time.Time,
-	endDate time.Time,
-	events []model.AggregatedEvent,
-) []dto.DailyFollowerChange {
+func (s *Event) calculateDailyFollowerChanges(events []model.AggregatedEvent) []dto.DailyFollowerChange {
 	dailyChangesMap := s.calculateDailyFollowerChangesMap(events)
+	startDate := events[0].Date
+	endDate := time.Now()
 	fullChangesMap := s.fillDailyFollowerChangesGaps(startDate, endDate, dailyChangesMap)
 
 	result := slices.Collect(maps.Values(fullChangesMap))
