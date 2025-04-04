@@ -21,7 +21,10 @@ function createFollowersTimelineChart(
     .range([margins.left, (config.width ?? DEFAULTS.width) - margins.right]);
   const yScale = d3
     .scaleLinear()
-    .domain(d3.extent(data, (d) => d.value) as [number, number])
+    .domain([
+      d3.min(data, (d) => d.value),
+      d3.max(data, (d) => d.value + 10),
+    ] as [number, number])
     .range([(config.height ?? DEFAULTS.height) - margins.bottom, margins.top]);
 
   const svg = createSVGElement(config);
