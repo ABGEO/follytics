@@ -1,56 +1,81 @@
+version: "2"
+
 run:
   concurrency: 4
-  timeout: 5m
-  issues-exit-code: 2
   modules-download-mode: readonly
+  issues-exit-code: 2
   allow-parallel-runners: true
 
 output:
   formats:
-    - format: colored-tab
-
-linters-settings:
-  varnamelen:
-    min-name-length: 2
-    ignore-type-assert-ok: true
-    ignore-map-index-ok: true
-    ignore-chan-recv-ok: true
-    ignore-names:
-      - i
-
-  gci:
-    sections:
-      - standard
-      - default
-      - prefix(github.com/abgeo/follytics)
-    skip-generated: false
-    custom-order: true
-
-  depguard:
-    rules:
-      main:
-        list-mode: lax
-        allow:
-          - $gostd
-        deny:
-          - pkg: 'math/rand$'
-            desc: use math/rand/v2
-          - pkg: 'github.com/pkg/errors'
-            desc: Should be replaced by standard lib errors package
-
-  godox:
-    keywords:
-      - '@todo'
-
-  forbidigo:
-    forbid:
-      - "^(fmt\\.Print(|f|ln)|print|println)$"
-      - "^(repository\\.)?WithDebug$"
+    tab:
+      path: stdout
 
 linters:
-  enable-all: true
+  default: all
   disable:
     - exhaustruct
 
-    # Deprecated.
-    - tenv
+  settings:
+    depguard:
+      rules:
+        main:
+          list-mode: lax
+          allow:
+            - $gostd
+          deny:
+            - pkg: math/rand$
+              desc: use math/rand/v2
+            - pkg: github.com/pkg/errors
+              desc: Should be replaced by standard lib errors package
+
+    forbidigo:
+      forbid:
+        - pattern: ^(fmt\.Print(|f|ln)|print|println)$
+        - pattern: ^(repository\.)?WithDebug$
+
+    godox:
+      keywords:
+        - '@todo'
+
+    varnamelen:
+      min-name-length: 2
+      ignore-names:
+        - i
+      ignore-type-assert-ok: true
+      ignore-map-index-ok: true
+      ignore-chan-recv-ok: true
+
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+
+  settings:
+    gci:
+      custom-order: true
+      sections:
+        - standard
+        - default
+        - prefix(github.com/abgeo/follytics)
+
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
