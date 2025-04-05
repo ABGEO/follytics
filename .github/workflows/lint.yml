@@ -42,6 +42,11 @@ jobs:
           go-version-file: "go.work"
           cache-dependency-path: "apps/api/go.sum"
 
+      - name: Install golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          args: "--help"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
