@@ -1,0 +1,31 @@
+.rootLayout {
+  min-height: 100vh !important;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  background: var(--ant-color-bg-container) !important;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headerChildren {
+  width: 100%;
+}
+
+.appName {
+  margin: 0 !important;
+  padding-left: 0.5rem;
+}
+
+.content {
+  padding: 1.5rem;
+  margin: 0;
+  margin-block: 1.5rem;
+}
+
+.footer {
+  text-align: center;
+  background: var(--ant-color-bg-container) !important;
+  border-top: 1px solid #f0f0f0;
+}

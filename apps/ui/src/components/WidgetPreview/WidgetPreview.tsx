@@ -59,6 +59,10 @@ function WidgetPreview({
     [imageUrl, altText]
   );
 
+  if (!imageUrl) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div>

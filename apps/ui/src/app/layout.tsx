@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   description: 'Follytics App',
 };
 
-type RootLayoutProps = {
+type AppLayoutProps = {
   children: ReactNode;
 };
 
-function RootLayout({ children }: RootLayoutProps) {
+function AppLayout({ children }: AppLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -36,4 +36,4 @@ function RootLayout({ children }: RootLayoutProps) {
   );
 }
 
-export default RootLayout;
+export default AppLayout;

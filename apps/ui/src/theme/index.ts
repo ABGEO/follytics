@@ -4,8 +4,8 @@ const theme: ThemeConfig = {
   cssVar: true,
   token: {
     // Base colors
-    colorPrimary: '#8ECAE6',
-    colorInfo: '#8ECAE6',
+    colorPrimary: '#219EBC',
+    colorInfo: '#219EBC',
     colorSuccess: '#52C41A',
     colorWarning: '#FFB703',
     colorError: '#FF4D4F',
@@ -48,8 +48,8 @@ const theme: ThemeConfig = {
       darkItemHoverColor: '#FFFFFF',
     },
     Button: {
-      colorPrimaryHover: '#219EBC',
-      colorPrimaryActive: '#0E7A9B',
+      colorPrimaryHover: '#1A89A5',
+      colorPrimaryActive: '#17778F',
     },
   },
 };

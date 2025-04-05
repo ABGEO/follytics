@@ -1,20 +1,9 @@
-.rootLayout {
-  min-height: 100vh !important;
-}
-
 .header {
-  display: flex;
-  align-items: center;
   background: var(--ant-layout-header-bg) !important;
-}
-
-.headerChildren {
-  width: 100%;
+  border-bottom: none !important;
 }
 
 .appName {
-  margin: 0 !important;
-  padding-left: 0.5rem;
   color: var(--ant-color-text-quaternary) !important;
 }
 
@@ -37,14 +26,11 @@
 }
 
 .content {
-  padding: 1.5rem;
-  margin: 0;
-  margin-block: 1.5rem;
   background: var(--ant-color-bg-container);
   border-radius: var(--ant-border-radius-lg);
 }
 
 .footer {
-  text-align: center;
   background: var(--ant-layout-body-bg) !important;
+  border-top: none !important;
 }

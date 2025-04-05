@@ -13,6 +13,8 @@ import { AuthProvider } from '@self/providers/AuthProvider';
 import { Logo } from '@self/components/Logo';
 import { auth } from '@self/lib/auth';
 
+import rootClasses from '../(root)/Layout.module.css';
+
 import classes from './Layout.module.css';
 
 type DashboardLayoutProps = {
@@ -29,17 +31,20 @@ async function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <ApiFactoryProvider>
       <AuthProvider>
-        <Layout className={classes.rootLayout}>
-          <Header className={classes.header}>
+        <Layout className={rootClasses.rootLayout}>
+          <Header className={`${rootClasses.header} ${classes.header}`}>
             <Flex
-              className={classes.headerChildren}
+              className={rootClasses.headerChildren}
               align="center"
               justify="space-between"
             >
               <Flex align="center">
                 <Logo width="3em" height="3em" />
 
-                <Title className={classes.appName} level={4}>
+                <Title
+                  className={`${rootClasses.appName} ${classes.appName}`}
+                  level={4}
+                >
                   Follytics
                 </Title>
               </Flex>
@@ -50,8 +55,10 @@ async function DashboardLayout({ children }: DashboardLayoutProps) {
             <AppSider />
             <Layout className={classes.contentLayout}>
               <AppBreadcrumb />
-              <Content className={classes.content}>{children}</Content>
-              <Footer className={classes.footer}>
+              <Content className={`${rootClasses.content} ${classes.content}`}>
+                {children}
+              </Content>
+              <Footer className={`${rootClasses.footer} ${classes.footer}`}>
                 Follytics ©2025-{new Date().getFullYear()}
               </Footer>
             </Layout>
