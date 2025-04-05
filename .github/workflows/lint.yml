@@ -1,0 +1,56 @@
+name: Lint
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure main branch exists
+        if: github.ref != 'refs/heads/main'
+        run: |
+          set -euo pipefail
+
+          git rev-parse --verify main \
+            || git remote set-branches origin main \
+            && git fetch --depth 1 origin main \
+            && git branch main origin/main
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Setup GoLang
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.work"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Linters
+        run: |
+          set -euo pipefail
+
+          NX_BASE="HEAD^1"
+          if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
+            NX_BASE=main
+          fi
+
+          npx nx affected -t lint --base="$NX_BASE"
