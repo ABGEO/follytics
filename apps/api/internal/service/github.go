@@ -19,6 +19,7 @@ type GithubService interface {
 	WithInstallationToken(ctx context.Context) (*Github, error)
 
 	GetUser(ctx context.Context, username string) (*github.User, *github.Response, error)
+	GetUserByID(ctx context.Context, id int64) (*github.User, *github.Response, error)
 	GetUserFollowers(ctx context.Context, username string, page int, limit int) ([]*github.User, *github.Response, error)
 }
 
@@ -102,6 +103,15 @@ func (s *Github) GetUser(ctx context.Context, username string) (*github.User, *g
 	user, res, err := s.client.Users.Get(ctx, username)
 	if err != nil {
 		return nil, res, fmt.Errorf("failed to get user from GitHub: %w", err)
+	}
+
+	return user, res, nil
+}
+
+func (s *Github) GetUserByID(ctx context.Context, id int64) (*github.User, *github.Response, error) {
+	user, res, err := s.client.Users.GetByID(ctx, id)
+	if err != nil {
+		return nil, res, fmt.Errorf("failed to get user by ID from GitHub: %w", err)
 	}
 
 	return user, res, nil

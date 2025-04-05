@@ -184,10 +184,18 @@ func (j *SyncFollowers) fetchUserFollowers(ctx context.Context, user *model.User
 	page := 1
 	logger := j.logger.With(slog.Any("user_id", user.ID))
 
+	// First, we have to fetch the user by ID, as the username could be outdated in our DB.
+	logger.DebugContext(ctx, "fetching user by ID")
+
+	ghUser, _, err := j.githubSvc.GetUserByID(ctx, user.GHID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user by ID: %w", err)
+	}
+
 	for {
 		logger.DebugContext(ctx, "fetching followers", slog.Int("page", page))
 
-		users, res, err := j.githubSvc.GetUserFollowers(ctx, user.Username, page, j.jobConfig.GitHubPageSize)
+		users, res, err := j.githubSvc.GetUserFollowers(ctx, *ghUser.Login, page, j.jobConfig.GitHubPageSize)
 		if err != nil {
 			return nil, fmt.Errorf("failed to get user followers: %w", err)
 		}
