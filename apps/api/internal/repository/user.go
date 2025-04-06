@@ -30,17 +30,6 @@ type User struct {
 var _ UserRepository = (*User)(nil)
 
 func NewUser(db *gorm.DB) *User {
-	// @todo: move to separate migrator tool.
-	db.Exec(`
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_type') THEN
-		CREATE TYPE user_type AS ENUM('REGULAR', 'REFERENCE');
-    END IF;
-END $$;
-`)
-	db.AutoMigrate(&model.User{}) //nolint: errcheck
-
 	return &User{
 		db: db,
 	}

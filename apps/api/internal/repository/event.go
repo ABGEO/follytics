@@ -21,17 +21,6 @@ type Event struct {
 var _ EventRepository = (*Event)(nil)
 
 func NewEvent(db *gorm.DB) *Event {
-	// @todo: move to separate migrator tool.
-	db.Exec(`
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'event_type') THEN
-		CREATE TYPE event_type AS ENUM('FOLLOW', 'UNFOLLOW');
-    END IF;
-END $$;
-`)
-	db.AutoMigrate(&model.Event{}) //nolint: errcheck
-
 	return &Event{
 		db: db,
 	}
