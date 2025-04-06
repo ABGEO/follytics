@@ -59,7 +59,7 @@
     "pnpm": ">=9"
   },
   "dependencies": {
-    "@ant-design/colors": "^7.2.0",
+    "@ant-design/colors": "^8.0.0",
     "@ant-design/icons": "^5.6.1",
     "@ant-design/nextjs-registry": "^1.0.2",
     "@ant-design/pro-layout": "^7.22.3",
