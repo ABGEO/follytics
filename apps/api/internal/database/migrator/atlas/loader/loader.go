@@ -5,6 +5,8 @@ import (
 	"strings"
 
 	"ariga.io/atlas-provider-gorm/gormschema"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 
 	"github.com/abgeo/follytics/db/sql"
 	"github.com/abgeo/follytics/internal/model"
@@ -43,7 +45,13 @@ func (l *SchemaLoader) Load() (string, error) {
 }
 
 func (l *SchemaLoader) loadModels(sb *strings.Builder) error {
-	statements, err := gormschema.New("postgres").Load(l.models...)
+	gormConfig := &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+	}
+
+	statements, err := gormschema.New("postgres", gormschema.WithConfig(gormConfig)).Load(l.models...)
 	if err != nil {
 		return fmt.Errorf("failed to load gorm schema: %w", err)
 	}
