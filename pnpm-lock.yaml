@@ -18,8 +18,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.2.1(@babel/core@7.26.8)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/pro-layout':
-        specifier: ^7.22.3
-        version: 7.22.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^7.22.4
+        version: 7.22.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/v5-patch-for-react-19':
         specifier: ^1.0.3
         version: 1.0.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -254,22 +254,22 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  '@ant-design/pro-layout@7.22.3':
-    resolution: {integrity: sha512-di/EOMDuoMDRjBweqesYyCxEYr2LCmO82y6A4bSwmmJ6ehxN7HGC73Wx4RuBkzDR7kHLTOXt7WxI6875ENT8mg==}
+  '@ant-design/pro-layout@7.22.4':
+    resolution: {integrity: sha512-X2WO4L2itXemX4zhS+0NG+8kXQD5SX9sG+zjx/15BmIO3FvsUGqOHgoCg0vhd424EiyPj7WtdMZJ39G1xdgDwA==}
     peerDependencies:
       antd: ^4.24.15 || ^5.11.2
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
 
-  '@ant-design/pro-provider@2.15.3':
-    resolution: {integrity: sha512-jUBCuRrhAXNMumSZ++704/zEg/7U1k2N3jMVBgtirvVaCAk5O9iZQKK4W3O3LRFc+D8yO16sXjsxhawvdGL4cA==}
+  '@ant-design/pro-provider@2.15.4':
+    resolution: {integrity: sha512-DBX0JNUNOYXAucVqd/zTdqtXckCDqr2Lo85KIku2YzWdhptDPDZRTNqL04JShjGejDl8fzwQ8yREHgVUfzn6Gg==}
     peerDependencies:
       antd: ^4.24.15 || ^5.11.2
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
 
-  '@ant-design/pro-utils@2.16.4':
-    resolution: {integrity: sha512-PFxqF0fsUsLj8ORvJSuMgVv9NDHwAxZaglzPN/u3jZX7rWYcrHD04EMJEXooZaSyT6Q4+j7SqXDx6oBsdb9zNw==}
+  '@ant-design/pro-utils@2.17.0':
+    resolution: {integrity: sha512-hHKUISjMEoS+E5ltJWyvNTrlEA3IimZNxtDrEhorRIbgVYAlmEN5Mj/ESSofzDM3+UlxiI5+A/Y6IHkByTfDEA==}
     peerDependencies:
       antd: ^4.24.15 || ^5.11.2
       react: '>=17.0.0'
@@ -924,10 +924,6 @@ packages:
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
-
-  '@babel/runtime@7.26.7':
-    resolution: {integrity: sha512-AOPI3D+a8dXnja+iwsUqGRjr1BbZIe771sXdapOtYI531gSqpi92vXivKcq2asu/DFpdl1ceFAKZyRzK2PCVcQ==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/runtime@7.27.0':
     resolution: {integrity: sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==}
@@ -8266,13 +8262,13 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/pro-layout@7.22.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/pro-layout@7.22.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/icons': 5.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@ant-design/pro-provider': 2.15.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@ant-design/pro-utils': 2.16.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@babel/runtime': 7.26.7
+      '@ant-design/pro-provider': 2.15.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@ant-design/pro-utils': 2.17.0(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@babel/runtime': 7.27.0
       '@umijs/route-utils': 4.0.1
       '@umijs/use-params': 1.0.9(react@19.1.0)
       antd: 5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -8287,10 +8283,10 @@ snapshots:
       swr: 2.3.3(react@19.1.0)
       warning: 4.0.3
 
-  '@ant-design/pro-provider@2.15.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/pro-provider@2.15.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@babel/runtime': 7.26.7
+      '@babel/runtime': 7.27.0
       '@ctrl/tinycolor': 3.6.1
       antd: 5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       dayjs: 1.11.13
@@ -8299,11 +8295,11 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       swr: 2.3.3(react@19.1.0)
 
-  '@ant-design/pro-utils@2.16.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/pro-utils@2.17.0(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/icons': 5.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@ant-design/pro-provider': 2.15.3(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@babel/runtime': 7.26.7
+      '@ant-design/pro-provider': 2.15.4(antd@5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@babel/runtime': 7.27.0
       antd: 5.24.6(date-fns@2.30.0)(luxon@3.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       classnames: 2.5.1
       dayjs: 1.11.13
@@ -9134,10 +9130,6 @@ snapshots:
       '@babel/plugin-transform-typescript': 7.26.8(@babel/core@7.26.8)
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/runtime@7.26.7':
-    dependencies:
-      regenerator-runtime: 0.14.1
 
   '@babel/runtime@7.27.0':
     dependencies:
