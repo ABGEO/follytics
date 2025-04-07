@@ -46,7 +46,7 @@ var _ ServeRegistry = (*Serve)(nil)
 func NewServe(flags *pflag.FlagSet) (*Serve, error) {
 	reg := &Serve{}
 
-	baseRegistry, err := newBase(flags)
+	baseRegistry, err := NewBase(flags)
 	if err != nil {
 		return nil, err
 	}

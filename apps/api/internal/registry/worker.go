@@ -37,7 +37,7 @@ var _ WorkerRegistry = (*Worker)(nil)
 func NewWorker(flags *pflag.FlagSet) (*Worker, error) {
 	reg := &Worker{}
 
-	baseRegistry, err := newBase(flags)
+	baseRegistry, err := NewBase(flags)
 	if err != nil {
 		return nil, err
 	}

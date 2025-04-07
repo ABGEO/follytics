@@ -52,6 +52,11 @@ type Database struct {
 	SkipDefaultTransaction bool `default:"true" mapstructure:"skip_default_transaction" validate:"boolean"`
 }
 
+type DatabaseMigrator struct {
+	MigrationsPath  string `default:"/var/migrations" mapstructure:"migrations_path"`
+	AtlasBinaryPath string `default:"atlas"           mapstructure:"atlas_binary_path"`
+}
+
 type GitHub struct {
 	AppClientID       string `mapstructure:"app_client_id"`
 	AppPrivateKeyPath string `mapstructure:"app_private_key_path"`
@@ -73,14 +78,15 @@ type Worker struct {
 type Config struct {
 	Env string `default:"prod" validate:"oneof=dev test prod"`
 
-	Logger      Logger
-	Server      Server
-	CORS        CORSConfig
-	Swagger     Swagger
-	Healthcheck Healthcheck
-	Database    Database
-	GitHub      GitHub
-	Worker      Worker
+	Logger           Logger
+	Server           Server
+	CORS             CORSConfig
+	Swagger          Swagger
+	Healthcheck      Healthcheck
+	Database         Database
+	DatabaseMigrator DatabaseMigrator `mapstructure:"database_migrator"`
+	GitHub           GitHub
+	Worker           Worker
 }
 
 func New(configPath string) (*Config, error) {

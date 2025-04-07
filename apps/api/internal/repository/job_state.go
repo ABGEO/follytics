@@ -21,9 +21,6 @@ type JobState struct {
 var _ JobStateRepository = (*JobState)(nil)
 
 func NewJobState(db *gorm.DB) *JobState {
-	// @todo: move to separate migrator tool.
-	db.AutoMigrate(&model.JobState{}) //nolint: errcheck
-
 	return &JobState{
 		db: db,
 	}

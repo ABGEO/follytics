@@ -34,9 +34,9 @@ linters:
         - pattern: ^(fmt\.Print(|f|ln)|print|println)$
         - pattern: ^(repository\.)?WithDebug$
 
-    godox:
-      keywords:
-        - '@todo'
+#    godox:
+#      keywords:
+#        - '@todo'
 
     varnamelen:
       min-name-length: 2
