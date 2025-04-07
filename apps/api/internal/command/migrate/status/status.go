@@ -63,7 +63,7 @@ func (c *Command) Run(ctx context.Context) error {
 
 	res, err := atlasExecutor.Status(ctx)
 	if err != nil {
-		return fmt.Errorf("failed to drop migrations: %w", err)
+		return fmt.Errorf("failed to retrieve migration status: %w", err)
 	}
 
 	reg.GetLogger().
