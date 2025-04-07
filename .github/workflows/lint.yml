@@ -59,8 +59,7 @@ jobs:
             NX_BASE=main
           fi
 
-          npx nx affected -t lint --base="$NX_BASE"
-
+          npx nx affected -t lint --base="$NX_BASE" --verbose
 
   lint-migrations:
     runs-on: ubuntu-latest
@@ -69,6 +68,10 @@ jobs:
         include:
           - app: "api"
             migrations: "file://apps/api/db/migrations"
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    permissions:
+      pull-requests: write
     services:
       postgres:
         image: postgres:17
