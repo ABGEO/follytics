@@ -50,3 +50,4 @@ worker:
     sync_followers:
       batch_size: 10
       github_page_size: 100
+      github_rate_limit_threshold: 100

@@ -65,8 +65,9 @@ type GitHub struct {
 }
 
 type SyncFollowersJob struct {
-	BatchSize      int `default:"10"  mapstructure:"batch_size"       validate:"gt=0"`
-	GitHubPageSize int `default:"100" mapstructure:"github_page_size" validate:"gt=0,lte=100"`
+	BatchSize                int `default:"10"  mapstructure:"batch_size"                  validate:"gt=0"`
+	GitHubPageSize           int `default:"100" mapstructure:"github_page_size"            validate:"gt=0,lte=100"`
+	GitHubRateLimitThreshold int `default:"100" mapstructure:"github_rate_limit_threshold" validate:"gt=0"`
 }
 
 type Worker struct {

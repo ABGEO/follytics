@@ -18,6 +18,7 @@ type GithubService interface {
 	WithToken(token string) *Github
 	WithInstallationToken(ctx context.Context) (*Github, error)
 
+	GetAPIRateLimits(ctx context.Context) (*github.RateLimits, *github.Response, error)
 	GetUser(ctx context.Context, username string) (*github.User, *github.Response, error)
 	GetUserByID(ctx context.Context, id int64) (*github.User, *github.Response, error)
 	GetUserFollowers(ctx context.Context, username string, page int, limit int) ([]*github.User, *github.Response, error)
@@ -97,6 +98,15 @@ func (s *Github) WithInstallationToken(ctx context.Context) (*Github, error) {
 	}
 
 	return s.WithToken(*data.Token), nil
+}
+
+func (s *Github) GetAPIRateLimits(ctx context.Context) (*github.RateLimits, *github.Response, error) {
+	meta, res, err := s.client.RateLimit.Get(ctx)
+	if err != nil {
+		return nil, res, fmt.Errorf("failed to get API Rate Limits from GitHub: %w", err)
+	}
+
+	return meta, res, nil
 }
 
 func (s *Github) GetUser(ctx context.Context, username string) (*github.User, *github.Response, error) {
