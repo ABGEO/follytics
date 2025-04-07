@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/abgeo/follytics/internal/command"
+	"github.com/abgeo/follytics/internal/command/migrate"
 	"github.com/abgeo/follytics/internal/command/serve"
 	"github.com/abgeo/follytics/internal/command/worker"
 )
@@ -37,6 +38,11 @@ func execute() error {
 }
 
 func getRootCmd() (*cobra.Command, error) {
+	migrateCmd, err := migrate.New()
+	if err != nil {
+		return nil, fmt.Errorf("failed to initialize migrate command: %w", err)
+	}
+
 	serveCmd, err := serve.New()
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize serve command: %w", err)
@@ -47,7 +53,7 @@ func getRootCmd() (*cobra.Command, error) {
 		return nil, fmt.Errorf("failed to initialize serve command: %w", err)
 	}
 
-	rootCmd, err := command.New(serveCmd, workerCmd)
+	rootCmd, err := command.New(migrateCmd, serveCmd, workerCmd)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize root command: %w", err)
 	}

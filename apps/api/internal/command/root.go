@@ -21,6 +21,7 @@ type Command struct {
 var _ commander.Commander = (*Command)(nil)
 
 func New(
+	migrateCmd commander.Commander,
 	serveCmd commander.Commander,
 	workerCmd commander.Commander,
 ) (*Command, error) {
@@ -34,6 +35,7 @@ func New(
 	commander.Init(
 		com,
 		commander.WithChildCommands(
+			migrateCmd,
 			serveCmd,
 			workerCmd,
 		),

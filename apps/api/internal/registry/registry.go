@@ -20,19 +20,19 @@ type Registry interface {
 	GetLogger() *slog.Logger
 }
 
-type base struct {
+type Base struct {
 	config    *config.Config
 	db        *gorm.DB
 	txManager *repository.TransactionManager
 	logger    *slog.Logger
 }
 
-var _ Registry = (*base)(nil)
+var _ Registry = (*Base)(nil)
 
-func newBase(flags *pflag.FlagSet) (*base, error) {
+func NewBase(flags *pflag.FlagSet) (*Base, error) {
 	var err error
 
-	reg := &base{}
+	reg := &Base{}
 
 	configPath, err := flags.GetString("config")
 	if err != nil {
@@ -59,18 +59,18 @@ func newBase(flags *pflag.FlagSet) (*base, error) {
 	return reg, nil
 }
 
-func (r *base) GetConfig() *config.Config {
+func (r *Base) GetConfig() *config.Config {
 	return r.config
 }
 
-func (r *base) GetDB() *gorm.DB {
+func (r *Base) GetDB() *gorm.DB {
 	return r.db
 }
 
-func (r *base) GetTransactionManager() *repository.TransactionManager {
+func (r *Base) GetTransactionManager() *repository.TransactionManager {
 	return r.txManager
 }
 
-func (r *base) GetLogger() *slog.Logger {
+func (r *Base) GetLogger() *slog.Logger {
 	return r.logger
 }

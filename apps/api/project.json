@@ -32,6 +32,34 @@
         "args": ["worker", "-c", "../../follytics.yaml"]
       }
     },
+    "migrate:apply": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["migrate", "apply", "-c", "../../follytics.yaml"]
+      }
+    },
+    "migrate:down": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["migrate", "down", "-c", "../../follytics.yaml"]
+      }
+    },
+    "migrate:generate": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["migrate", "generate", "-c", "../../follytics.yaml"]
+      }
+    },
+    "migrate:status": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "main": "{projectRoot}/cmd/follytics/follytics.go",
+        "args": ["migrate", "status", "-c", "../../follytics.yaml"]
+      }
+    },
     "test": {
       "executor": "@nx-go/nx-go:test"
     },
@@ -47,6 +75,13 @@
       "options": {
         "linter": "golangci-lint",
         "args": ["run", "--config=../../.golangci.yaml", "--fix"]
+      }
+    },
+    "atlas:diff": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/api",
+        "command": "atlas migrate diff -c file://db/atlas.hcl --env dev"
       }
     },
     "tidy": {

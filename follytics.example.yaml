@@ -19,7 +19,7 @@ cors:
   max_age: 12h
 
 swagger:
-  enabled: true
+  enabled: false
   path: /swagger
 
 healthcheck:
@@ -34,6 +34,10 @@ database:
   database: follytics
   batch_size: 100
   skip_default_transaction: true
+
+database_migrator:
+  migrations_path: /var/migrations
+  atlas_binary_path: atlas
 
 github:
   app_client_id:
