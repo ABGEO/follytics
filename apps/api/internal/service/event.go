@@ -121,6 +121,10 @@ func (s *Event) fetchAvatar(ctx context.Context, url string) (*http.Response, er
 }
 
 func (s *Event) calculateDailyFollowerChanges(events []model.AggregatedEvent) []dto.DailyFollowerChange {
+	if len(events) == 0 {
+		return []dto.DailyFollowerChange{}
+	}
+
 	dailyChangesMap := s.calculateDailyFollowerChangesMap(events)
 	startDate := events[0].Date
 	endDate := time.Now()
