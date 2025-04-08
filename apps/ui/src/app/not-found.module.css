@@ -1,0 +1,13 @@
+.contentWrapper {
+  margin-top: 2rem !important;
+}
+
+.title {
+  font-size: 2rem !important;
+  text-align: center;
+}
+
+.message {
+  font-size: 1.1rem !important;
+  text-align: center;
+}
