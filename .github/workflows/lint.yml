@@ -67,7 +67,7 @@ jobs:
       matrix:
         include:
           - app: "api"
-            migrations: "file://apps/api/db/migrations"
+            migrations-path: "apps/api/db/migrations"
     env:
       GITHUB_TOKEN: ${{ github.token }}
     permissions:
@@ -91,14 +91,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: check modified files
+        id: check_migrations
+        run: |
+          if git diff --name-only ${{ github.sha }} ${{ github.event.before }} | grep '^${{ matrix.migrations-path }}/'; then
+            echo "migrations_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "migrations_changed=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Atlas
+        if: steps.check_migrations.outputs.migrations_changed == 'true'
         uses: ariga/setup-atlas@v0
         with:
           cloud-token: ${{ secrets.ATLAS_TOKEN }}
 
       - name: Run Linters
+        if: steps.check_migrations.outputs.migrations_changed == 'true'
         uses: ariga/atlas-action/migrate/lint@v1
         with:
-          dir: ${{ matrix.migrations }}
+          dir: "file://${{ matrix.migrations-path }}"
           dir-name: "follytics-${{ matrix.app }}"
           dev-url: "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
