@@ -58,7 +58,7 @@ func (r *Worker) createDependencies() {
 	r.userRepo = repository.NewUser(r.GetDB())
 
 	r.authSvc = service.NewAuth()
-	r.githubSvc = service.NewGithub(r.GetConfig())
+	r.githubSvc = service.NewGithub(r.GetConfig(), r.GetLogger())
 	r.jobStateSvc = service.NewJobState(r.GetLogger(), r.jobStateRepo)
 	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc)
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rsa"
 	"fmt"
+	"log/slog"
 	"os"
 	"time"
 
@@ -22,21 +23,27 @@ type GithubService interface {
 	GetUser(ctx context.Context, username string) (*github.User, *github.Response, error)
 	GetUserByID(ctx context.Context, id int64) (*github.User, *github.Response, error)
 	GetUserFollowers(ctx context.Context, username string, page int, limit int) ([]*github.User, *github.Response, error)
+	CollectUserFollowers(ctx context.Context, username string, limit int) ([]*github.User, error)
 }
 
 type Github struct {
 	config *config.Config
+	logger *slog.Logger
 
 	client *github.Client
 }
 
 var _ GithubService = (*Github)(nil)
 
-func NewGithub(config *config.Config) *Github {
+func NewGithub(config *config.Config, logger *slog.Logger) *Github {
 	client := github.NewClient(nil)
 
 	return &Github{
 		config: config,
+		logger: logger.With(
+			slog.String("component", "service"),
+			slog.String("service", "github"),
+		),
 		client: client,
 	}
 }
@@ -80,6 +87,7 @@ func (s *Github) loadPrivateKey() (*rsa.PrivateKey, error) {
 func (s *Github) WithToken(token string) *Github {
 	return &Github{
 		config: s.config,
+		logger: s.logger,
 		client: s.client.WithAuthToken(token),
 	}
 }
@@ -144,4 +152,36 @@ func (s *Github) GetUserFollowers(
 	}
 
 	return users, res, nil
+}
+
+func (s *Github) CollectUserFollowers(
+	ctx context.Context,
+	username string,
+	limit int,
+) ([]*github.User, error) {
+	var followers []*github.User
+
+	page := 1
+	logger := s.logger.With(slog.Any("username", username))
+
+	for {
+		logger.DebugContext(ctx, "fetching followers", slog.Int("page", page))
+
+		users, res, err := s.GetUserFollowers(ctx, username, page, limit)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get user followers: %w", err)
+		}
+
+		followers = append(followers, users...)
+
+		if res.NextPage == 0 {
+			logger.DebugContext(ctx, "last page reached")
+
+			break
+		}
+
+		page = res.NextPage
+	}
+
+	return followers, nil
 }

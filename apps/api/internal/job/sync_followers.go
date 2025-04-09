@@ -197,9 +197,6 @@ func (j *SyncFollowers) processUser(ctx context.Context, user *model.User) error
 }
 
 func (j *SyncFollowers) fetchUserFollowers(ctx context.Context, user *model.User) ([]*github.User, error) {
-	var followers []*github.User
-
-	page := 1
 	logger := j.logger.With(slog.Any("user_id", user.ID))
 
 	// First, we have to fetch the user by ID, as the username could be outdated in our DB.
@@ -210,23 +207,9 @@ func (j *SyncFollowers) fetchUserFollowers(ctx context.Context, user *model.User
 		return nil, fmt.Errorf("failed to get user by ID: %w", err)
 	}
 
-	for {
-		logger.DebugContext(ctx, "fetching followers", slog.Int("page", page))
-
-		users, res, err := j.githubSvc.GetUserFollowers(ctx, *ghUser.Login, page, j.jobConfig.GitHubPageSize)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get user followers: %w", err)
-		}
-
-		followers = append(followers, users...)
-
-		if res.NextPage == 0 {
-			logger.DebugContext(ctx, "last page reached")
-
-			break
-		}
-
-		page = res.NextPage
+	followers, err := j.githubSvc.CollectUserFollowers(ctx, *ghUser.Login, j.jobConfig.GitHubPageSize)
+	if err != nil {
+		return nil, fmt.Errorf("failed to collect user followers: %w", err)
 	}
 
 	logger.DebugContext(ctx, "followers fetched", slog.Int("count", len(followers)))
