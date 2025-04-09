@@ -60,7 +60,7 @@ func (r *Worker) createDependencies() {
 	r.authSvc = service.NewAuth()
 	r.githubSvc = service.NewGithub(r.GetConfig(), r.GetLogger())
 	r.jobStateSvc = service.NewJobState(r.GetLogger(), r.jobStateRepo)
-	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc)
+	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc, r.githubSvc)
 
 	r.syncFollowersJob = job.NewSyncFollowers(
 		r.GetLogger(),

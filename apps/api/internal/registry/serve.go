@@ -75,7 +75,7 @@ func (r *Serve) createDependencies() {
 	r.eventSvc = service.NewEvent(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo)
 	r.githubSvc = service.NewGithub(r.GetConfig(), r.GetLogger())
 	r.httpSvc = service.NewHTTP()
-	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc)
+	r.userSvc = service.NewUser(r.GetLogger(), r.GetTransactionManager(), r.eventRepo, r.userRepo, r.authSvc, r.githubSvc)
 
 	r.userHandler = handler.NewUser(r.GetLogger(), r.authSvc, r.eventSvc, r.httpSvc, r.userSvc)
 

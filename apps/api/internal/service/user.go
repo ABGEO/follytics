@@ -30,7 +30,8 @@ type User struct {
 	eventRepo repository.EventRepository
 	userRepo  repository.UserRepository
 
-	authSvc AuthService
+	authSvc   AuthService
+	githubSvc GithubService
 }
 
 var _ UserService = (*User)(nil)
@@ -41,6 +42,7 @@ func NewUser(
 	eventRepo repository.EventRepository,
 	userRepo repository.UserRepository,
 	authSvc AuthService,
+	githubSvc GithubService,
 ) *User {
 	return &User{
 		logger: logger.With(
@@ -51,6 +53,7 @@ func NewUser(
 		eventRepo: eventRepo,
 		userRepo:  userRepo,
 		authSvc:   authSvc,
+		githubSvc: githubSvc,
 	}
 }
 
@@ -73,7 +76,46 @@ func (s *User) Sync(ctx context.Context) (*model.User, error) {
 		return nil, fmt.Errorf("failed to upsert user: %w", err)
 	}
 
+	go func() {
+		err := s.collectAndStoreGitHubFollowers(
+			context.WithoutCancel(ctx),
+			entity,
+		)
+		if err != nil {
+			s.logger.ErrorContext(
+				ctx,
+				"unable to store GitHub followers",
+				slog.Any("user_id", entity.ID),
+				slog.Any("error", err),
+			)
+		}
+	}()
+
 	return entity, nil
+}
+
+func (s *User) collectAndStoreGitHubFollowers(ctx context.Context, user *model.User) error {
+	const ghLimit = 100
+
+	logger := s.logger.With(slog.Any("user_id", user.ID))
+
+	logger.InfoContext(ctx, "storing user followers")
+
+	followers, err := s.githubSvc.
+		WithToken(s.authSvc.Token(ctx)).
+		CollectUserFollowers(ctx, user.Username, ghLimit)
+	if err != nil {
+		return fmt.Errorf("failed to collect user followers: %w", err)
+	}
+
+	err = s.StoreGitHubFollowers(ctx, user, followers)
+	if err != nil {
+		return fmt.Errorf("failed to store GitHub followers: %w", err)
+	}
+
+	logger.DebugContext(ctx, "user followers storing process has been finished")
+
+	return nil
 }
 
 func (s *User) GetRegularUsers(ctx context.Context, paginator pagination.Paginator) ([]*model.User, error) {
