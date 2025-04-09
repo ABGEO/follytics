@@ -9,7 +9,6 @@ import { UserOutlined } from '@ant-design/icons';
 
 import type { ResponseEventWithUserReference } from '@follytics/sdk';
 
-import { ErrorBoundary } from '@self/components/ErrorBoundary';
 import { useAuth } from '@self/providers/AuthProvider';
 import useUserFollowEvents from '@self/data/user/user-follow-events/swr';
 
@@ -96,7 +95,7 @@ function UserFollowEvents() {
   });
 
   const auth = useAuth();
-  const { data, error, isLoading } = useUserFollowEvents({
+  const { data, isLoading } = useUserFollowEvents({
     id: auth.user?.id ?? '',
     page: tableParams.pagination?.current,
     limit: tableParams.pagination?.pageSize,
@@ -122,17 +121,15 @@ function UserFollowEvents() {
   }
 
   return (
-    <ErrorBoundary error={error}>
-      <Table<ResponseEventWithUserReference>
-        rowKey="id"
-        columns={columns}
-        dataSource={data?.data}
-        pagination={tableParams.pagination}
-        loading={isLoading}
-        onChange={handleTableChange}
-        scroll={{ x: true }}
-      />
-    </ErrorBoundary>
+    <Table<ResponseEventWithUserReference>
+      rowKey="id"
+      columns={columns}
+      dataSource={data?.data}
+      pagination={tableParams.pagination}
+      loading={isLoading}
+      onChange={handleTableChange}
+      scroll={{ x: true }}
+    />
   );
 }
 

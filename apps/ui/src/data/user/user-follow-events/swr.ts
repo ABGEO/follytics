@@ -15,9 +15,15 @@ function useUserFollowEvents(request: UserApiGetUserFollowEventsRequest) {
       ? ['userApi/getUserFollowEvents', request.id, request.page, request.limit]
       : null;
 
-  return useSWR(key, () =>
-    fetchUserFollowEvents(apiFactory as ApiFactoryInterface, request)
+  const result = useSWR(key, () =>
+    fetchUserFollowEvents(apiFactory as ApiFactoryInterface, request),
   );
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  return result;
 }
 
 export default useUserFollowEvents;

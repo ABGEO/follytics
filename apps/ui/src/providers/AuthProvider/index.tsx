@@ -16,7 +16,7 @@ import { Spin, message } from 'antd';
 import type { ResponseUser } from '@follytics/sdk';
 
 import { Logo } from '@self/components/Logo';
-import { getApiErrorMessage } from '@self/lib/api/error';
+import { normalizeError } from '@self/lib/error';
 import { useApiFactory } from '@self/providers/ApiFactoryProvider';
 
 import './style.css';
@@ -62,7 +62,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       } catch (error) {
         messageApi.open({
           type: 'error',
-          content: getApiErrorMessage(error),
+          content: normalizeError(error as Error).message,
         });
       } finally {
         setAuthLoading(false);

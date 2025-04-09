@@ -8,7 +8,7 @@ import useApiFactory from '@self/hooks/use-api-factory';
 import fetchUserFollowersTimeline from './fetcher';
 
 function useUserFollowersTimeline(
-  request: UserApiGetUserFollowersTimelineRequest
+  request: UserApiGetUserFollowersTimelineRequest,
 ) {
   const apiFactory = useApiFactory();
 
@@ -17,9 +17,15 @@ function useUserFollowersTimeline(
       ? ['userApi/getUserFollowersTimeline', request.id]
       : null;
 
-  return useSWR(key, () =>
-    fetchUserFollowersTimeline(apiFactory as ApiFactoryInterface, request)
+  const result = useSWR(key, () =>
+    fetchUserFollowersTimeline(apiFactory as ApiFactoryInterface, request),
   );
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  return result;
 }
 
 export default useUserFollowersTimeline;

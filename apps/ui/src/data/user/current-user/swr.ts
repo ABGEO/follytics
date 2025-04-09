@@ -10,7 +10,15 @@ function useCurrentUser() {
 
   const key = apiFactory ? ['userApi/getCurrentUser'] : null;
 
-  return useSWR(key, () => fetchCurrentUser(apiFactory as ApiFactoryInterface));
+  const result = useSWR(key, () =>
+    fetchCurrentUser(apiFactory as ApiFactoryInterface),
+  );
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  return result;
 }
 
 export default useCurrentUser;
