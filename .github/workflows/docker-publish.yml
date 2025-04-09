@@ -77,11 +77,13 @@ jobs:
           {
             "ui": {
               "dockerfile": "apps/ui/Dockerfile",
-              "context": "."
+              "context": ".",
+              "trivySkipFiles": ""
             },
             "api": {
               "dockerfile": "apps/api/build/package/Dockerfile",
-              "context": "."
+              "context": ".",
+              "trivySkipFiles": "usr/bin/atlas"
             }
           }
           EOL
@@ -94,7 +96,8 @@ jobs:
               project: $projects | map(select(. as $p | $dockerConfigs[$p] != null)) | map({
                 name: .,
                 dockerfile: $dockerConfigs[.].dockerfile,
-                context: $dockerConfigs[.].context
+                context: $dockerConfigs[.].context,
+                "trivy-skip-files": $dockerConfigs[.].trivySkipFiles
               })
             }
           ')
@@ -158,6 +161,20 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Extract first tag
+        id: first-tag
+        run: echo "tag=$(echo '${{ steps.meta.outputs.tags }}' | head -n 1)" >> $GITHUB_OUTPUT
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: ${{ steps.first-tag.outputs.tag }}
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "MEDIUM,HIGH,CRITICAL"
+          skip-files: ${{ matrix.project.trivy-skip-files }}
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
