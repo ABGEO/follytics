@@ -9,7 +9,7 @@ import { MainLayout } from '@self/layout/MainLayout';
 
 import classes from './not-found.module.css';
 
-export default function NotFound() {
+function NotFound() {
   return (
     <MainLayout>
       <Flex vertical align="center">
@@ -19,7 +19,6 @@ export default function NotFound() {
             preview={false}
             alt="Not Found"
             height={400}
-            style={{ marginBottom: 64 }}
           />
         </div>
 
@@ -47,3 +46,5 @@ export default function NotFound() {
     </MainLayout>
   );
 }
+
+export default NotFound;

@@ -11,7 +11,7 @@ type ErrorProps = {
   reset: () => void;
 };
 
-export default function Error({ error }: ErrorProps) {
+function Error({ error }: ErrorProps) {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const normalizedError = useMemo(() => normalizeError(error), [error]);
@@ -28,3 +28,5 @@ export default function Error({ error }: ErrorProps) {
     </div>
   );
 }
+
+export default Error;
