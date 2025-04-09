@@ -11,13 +11,12 @@ import {
   type ResponseHTTPResponseResponseFollowersTimeline,
 } from '@follytics/sdk';
 
-import { fetchServerData } from '@self/data/server';
 import fetchUserFollowersTimeline from '@self/data/user/user-followers-timeline/fetcher';
 import getServerApiFactory from '@self/lib/api/server-api-factory';
 
 async function handler(request: NextRequest) {
   const chartConfig = Object.fromEntries(
-    request.nextUrl.searchParams.entries()
+    request.nextUrl.searchParams.entries(),
   );
 
   try {
@@ -35,7 +34,7 @@ async function handler(request: NextRequest) {
     const svg = createFollowersTimelineChart(
       dataPoints,
       response.data.user,
-      chartConfig
+      chartConfig,
     );
 
     if (!svg) {
@@ -59,23 +58,14 @@ function extractUserIdFromPath(request: NextRequest): string | null {
 }
 
 async function fetchTimelineData(
-  userId: string
+  userId: string,
 ): Promise<ResponseHTTPResponseResponseFollowersTimeline | null> {
   try {
     const apiFactory = await getServerApiFactory();
-    const { data, error } = await fetchServerData(
-      fetchUserFollowersTimeline,
-      apiFactory,
-      { id: userId }
-    );
 
-    if (error || !data?.data) {
-      console.error('Error fetching timeline data:', error);
-
-      return null;
-    }
-
-    return data;
+    return await fetchUserFollowersTimeline(apiFactory, {
+      id: userId,
+    });
   } catch (err) {
     console.error('Exception in fetchTimelineData:', err);
 
@@ -84,7 +74,7 @@ async function fetchTimelineData(
 }
 
 function mapTimelineData(
-  timeline: ResponseFollowersTimelineItem[]
+  timeline: ResponseFollowersTimelineItem[],
 ): DataPoint[] {
   return timeline.map((item) => ({
     date: new Date(item.date),
