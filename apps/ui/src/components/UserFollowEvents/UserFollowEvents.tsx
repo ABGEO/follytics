@@ -72,8 +72,8 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
                 <Image
                   src={user?.avatar}
                   alt={user?.name ?? 'Default User Avatar'}
-                  layout="fill"
-                  objectFit="cover"
+                  sizes="100%"
+                  fill
                 />
               )
             }

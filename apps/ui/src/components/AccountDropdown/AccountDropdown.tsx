@@ -37,8 +37,8 @@ function AccountDropdown() {
               <Image
                 src={session?.user?.image}
                 alt={session?.user?.name ?? 'Default User Avatar'}
-                layout="fill"
-                objectFit="cover"
+                sizes="100%"
+                fill
               />
             )
           }
