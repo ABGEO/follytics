@@ -1,7 +1,7 @@
 'use client';
 
+import { Suspense, useMemo } from 'react';
 import Link from 'next/link';
-import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import { Button, Flex, Image } from 'antd';
@@ -21,7 +21,7 @@ const ERROR_MESSAGES = {
     'Some mysterious force blocked your access — we’re not sure if it was a cosmic ray or a rogue AI. Either way, something weird happened. Try again or return to base while we decode the disturbance.',
 };
 
-function Error() {
+function ErrorMessage() {
   const searchParams = useSearchParams();
 
   const error = searchParams.get('error');
@@ -39,6 +39,15 @@ function Error() {
   }, [error]);
 
   return (
+    <>
+      {error && <Text strong>Error Code: {error}</Text>}
+      <Paragraph className={classes.message}>{errorMessage}</Paragraph>
+    </>
+  );
+}
+
+function Error() {
+  return (
     <Flex vertical align="center">
       <div>
         <Image
@@ -51,8 +60,18 @@ function Error() {
 
       <Flex vertical align="center" className={classes.contentWrapper} gap={16}>
         <Title className={classes.title}>Glitch in the Galaxy</Title>
-        {error && <Text strong>Error Code: {error}</Text>}
-        <Paragraph className={classes.message}>{errorMessage}</Paragraph>
+
+        <Suspense
+          fallback={
+            <Text>
+              <Paragraph className={classes.message}>
+                {DEFAULT_ERROR_MESSAGE}
+              </Paragraph>
+            </Text>
+          }
+        >
+          <ErrorMessage />
+        </Suspense>
 
         <div>
           <Link href="/" passHref legacyBehavior>
