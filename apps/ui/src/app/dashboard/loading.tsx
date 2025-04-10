@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 
-export default function Loading() {
+function Loading() {
   return (
     <>
       <Skeleton
@@ -14,3 +14,5 @@ export default function Loading() {
     </>
   );
 }
+
+export default Loading;

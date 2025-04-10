@@ -4,7 +4,7 @@ import { DotChartOutlined } from '@ant-design/icons';
 import Input from 'antd/lib/skeleton/Input';
 import Node from 'antd/lib/skeleton/Node';
 
-export default function Loading() {
+function Loading() {
   return (
     <>
       <Skeleton
@@ -84,3 +84,5 @@ export default function Loading() {
     </>
   );
 }
+
+export default Loading;

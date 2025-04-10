@@ -36,7 +36,7 @@ function MainLayout({ children }: MainLayoutProps) {
       <Footer className={classes.footer}>
         <p>Follytics ©2025-{new Date().getFullYear()}.</p>
         <p>
-          Made with ❤️ by{' '}
+          Made with 💚 by{' '}
           <a href="https://www.abgeo.dev" target="_blank">
             ABGEO
           </a>
