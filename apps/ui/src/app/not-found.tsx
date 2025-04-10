@@ -35,7 +35,7 @@ function NotFound() {
           </Paragraph>
 
           <div>
-            <Link href="/" passHref legacyBehavior>
+            <Link href="/" passHref>
               <Button type="primary" size="large" icon={<HomeOutlined />}>
                 Return to Earth
               </Button>

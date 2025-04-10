@@ -31,7 +31,7 @@ async function Home() {
       <Space size="large" style={{ marginTop: 32 }}>
         {!session && <SignIn />}
         {session && (
-          <Link href="/dashboard" passHref legacyBehavior>
+          <Link href="/dashboard" passHref>
             <Button type="primary" size="large" icon={<DashboardOutlined />}>
               Dashboard
             </Button>

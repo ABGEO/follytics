@@ -74,7 +74,7 @@ function Error() {
         </Suspense>
 
         <div>
-          <Link href="/" passHref legacyBehavior>
+          <Link href="/" passHref>
             <Button type="primary" size="large" icon={<HomeOutlined />}>
               Return to Base
             </Button>
