@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/abgeo/follytics/internal/pagination"
+	"github.com/abgeo/follytics/internal/query/filter"
 )
 
 type Option func(tx *gorm.DB) *gorm.DB
@@ -19,6 +20,12 @@ func WithOptions(tx *gorm.DB, opts ...Option) *gorm.DB {
 func WithPagination(paginator pagination.Paginator) func(tx *gorm.DB) *gorm.DB {
 	return func(tx *gorm.DB) *gorm.DB {
 		return tx.Scopes(paginator.Apply)
+	}
+}
+
+func WithFilterer(filterer filter.Filterer) func(tx *gorm.DB) *gorm.DB {
+	return func(tx *gorm.DB) *gorm.DB {
+		return tx.Scopes(filterer.Apply)
 	}
 }
 

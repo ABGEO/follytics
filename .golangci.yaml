@@ -46,6 +46,15 @@ linters:
       ignore-map-index-ok: true
       ignore-chan-recv-ok: true
 
+    ireturn:
+      allow:
+        - anon
+        - error
+        - empty
+        - stdlib
+        - gorm.io\/gorm\/logger\.Interface
+        - gorm.io\/gorm\/clause\.Expression
+
   exclusions:
     generated: lax
     presets:
