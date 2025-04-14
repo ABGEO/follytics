@@ -70,20 +70,6 @@ func (s *Github) CreateJWT() (string, error) {
 	return tokenString, nil
 }
 
-func (s *Github) loadPrivateKey() (*rsa.PrivateKey, error) {
-	privateKey, err := os.ReadFile(s.config.GitHub.AppPrivateKeyPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read private key: %w", err)
-	}
-
-	rsaKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse RSA key: %w", err)
-	}
-
-	return rsaKey, nil
-}
-
 func (s *Github) WithToken(token string) *Github {
 	return &Github{
 		config: s.config,
@@ -184,4 +170,18 @@ func (s *Github) CollectUserFollowers(
 	}
 
 	return followers, nil
+}
+
+func (s *Github) loadPrivateKey() (*rsa.PrivateKey, error) {
+	privateKey, err := os.ReadFile(s.config.GitHub.AppPrivateKeyPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read private key: %w", err)
+	}
+
+	rsaKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse RSA key: %w", err)
+	}
+
+	return rsaKey, nil
 }

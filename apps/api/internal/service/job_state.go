@@ -67,13 +67,6 @@ func (s *JobState) GetOrInit(ctx context.Context, jobName string) (*model.JobSta
 	return nil, err
 }
 
-func (s *JobState) getEmptyJobState(jobName string) *model.JobState {
-	return &model.JobState{
-		JobName:    jobName,
-		Attributes: make(datatypes.JSONMap),
-	}
-}
-
 func (s *JobState) GetAttributes(ctx context.Context, jobName string) (datatypes.JSONMap, error) {
 	jobState, err := s.GetOrInit(ctx, jobName)
 	if err != nil {
@@ -98,4 +91,11 @@ func (s *JobState) StoreAttributes(
 	}
 
 	return jobState, nil
+}
+
+func (s *JobState) getEmptyJobState(jobName string) *model.JobState {
+	return &model.JobState{
+		JobName:    jobName,
+		Attributes: make(datatypes.JSONMap),
+	}
 }

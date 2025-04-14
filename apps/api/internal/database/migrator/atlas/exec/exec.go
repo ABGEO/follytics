@@ -61,17 +61,6 @@ func (e Executor) Apply(ctx context.Context) (*atlasexec.MigrateApply, error) {
 	return res, nil
 }
 
-func (e Executor) getDatabaseURL() string {
-	// @todo: compose params from config.
-	return fmt.Sprintf(
-		"postgres://%s:%s@%s/%s?search_path=public&sslmode=disable",
-		e.config.Database.User,
-		e.config.Database.Password,
-		net.JoinHostPort(e.config.Database.Host, e.config.Database.Port),
-		e.config.Database.Database,
-	)
-}
-
 func (e Executor) Down(ctx context.Context) (*atlasexec.MigrateDown, error) {
 	opts := atlasexec.MigrateDownParams{
 		URL:    e.getDatabaseURL(),
@@ -105,4 +94,15 @@ func (e Executor) Shutdown() error {
 	}
 
 	return nil
+}
+
+func (e Executor) getDatabaseURL() string {
+	// @todo: compose params from config.
+	return fmt.Sprintf(
+		"postgres://%s:%s@%s/%s?search_path=public&sslmode=disable",
+		e.config.Database.User,
+		e.config.Database.Password,
+		net.JoinHostPort(e.config.Database.Host, e.config.Database.Port),
+		e.config.Database.Database,
+	)
 }

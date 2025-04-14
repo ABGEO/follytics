@@ -94,30 +94,6 @@ func (s *User) Sync(ctx context.Context) (*model.User, error) {
 	return entity, nil
 }
 
-func (s *User) collectAndStoreGitHubFollowers(ctx context.Context, user *model.User) error {
-	const ghLimit = 100
-
-	logger := s.logger.With(slog.Any("user_id", user.ID))
-
-	logger.InfoContext(ctx, "storing user followers")
-
-	followers, err := s.githubSvc.
-		WithToken(s.authSvc.Token(ctx)).
-		CollectUserFollowers(ctx, user.Username, ghLimit)
-	if err != nil {
-		return fmt.Errorf("failed to collect user followers: %w", err)
-	}
-
-	err = s.StoreGitHubFollowers(ctx, user, followers)
-	if err != nil {
-		return fmt.Errorf("failed to store GitHub followers: %w", err)
-	}
-
-	logger.DebugContext(ctx, "user followers storing process has been finished")
-
-	return nil
-}
-
 func (s *User) GetRegularUsers(ctx context.Context, querier query.Querier) ([]*model.User, error) {
 	users, err := s.userRepo.List(
 		ctx,
@@ -151,6 +127,47 @@ func (s *User) StoreGitHubFollowers(ctx context.Context, user *model.User, follo
 	)
 
 	return s.processFollowerChanges(ctx, user, changes)
+}
+
+func (s *User) GetFollowers(
+	ctx context.Context,
+	userID uuid.UUID,
+	querier query.Querier,
+) ([]*model.User, error) {
+	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load user: %w", err)
+	}
+
+	followers, err := s.userRepo.ListFollowers(ctx, userID, repository.WithQuerier(querier))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load followers: %w", err)
+	}
+
+	return followers, nil
+}
+
+func (s *User) GetFollowEvents(
+	ctx context.Context,
+	userID uuid.UUID,
+	querier query.Querier,
+) ([]*model.Event, error) {
+	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load user: %w", err)
+	}
+
+	events, err := s.eventRepo.List(
+		ctx,
+		repository.WithWhere("user_id = ?", userID),
+		repository.WithPreload("ReferenceUser"),
+		repository.WithQuerier(querier),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load follow events: %w", err)
+	}
+
+	return events, nil
 }
 
 func (s *User) processFollowerChanges(ctx context.Context, user *model.User, changes *helper.UserChanges) error {
@@ -250,43 +267,26 @@ func (s *User) processRemovedFollowers(
 	return nil
 }
 
-func (s *User) GetFollowers(
-	ctx context.Context,
-	userID uuid.UUID,
-	querier query.Querier,
-) ([]*model.User, error) {
-	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
+func (s *User) collectAndStoreGitHubFollowers(ctx context.Context, user *model.User) error {
+	const ghLimit = 100
+
+	logger := s.logger.With(slog.Any("user_id", user.ID))
+
+	logger.InfoContext(ctx, "storing user followers")
+
+	followers, err := s.githubSvc.
+		WithToken(s.authSvc.Token(ctx)).
+		CollectUserFollowers(ctx, user.Username, ghLimit)
 	if err != nil {
-		return nil, fmt.Errorf("failed to load user: %w", err)
+		return fmt.Errorf("failed to collect user followers: %w", err)
 	}
 
-	followers, err := s.userRepo.ListFollowers(ctx, userID, repository.WithQuerier(querier))
+	err = s.StoreGitHubFollowers(ctx, user, followers)
 	if err != nil {
-		return nil, fmt.Errorf("failed to load followers: %w", err)
+		return fmt.Errorf("failed to store GitHub followers: %w", err)
 	}
 
-	return followers, nil
-}
+	logger.DebugContext(ctx, "user followers storing process has been finished")
 
-func (s *User) GetFollowEvents(
-	ctx context.Context,
-	userID uuid.UUID,
-	querier query.Querier,
-) ([]*model.Event, error) {
-	_, err := s.userRepo.GetByID(ctx, userID, repository.WithSelect("id"))
-	if err != nil {
-		return nil, fmt.Errorf("failed to load user: %w", err)
-	}
-
-	events, err := s.eventRepo.List(
-		ctx,
-		repository.WithWhere("user_id = ?", userID),
-		repository.WithPreload("ReferenceUser"),
-		repository.WithQuerier(querier),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load follow events: %w", err)
-	}
-
-	return events, nil
+	return nil
 }
