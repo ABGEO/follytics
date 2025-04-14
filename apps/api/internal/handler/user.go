@@ -11,6 +11,8 @@ import (
 
 	"github.com/abgeo/follytics/internal/domain/constant"
 	"github.com/abgeo/follytics/internal/domain/dto/response"
+	"github.com/abgeo/follytics/internal/query"
+	"github.com/abgeo/follytics/internal/query/filter"
 	"github.com/abgeo/follytics/internal/query/pagination"
 	"github.com/abgeo/follytics/internal/service"
 )
@@ -151,7 +153,7 @@ func (h *User) Followers(ctx *gin.Context) {
 		return
 	}
 
-	user, err := h.userSvc.GetFollowers(ctx, id, paginator)
+	user, err := h.userSvc.GetFollowers(ctx, id, query.NewWithPaginator(paginator))
 	if err != nil {
 		h.handleError(ctx, err)
 
@@ -191,6 +193,10 @@ func (h *User) FollowEvents(ctx *gin.Context) {
 	var resp response.HTTPResponse[[]response.EventWithUserReference]
 
 	paginator := pagination.New().FromContext(ctx)
+	filterer := filter.New().FromContext(ctx)
+	querier := query.New().
+		WithPaginator(paginator).
+		WithFilterer(filterer)
 
 	id, err := uuid.Parse(ctx.Param("id"))
 	if err != nil {
@@ -199,7 +205,7 @@ func (h *User) FollowEvents(ctx *gin.Context) {
 		return
 	}
 
-	events, err := h.userSvc.GetFollowEvents(ctx, id, paginator)
+	events, err := h.userSvc.GetFollowEvents(ctx, id, querier)
 	if err != nil {
 		h.handleError(ctx, err)
 

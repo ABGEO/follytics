@@ -12,6 +12,7 @@ import (
 
 	"github.com/abgeo/follytics/internal/config"
 	"github.com/abgeo/follytics/internal/model"
+	"github.com/abgeo/follytics/internal/query"
 	"github.com/abgeo/follytics/internal/query/pagination"
 	"github.com/abgeo/follytics/internal/service"
 )
@@ -141,7 +142,7 @@ func (j *SyncFollowers) loadUsers(ctx context.Context, offset int) ([]*model.Use
 		WithLimit(j.jobConfig.BatchSize).
 		WithOffset(offset)
 
-	users, err := j.userSvc.GetRegularUsers(ctx, paginator)
+	users, err := j.userSvc.GetRegularUsers(ctx, query.NewWithPaginator(paginator))
 	if err != nil {
 		return nil, offset, fmt.Errorf("failed to load users: %w", err)
 	}

@@ -3,6 +3,7 @@ package repository
 import (
 	"gorm.io/gorm"
 
+	"github.com/abgeo/follytics/internal/query"
 	"github.com/abgeo/follytics/internal/query/filter"
 	"github.com/abgeo/follytics/internal/query/pagination"
 )
@@ -15,6 +16,12 @@ func WithOptions(tx *gorm.DB, opts ...Option) *gorm.DB {
 	}
 
 	return tx
+}
+
+func WithQuerier(querier query.Querier) func(tx *gorm.DB) *gorm.DB {
+	return func(tx *gorm.DB) *gorm.DB {
+		return tx.Scopes(querier.Apply)
+	}
 }
 
 func WithPagination(paginator pagination.Paginator) func(tx *gorm.DB) *gorm.DB {
