@@ -10,7 +10,7 @@ import (
 
 	"github.com/abgeo/follytics/internal/helper"
 	"github.com/abgeo/follytics/internal/model"
-	"github.com/abgeo/follytics/internal/pagination"
+	"github.com/abgeo/follytics/internal/query/pagination"
 	"github.com/abgeo/follytics/internal/repository"
 )
 

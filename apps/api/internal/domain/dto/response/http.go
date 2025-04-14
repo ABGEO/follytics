@@ -6,7 +6,7 @@ import (
 	"github.com/jinzhu/copier"
 
 	domainErrors "github.com/abgeo/follytics/internal/domain/errors"
-	"github.com/abgeo/follytics/internal/pagination"
+	"github.com/abgeo/follytics/internal/query/pagination"
 )
 
 type HTTPResponse[T any] struct {

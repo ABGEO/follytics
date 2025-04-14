@@ -11,7 +11,7 @@ import (
 
 	"github.com/abgeo/follytics/internal/domain/constant"
 	"github.com/abgeo/follytics/internal/domain/dto/response"
-	"github.com/abgeo/follytics/internal/pagination"
+	"github.com/abgeo/follytics/internal/query/pagination"
 	"github.com/abgeo/follytics/internal/service"
 )
 

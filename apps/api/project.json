@@ -95,9 +95,8 @@
         "dirs": [
           "apps/api/internal/docs",
           "apps/api/internal/handler",
-          "apps/api/internal/domain/dto/request",
           "apps/api/internal/domain/dto/response",
-          "apps/api/internal/pagination"
+          "apps/api/internal/query/pagination"
         ],
         "generalInfo": "docs.go"
       }

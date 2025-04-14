@@ -46,7 +46,7 @@ type Pagination struct {
 
 var _ Paginator = (*Pagination)(nil)
 
-// New creates a new GormPaginator with default values.
+// New creates a new Paginator with default values.
 func New() *Pagination {
 	return &Pagination{
 		limit:  DefaultLimit,

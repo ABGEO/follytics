@@ -3,8 +3,8 @@ package repository
 import (
 	"gorm.io/gorm"
 
-	"github.com/abgeo/follytics/internal/pagination"
 	"github.com/abgeo/follytics/internal/query/filter"
+	"github.com/abgeo/follytics/internal/query/pagination"
 )
 
 type Option func(tx *gorm.DB) *gorm.DB
