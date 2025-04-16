@@ -76,10 +76,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} id User ID to retrieve followers for
          * @param {number} [page] Page number for pagination (default: 1)
          * @param {number} [limit] Number of results per page (default: 10)
+         * @param {Array<string>} [filter] Filter Options
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserFollowEvents: async (id: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUserFollowEvents: async (id: string, page?: number, limit?: number, filter?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getUserFollowEvents', 'id', id)
             const localVarPath = `/users/{id}/follow-events`
@@ -104,6 +105,10 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+            if (filter) {
+                localVarQueryParameter['filter'] = filter;
             }
 
 
@@ -259,11 +264,12 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {string} id User ID to retrieve followers for
          * @param {number} [page] Page number for pagination (default: 1)
          * @param {number} [limit] Number of results per page (default: 10)
+         * @param {Array<string>} [filter] Filter Options
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserFollowEvents(id: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUserFollowEvents200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserFollowEvents(id, page, limit, options);
+        async getUserFollowEvents(id: string, page?: number, limit?: number, filter?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUserFollowEvents200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserFollowEvents(id, page, limit, filter, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.getUserFollowEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -335,7 +341,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         getUserFollowEvents(requestParameters: UserApiGetUserFollowEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetUserFollowEvents200Response> {
-            return localVarFp.getUserFollowEvents(requestParameters.id, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getUserFollowEvents(requestParameters.id, requestParameters.page, requestParameters.limit, requestParameters.filter, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a paginated list of followers for the specified user ID
@@ -395,6 +401,13 @@ export interface UserApiGetUserFollowEventsRequest {
      * @memberof UserApiGetUserFollowEvents
      */
     readonly limit?: number
+
+    /**
+     * Filter Options
+     * @type {Array<string>}
+     * @memberof UserApiGetUserFollowEvents
+     */
+    readonly filter?: Array<string>
 }
 
 /**
@@ -466,7 +479,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public getUserFollowEvents(requestParameters: UserApiGetUserFollowEventsRequest, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).getUserFollowEvents(requestParameters.id, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).getUserFollowEvents(requestParameters.id, requestParameters.page, requestParameters.limit, requestParameters.filter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
