@@ -43,21 +43,28 @@ func New() *Filter {
 
 // FromContext populates filter parameters from Gin context.
 func (f *Filter) FromContext(ctx *gin.Context) *Filter {
-	for column, value := range ctx.QueryMap(QueryParamIndex) {
-		if value == "" {
+	for _, item := range ctx.QueryArray(QueryParamIndex) {
+		if item == "" {
 			continue
 		}
 
-		valueParts := strings.Split(value, Separator)
-		ruleInstance := rule{
-			operation: operation.Operation(valueParts[0]),
+		parts := strings.Split(item, Separator)
+		if len(parts) < 2 {
+			continue
 		}
 
-		if len(valueParts) > 1 {
-			ruleInstance.parameters = valueParts[1:]
+		var params []string
+		column := parts[0]
+		op := operation.Operation(parts[1])
+
+		if len(parts) > 2 {
+			params = parts[2:]
 		}
 
-		f.rules[column] = ruleInstance
+		f.rules[column] = rule{
+			operation:  op,
+			parameters: params,
+		}
 	}
 
 	return f
