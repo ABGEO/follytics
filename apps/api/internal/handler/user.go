@@ -130,9 +130,9 @@ func (h *User) TrackLogin(ctx *gin.Context) {
 //
 //	@Security		ApiKeyAuth
 //
+//	@Param			id		path		string	true	"User ID to retrieve followers for"			Format(uuid)
 //	@Param			page	query		string	false	"Page number for pagination (default: 1)"	Format(int)
 //	@Param			limit	query		string	false	"Number of results per page (default: 10)"	Format(int)
-//	@Param			id		path		string	true	"User ID to retrieve followers for"			Format(uuid)
 //
 //	@Success		200		{object}	response.HTTPResponse[[]response.User]{pagination=pagination.Metadata}
 //	@Failure		400		{object}	response.HTTPError
@@ -178,9 +178,10 @@ func (h *User) Followers(ctx *gin.Context) {
 //
 //	@Security		ApiKeyAuth
 //
-//	@Param			page	query		string	false	"Page number for pagination (default: 1)"	Format(int)
-//	@Param			limit	query		string	false	"Number of results per page (default: 10)"	Format(int)
-//	@Param			id		path		string	true	"User ID to retrieve followers for"			Format(uuid)
+//	@Param			id		path		string		true	"User ID to retrieve followers for"			Format(uuid)
+//	@Param			page	query		string		false	"Page number for pagination (default: 1)"	Format(int)
+//	@Param			limit	query		string		false	"Number of results per page (default: 10)"	Format(int)
+//	@Param			filter	query		[]string	false	"Filter Options"							CollectionFormat(multi)
 //
 //	@Success		200		{object}	response.HTTPResponse[[]response.EventWithUserReference]{pagination=pagination.Metadata}
 //	@Failure		400		{object}	response.HTTPError

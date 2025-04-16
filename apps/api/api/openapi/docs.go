@@ -116,6 +116,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "format": "uuid",
+                        "description": "User ID to retrieve followers for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "format": "int",
                         "description": "Page number for pagination (default: 1)",
                         "name": "page",
@@ -129,12 +137,14 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "User ID to retrieve followers for",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Filter Options",
+                        "name": "filter",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -199,6 +209,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "format": "uuid",
+                        "description": "User ID to retrieve followers for",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "format": "int",
                         "description": "Page number for pagination (default: 1)",
                         "name": "page",
@@ -210,14 +228,6 @@ const docTemplate = `{
                         "description": "Number of results per page (default: 10)",
                         "name": "limit",
                         "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "User ID to retrieve followers for",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
                     }
                 ],
                 "responses": {
