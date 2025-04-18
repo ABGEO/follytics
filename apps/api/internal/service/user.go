@@ -161,6 +161,7 @@ func (s *User) GetFollowEvents(
 		ctx,
 		repository.WithWhere("user_id = ?", userID),
 		repository.WithPreload("ReferenceUser"),
+		repository.WithOrder("id DESC"),
 		repository.WithQuerier(querier),
 	)
 	if err != nil {

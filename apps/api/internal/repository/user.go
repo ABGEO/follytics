@@ -143,7 +143,6 @@ func (r *User) ListFollowers(ctx context.Context, userID uuid.UUID, opts ...Opti
 		WithSelect(`"user".*`),
 		WithJoins(`JOIN user_followers uf on "user".id = uf.follower_id`),
 		WithWhere("uf.user_id = ?", userID),
-		WithOrder("id"),
 	)
 
 	return r.List(ctx, opts...)
