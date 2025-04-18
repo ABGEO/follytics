@@ -5,11 +5,11 @@ import { useState } from 'react';
 
 import { Avatar, Table, Tag } from 'antd';
 import type { GetProp, TableProps } from 'antd';
+import Link from 'antd/lib/typography/Link';
 import { UserOutlined } from '@ant-design/icons';
 
 import type { ResponseEventWithUserReference } from '@follytics/sdk';
 
-import { useAuth } from '@self/providers/AuthProvider';
 import useUserFollowEvents from '@self/data/user/user-follow-events/swr';
 
 type TablePaginationConfig = Exclude<
@@ -21,17 +21,31 @@ type TableParams = {
   pagination?: TablePaginationConfig;
 };
 
+type UserFollowEventsProps = {
+  userId: string;
+};
+
 const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
   {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Created At',
+    title: 'Date',
     dataIndex: 'createdAt',
     key: 'createdAt',
+    render: (createdAt) => {
+      const date = new Date(createdAt);
+      return (
+        <>
+          {date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          })}
+        </>
+      );
+    },
   },
   {
     title: 'Type',
@@ -50,41 +64,37 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
       return <Tag color={color}>{type}</Tag>;
     },
   },
-
   {
     title: 'User',
     key: 'user',
-    dataIndex: 'userName',
-    render: (_, { user }) => <>{user?.username}</>,
-  },
-  {
-    title: 'Avatar',
-    key: 'user',
-    dataIndex: 'userAvatar',
+    dataIndex: 'user',
     render: (_, { user }) => {
       return (
-        <>
-          <Avatar
-            icon={
-              !user?.avatar ? (
-                <UserOutlined />
-              ) : (
-                <Image
-                  src={user?.avatar}
-                  alt={user?.name ?? 'Default User Avatar'}
-                  sizes="100%"
-                  fill
-                />
-              )
-            }
-          />
-        </>
+        <div>
+          <Link href={`https://github.com/${user?.username}`} target="_blank">
+            <Avatar
+              icon={
+                !user?.avatar ? (
+                  <UserOutlined />
+                ) : (
+                  <Image
+                    src={user?.avatar}
+                    alt={user?.name ?? 'Default User Avatar'}
+                    sizes="100%"
+                    fill
+                  />
+                )
+              }
+            />
+            <span style={{ marginLeft: 10 }}>@{user?.username}</span>
+          </Link>
+        </div>
       );
     },
   },
 ];
 
-function UserFollowEvents() {
+function UserFollowEvents({ userId }: UserFollowEventsProps) {
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -94,9 +104,8 @@ function UserFollowEvents() {
     },
   });
 
-  const auth = useAuth();
   const { data, isLoading } = useUserFollowEvents({
-    id: auth.user?.id ?? '',
+    id: userId,
     page: tableParams.pagination?.current,
     limit: tableParams.pagination?.pageSize,
   });
@@ -123,6 +132,7 @@ function UserFollowEvents() {
   return (
     <Table<ResponseEventWithUserReference>
       rowKey="id"
+      size="small"
       columns={columns}
       dataSource={data?.data}
       pagination={tableParams.pagination}
