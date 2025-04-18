@@ -21,7 +21,7 @@
     "@nx/next": "20.8.0",
     "@nx/plugin": "20.8.0",
     "@nx/workspace": "20.8.0",
-    "@openapitools/openapi-generator-cli": "^2.18.4",
+    "@openapitools/openapi-generator-cli": "^2.19.1",
     "@swc-node/register": "~1.10.10",
     "@swc/cli": "~0.7.3",
     "@swc/core": "~1.11.21",
