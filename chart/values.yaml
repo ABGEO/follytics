@@ -13,7 +13,7 @@ postgresql:
     size: 8Gi
 
   readReplicas:
-    replicaCount: 2
+    replicaCount: 3
     resourcesPreset: "nano"
 
     persistence:
