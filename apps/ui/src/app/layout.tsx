@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
@@ -32,6 +33,7 @@ function AppLayout({ children }: AppLayoutProps) {
           </AntdRegistry>
         </ConfigProvider>
       </body>
+      <GoogleAnalytics gaId="G-TE0GT7TD6Y" />
     </html>
   );
 }
