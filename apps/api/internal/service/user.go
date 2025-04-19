@@ -69,15 +69,32 @@ func (s *User) Me(ctx context.Context) (*model.User, error) {
 }
 
 func (s *User) Sync(ctx context.Context) (*model.User, error) {
+	var err error
+
 	ghUser := s.authSvc.CurrentUser(ctx)
 	entity := helper.MapGitHubUserToModel(ghUser, model.UserTypeRegular)
 
-	if err := s.userRepo.Upsert(ctx, entity); err != nil {
+	if err = s.userRepo.Upsert(ctx, entity); err != nil {
 		return nil, fmt.Errorf("failed to upsert user: %w", err)
 	}
 
 	go func() {
-		err := s.collectAndStoreGitHubFollowers(
+		entity.Followers, err = s.userRepo.ListFollowers(
+			context.WithoutCancel(ctx),
+			entity.ID,
+		)
+		if err != nil {
+			s.logger.ErrorContext(
+				ctx,
+				"unable to load user followers",
+				slog.Any("user_id", entity.ID),
+				slog.Any("error", err),
+			)
+
+			return
+		}
+
+		err = s.collectAndStoreGitHubFollowers(
 			context.WithoutCancel(ctx),
 			entity,
 		)
