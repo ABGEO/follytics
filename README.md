@@ -10,6 +10,10 @@ allowing for accurate and historical insights into user follower trends.
 
 **Note: This project is a work in progress.**
 
+[![Lint](https://github.com/ABGEO/follytics/actions/workflows/lint.yml/badge.svg)](https://github.com/ABGEO/follytics/actions/workflows/lint.yml)
+[![Build Docker Images](https://github.com/ABGEO/follytics/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ABGEO/follytics/actions/workflows/docker-publish.yml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FABGEO%2Ffollytics.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FABGEO%2Ffollytics?ref=badge_shield&issueType=license)
+
 ## Features
 
 ## Installation
