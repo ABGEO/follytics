@@ -20,6 +20,21 @@ const nextConfig = {
     ],
   },
   output: 'standalone',
+  outputFileTracingExcludes: {
+    '**/*': [
+      // Build tools
+      './node_modules/.pnpm/@esbuild+linux-x64@**/**',
+      './node_modules/.pnpm/webpack@**/**',
+
+      // SWC binaries
+      './node_modules/.pnpm/@swc+core-linux-x64-gnu@**/**',
+      './node_modules/.pnpm/@swc+core-linux-x64-musl@**/**',
+
+      // Rspack binaries
+      './node_modules/.pnpm/@rspack+binding-linux-x64-gnu@**/**',
+      './node_modules/.pnpm/@rspack+binding-linux-x64-musl@**/**',
+    ],
+  },
   allowedDevOrigins: [
     'localhost:3000',
     '127.0.0.1:3000',

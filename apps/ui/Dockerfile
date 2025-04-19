@@ -13,10 +13,10 @@ FROM base-pnpm AS nx-deps
 
 WORKDIR /app
 
-RUN --mount=type=cache,target=/root/.pnpm-store \
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
   --mount=type=bind,source=package.json,target=package.json,rw \
   --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-  pnpm install --frozen-lockfile
+  pnpm install --frozen-lockfile --ignore-scripts
 
 # Build the UI application using NX.
 FROM base-pnpm AS nx-builder
@@ -37,16 +37,6 @@ COPY libs/sdk-ts/ ./libs/sdk-ts/
 
 RUN npx nx build ui
 
-# Install production dependencies for the UI app.
-FROM base-pnpm AS deps
-
-WORKDIR /app
-
-COPY --from=nx-builder /app/dist/apps/ui/package.json /app/dist/apps/ui/pnpm-lock.yaml ./
-
-RUN --mount=type=cache,target=/root/.pnpm-store \
-  pnpm install --frozen-lockfile
-
 # Prepare the final production image.
 FROM base
 
@@ -66,8 +56,6 @@ RUN adduser \
   --no-create-home \
   --uid "${UID}" \
   "follytics"
-
-COPY --from=deps --chown=follytics:follytics /app/node_modules ./node_modules
 
 COPY --from=nx-builder --chown=follytics:follytics /app/dist/apps/ui/.next/standalone ./
 COPY --from=nx-builder --chown=follytics:follytics /app/dist/apps/ui/public ./apps/ui/public
