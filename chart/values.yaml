@@ -1,0 +1,231 @@
+postgresql:
+  enabled: true
+
+  architecture: replication
+  replication:
+    applicationName: follytics
+
+  primary:
+    resourcesPreset: "nano"
+
+  persistence:
+    enabled: true
+    size: 8Gi
+
+  readReplicas:
+    replicaCount: 2
+    resourcesPreset: "nano"
+
+    persistence:
+      enabled: true
+      size: 8Gi
+
+  volumePermissions:
+    enabled: true
+
+api:
+  enabled: true
+
+  deployment:
+    replicas: 3
+    image:
+      repository: ghcr.io/abgeo/follytics-api
+      tag: main
+    ports:
+      - containerPort: 8000
+        name: http
+        protocol: TCP
+    securityContext:
+      runAsUser: 1001
+    env:
+      DATABASE_HOST:
+        value: "{{ .Release.Name }}-postgresql-primary.{{ .Release.Namespace }}.svc.cluster.local"
+      DATABASE_USER:
+        value: postgres
+      DATABASE_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: "{{ .Release.Name }}-postgresql"
+            key: postgres-password
+      DATABASE_DATABASE:
+        value: postgres
+    livenessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: 8000
+    readinessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: 8000
+    initContainers:
+      migrate:
+        image: ghcr.io/abgeo/follytics-api:main
+        command:
+          - follytics
+          - migrate
+          - apply
+        securityContext:
+          runAsUser: 1001
+        env:
+          - name: DATABASE_HOST
+            value: "{{ .Release.Name }}-postgresql-primary.{{ .Release.Namespace }}.svc.cluster.local"
+          - name: DATABASE_USER
+            value: postgres
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-postgresql"
+                key: postgres-password
+          - name: DATABASE_DATABASE
+            value: postgres
+
+  service:
+    ports:
+      - port: 8000
+        name: http
+        protocol: TCP
+        targetPort: 8000
+
+  ingress:
+    enabled: true
+    ingressClassName: ""
+    hosts:
+      - host: api.follytics.app
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            serviceName: api
+            servicePort: http
+
+worker:
+  enabled: true
+
+  deployment:
+    enabled: false
+
+  service:
+    enabled: false
+
+  rbac:
+    enabled: true
+    serviceAccount:
+      enabled: true
+
+  secret:
+    enabled: true
+    files:
+      github-app:
+        data:
+          client-id: ""
+          installation-id: ""
+        encodedData:
+          private-key.pem: ""
+
+  cronJob:
+    enabled: true
+    jobs:
+      worker:
+        schedule: "*/5 * * * *"
+        image:
+          repository: ghcr.io/abgeo/follytics-api
+          tag: main
+        command: [ "follytics" ]
+        args: [ "worker" ]
+        env:
+          GITHUB_APP_CLIENT_ID:
+            valueFrom:
+              secretKeyRef:
+                name: worker-github-app
+                key: client-id
+          GITHUB_APP_INSTALLATION_ID:
+            valueFrom:
+              secretKeyRef:
+                name: worker-github-app
+                key: installation-id
+          GITHUB_APP_PRIVATE_KEY_PATH:
+            value: /var/secret/github-app/private-key.pem
+          DATABASE_HOST:
+            value: "{{ .Release.Name }}-postgresql-primary.{{ .Release.Namespace }}.svc.cluster.local"
+          DATABASE_USER:
+            value: postgres
+          DATABASE_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-postgresql"
+                key: postgres-password
+          DATABASE_DATABASE:
+            value: postgres
+        volumes:
+          - name: github-app
+            secret:
+              secretName: worker-github-app
+        volumeMounts:
+          - mountPath: "/var/secret/github-app"
+            name: github-app
+            readOnly: true
+
+ui:
+  enabled: true
+
+  secret:
+    enabled: true
+    files:
+      config:
+        data:
+          NEXT_PUBLIC_APP_URL: "https://follytics.app"
+          NEXT_PUBLIC_API_URL: "https://api.follytics.app"
+          AUTH_TRUST_HOST: "true"
+          AUTH_URL: "https://follytics.app/"
+          AUTH_SECRET: ""
+          AUTH_GITHUB_ID: ""
+          AUTH_GITHUB_SECRET: ""
+
+  deployment:
+    replicas: 3
+    image:
+      repository: ghcr.io/abgeo/follytics-ui
+      tag: main
+    ports:
+      - containerPort: 3000
+        name: http
+        protocol: TCP
+    securityContext:
+      runAsUser: 1001
+    envFrom:
+      config:
+        type: secret
+        nameSuffix: config
+    livenessProbe:
+      enabled: true
+      httpGet:
+        path: /
+        port: 3000
+    readinessProbe:
+      enabled: true
+      httpGet:
+        path: /
+        port: 3000
+    containerSecurityContext:
+      readOnlyRootFilesystem: false
+      runAsNonRoot: true
+
+  service:
+    enabled: true
+    ports:
+      - port: 3000
+        name: http
+        protocol: TCP
+        targetPort: 3000
+
+  ingress:
+    enabled: true
+    ingressClassName: ""
+    hosts:
+      - host: follytics.app
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            serviceName: ui
+            servicePort: http

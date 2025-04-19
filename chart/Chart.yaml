@@ -1,0 +1,23 @@
+apiVersion: v2
+name: follytics
+version: 0.0.1
+dependencies:
+  - name: postgresql
+    condition: postgresql.enabled
+    version: 16.6.3
+    repository: https://charts.bitnami.com/bitnami
+  - name: application
+    condition: api.enabled
+    alias: api
+    version: 6.0.3
+    repository: https://stakater.github.io/stakater-charts
+  - name: application
+    condition: worker.enabled
+    alias: worker
+    version: 6.0.3
+    repository: https://stakater.github.io/stakater-charts
+  - name: application
+    condition: ui.enabled
+    alias: ui
+    version: 6.0.3
+    repository: https://stakater.github.io/stakater-charts

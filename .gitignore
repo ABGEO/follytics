@@ -48,3 +48,6 @@ out
 .env.local
 *.pem
 follytics.yaml
+
+chart/charts/
+chart/values-override.yaml
