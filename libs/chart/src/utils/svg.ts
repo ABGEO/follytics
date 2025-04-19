@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import { JSDOM } from 'jsdom';
 
+import { DEFAULTS, FONT_FAMILY } from '../constants';
 import { ChartConfiguration } from '../types';
-import { DEFAULTS } from '../constants';
 
 type SVG = d3.Selection<SVGSVGElement, unknown, null, undefined>;
 
@@ -22,7 +22,7 @@ function createSVGElement(config: ChartConfiguration): SVG {
       'style',
       `max-width: 100%; height: auto; height: intrinsic; background-color: ${
         backgroundColor ?? 'transparent'
-      };`
+      }; font-family: ${FONT_FAMILY};`,
     )
     .attr('width', width)
     .attr('height', height)
@@ -33,16 +33,15 @@ function createSVGElement(config: ChartConfiguration): SVG {
     .attr('type', 'text/css')
     .text(
       `
-      @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800');
-  
       path.domain,
       .tick line {
         stroke: ${config.axisColor ?? DEFAULTS.textColor};
       }
       .tick text {
         fill: ${config.textColor ?? DEFAULTS.textColor};
+        font-family: ${FONT_FAMILY};
       }
-      `
+      `,
     );
 
   return svg;

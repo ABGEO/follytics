@@ -8,7 +8,7 @@ const watermarkImage =
 function addWatermark(
   svg: SVG,
   config: ChartConfiguration,
-  margins: { right: number; bottom: number }
+  margins: { right: number; bottom: number },
 ) {
   const { width = DEFAULTS.width, height = DEFAULTS.height } = config;
 
@@ -27,7 +27,6 @@ function addWatermark(
     .attr('fill', config.textColor ?? DEFAULTS.textColor)
     .attr('text-anchor', 'end')
     .text('follytics.app')
-    .style('font-family', 'Open Sans, sans-serif')
     .style('font-size', '14px');
 }
 

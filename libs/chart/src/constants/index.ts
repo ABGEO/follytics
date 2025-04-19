@@ -5,4 +5,6 @@ const DEFAULTS = {
   lineColor: '#1677ff',
 };
 
-export { DEFAULTS };
+const FONT_FAMILY = `"Mona Sans", "Mona Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
+
+export { DEFAULTS, FONT_FAMILY };

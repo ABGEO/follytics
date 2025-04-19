@@ -5,7 +5,7 @@ import { createSVGElement } from '../utils/svg';
 
 function createText(
   config: ChartConfiguration,
-  text: string
+  text: string,
 ): SVGSVGElement | null {
   const { width = DEFAULTS.width, height = DEFAULTS.height } = config;
 
@@ -18,7 +18,6 @@ function createText(
     .attr('fill', config.textColor ?? DEFAULTS.textColor)
     .attr('text-anchor', 'middle')
     .text(text)
-    .style('font-family', 'Open Sans, sans-serif')
     .style('font-size', '18px');
 
   addWatermark(svg, config, { right: width / 2 - 50, bottom: height / 2 - 50 });

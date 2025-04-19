@@ -6,7 +6,7 @@ function addUserDetails(
   svg: SVG,
   config: ChartConfiguration,
   margins: { left: number; top: number },
-  user: UserDetails
+  user: UserDetails,
 ) {
   svg
     .append('text')
@@ -15,7 +15,6 @@ function addUserDetails(
     .attr('fill', config.textColor ?? DEFAULTS.textColor)
     .attr('text-anchor', 'start')
     .text('Followers timeline for')
-    .style('font-family', 'Open Sans, sans-serif')
     .style('font-size', '14px');
 
   svg
@@ -33,7 +32,6 @@ function addUserDetails(
     .attr('fill', config.textColor ?? DEFAULTS.textColor)
     .attr('text-anchor', 'start')
     .text(`@${user.username}`)
-    .style('font-family', 'Open Sans, sans-serif')
     .style('font-size', '16px');
 }
 
