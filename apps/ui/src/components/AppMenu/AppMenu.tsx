@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { DashboardOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
 
@@ -12,7 +12,7 @@ import classes from './AppMenu.module.css';
 const createMenuItem = (
   path: string,
   icon: React.ReactNode,
-  label: string
+  label: string,
 ) => ({
   key: path,
   icon,
@@ -21,8 +21,7 @@ const createMenuItem = (
 
 const menuItems: MenuProps['items'] = [
   createMenuItem('/dashboard', <DashboardOutlined />, 'Dashboard'),
-  createMenuItem('/dashboard/widget', <DashboardOutlined />, 'Widget'),
-  createMenuItem('/dashboard/profile', <DashboardOutlined />, 'Profile'),
+  createMenuItem('/dashboard/widget', <LineChartOutlined />, 'Widget'),
 ];
 
 function AppMenu() {
