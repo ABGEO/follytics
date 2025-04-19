@@ -29,8 +29,6 @@ function FollowersCount({ userId }: FollowersCountProps) {
   const timelineData = timeline?.data?.timeline ?? [];
   let change = 0;
 
-  console.log('timelineData', timelineData);
-
   if (timelineData.length > 1) {
     const count = timelineData.length;
 

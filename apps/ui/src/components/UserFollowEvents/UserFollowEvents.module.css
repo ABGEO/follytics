@@ -1,0 +1,11 @@
+.userLink {
+  color: var(--ant-color-text) !important;
+  transition: all var(--ant-motion-duration-slow);
+  font-weight: bold;
+
+  margin-left: 1rem;
+
+  &:hover {
+    color: var(--ant-color-primary) !important;
+  }
+}

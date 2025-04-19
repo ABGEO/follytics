@@ -12,6 +12,8 @@ import type { ResponseEventWithUserReference } from '@follytics/sdk';
 
 import useUserFollowEvents from '@self/data/user/user-follow-events/swr';
 
+import classes from './UserFollowEvents.module.css';
+
 type TablePaginationConfig = Exclude<
   GetProp<TableProps, 'pagination'>,
   boolean
@@ -71,22 +73,26 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
     render: (_, { user }) => {
       return (
         <div>
-          <Link href={`https://github.com/${user?.username}`} target="_blank">
-            <Avatar
-              icon={
-                !user?.avatar ? (
-                  <UserOutlined />
-                ) : (
-                  <Image
-                    src={user?.avatar}
-                    alt={user?.name ?? 'Default User Avatar'}
-                    sizes="100%"
-                    fill
-                  />
-                )
-              }
-            />
-            <span style={{ marginLeft: 10 }}>@{user?.username}</span>
+          <Avatar
+            icon={
+              !user?.avatar ? (
+                <UserOutlined />
+              ) : (
+                <Image
+                  src={user?.avatar}
+                  alt={user?.name ?? 'Default User Avatar'}
+                  sizes="100%"
+                  fill
+                />
+              )
+            }
+          />
+          <Link
+            href={`https://github.com/${user?.username}`}
+            target="_blank"
+            className={classes.userLink}
+          >
+            @{user?.username}
           </Link>
         </div>
       );
