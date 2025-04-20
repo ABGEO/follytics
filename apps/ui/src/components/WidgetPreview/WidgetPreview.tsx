@@ -1,8 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Image, Typography } from 'antd';
 import { AggregationColor } from 'antd/lib/color-picker/color';
 import Title from 'antd/lib/typography/Title';
+
+import { WidgetPreviewSkeleton } from './Skeleton';
 
 const { Paragraph } = Typography;
 
@@ -17,6 +19,8 @@ function WidgetPreview({
   config,
   altText = 'Check my followers using Follytics.app',
 }: WidgetPreviewProps) {
+  const [isLoading, setLoading] = useState(true);
+
   const formatConfigValue = useCallback((value: unknown): string => {
     if (
       value &&
@@ -41,14 +45,13 @@ function WidgetPreview({
 
         return acc;
       },
-      {} as Record<string, string>
+      {} as Record<string, string>,
     );
 
     const params = new URLSearchParams(serializableConfig);
 
     return `?${params}`;
   }, [config, formatConfigValue]);
-
   const imageUrl = useMemo(() => `${url}${queryString}`, [url, queryString]);
   const embedOptions = useMemo(
     () => [
@@ -56,11 +59,22 @@ function WidgetPreview({
       { title: 'Markdown', content: `![${altText}](${imageUrl})` },
       { title: 'HTML', content: `<img alt="${altText}" src="${imageUrl}" />` },
     ],
-    [imageUrl, altText]
+    [imageUrl, altText],
   );
 
-  if (!imageUrl) {
-    return <div>Loading...</div>;
+  if (!imageUrl || isLoading) {
+    return (
+      <>
+        <Image
+          src={imageUrl}
+          alt={altText}
+          onLoad={() => setLoading(false)}
+          style={{ display: 'none' }}
+        />
+
+        <WidgetPreviewSkeleton />
+      </>
+    );
   }
 
   return (
