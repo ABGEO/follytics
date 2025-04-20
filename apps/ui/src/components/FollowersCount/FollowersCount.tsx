@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Flex, theme } from 'antd';
+import { Flex, Skeleton, theme } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
 import useUserFollowers from '@self/data/user/user-followers/swr';
@@ -16,11 +16,12 @@ type FollowersCountProps = {
 function FollowersCount({ userId }: FollowersCountProps) {
   const { token } = useToken();
 
-  const { data: timeline } = useUserFollowersTimeline({
-    id: userId,
-  });
+  const { data: timeline, isLoading: isTimelineLoading } =
+    useUserFollowersTimeline({
+      id: userId,
+    });
 
-  const { data: followers } = useUserFollowers({
+  const { data: followers, isLoading: isFollowersLoading } = useUserFollowers({
     id: userId,
   });
 
@@ -33,6 +34,19 @@ function FollowersCount({ userId }: FollowersCountProps) {
     const count = timelineData.length;
 
     change = timelineData[count - 1].total - timelineData[count - 2].total;
+  }
+
+  if (isTimelineLoading || isFollowersLoading) {
+    return (
+      <Skeleton
+        active
+        paragraph={false}
+        title={{
+          width: 50,
+          style: { height: 25, marginTop: 8, marginBottom: 8 },
+        }}
+      />
+    );
   }
 
   return (

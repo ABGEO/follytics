@@ -46,7 +46,7 @@ function Dashboard() {
         </Col>
       </Row>
 
-      <Row>
+      <Row style={{ marginTop: 24 }}>
         <Col span={24}>
           <Card size="small" title="Followers Timeline" variant="borderless">
             <Suspense fallback={<div>Loading...</div>}>

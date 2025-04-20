@@ -9,13 +9,15 @@ import Link from 'antd/lib/typography/Link';
 
 import useUserFollowEvents from '@self/data/user/user-follow-events/swr';
 
+import { NewFollowersSkeleton } from './Skeleton';
+
 type NewFollowersProps = {
   userId: string;
   limit?: number;
 };
 
 function NewFollowers({ userId, limit = 10 }: NewFollowersProps) {
-  const { data: events } = useUserFollowEvents({
+  const { data: events, isLoading } = useUserFollowEvents({
     id: userId,
     limit: limit,
     filter: ['type||eq||FOLLOW'],
@@ -27,6 +29,10 @@ function NewFollowers({ userId, limit = 10 }: NewFollowersProps) {
       avatar: event.user?.avatar,
     };
   });
+
+  if (isLoading) {
+    return <NewFollowersSkeleton size={limit} />;
+  }
 
   return (
     <List

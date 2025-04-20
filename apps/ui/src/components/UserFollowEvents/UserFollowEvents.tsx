@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { Avatar, Table, Tag } from 'antd';
+import { Avatar, Flex, Table, Tag } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import Link from 'antd/lib/typography/Link';
 import { UserOutlined } from '@ant-design/icons';
@@ -11,6 +11,8 @@ import { UserOutlined } from '@ant-design/icons';
 import type { ResponseEventWithUserReference } from '@follytics/sdk';
 
 import useUserFollowEvents from '@self/data/user/user-follow-events/swr';
+
+import { UserFollowEventsSkeleton } from './Skeleton';
 
 import classes from './UserFollowEvents.module.css';
 
@@ -72,7 +74,7 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
     dataIndex: 'user',
     render: (_, { user }) => {
       return (
-        <div>
+        <Flex align="center" gap={8}>
           <Avatar
             icon={
               !user?.avatar ? (
@@ -94,7 +96,7 @@ const columns: TableProps<ResponseEventWithUserReference>['columns'] = [
           >
             @{user?.username}
           </Link>
-        </div>
+        </Flex>
       );
     },
   },
@@ -135,6 +137,14 @@ function UserFollowEvents({ userId }: UserFollowEventsProps) {
     }));
   }
 
+  if (isLoading) {
+    return (
+      <UserFollowEventsSkeleton
+        pageSize={tableParams.pagination?.pageSize ?? 10}
+      />
+    );
+  }
+
   return (
     <Table<ResponseEventWithUserReference>
       rowKey="id"
@@ -142,7 +152,6 @@ function UserFollowEvents({ userId }: UserFollowEventsProps) {
       columns={columns}
       dataSource={data?.data}
       pagination={tableParams.pagination}
-      loading={isLoading}
       onChange={handleTableChange}
       scroll={{ x: true }}
     />
