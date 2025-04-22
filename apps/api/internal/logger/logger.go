@@ -5,23 +5,27 @@ import (
 	"log/slog"
 	"os"
 
+	slogmulti "github.com/samber/slog-multi"
+	"go.opentelemetry.io/contrib/bridges/otelslog"
+	"go.opentelemetry.io/otel/log"
+
 	"github.com/abgeo/follytics/internal/config"
-	"github.com/abgeo/follytics/internal/version"
+	"github.com/abgeo/follytics/internal/telemetry"
 )
 
-func New(conf *config.Config) (*slog.Logger, error) {
-	attrs := []slog.Attr{
-		slog.String("env", conf.Env),
-		slog.String("version", version.Version),
-	}
-
+func New(conf *config.Config, telemetry telemetry.Provider) (*slog.Logger, error) {
 	level, err := parseLogLevel(conf.Logger.Level)
 	if err != nil {
 		return nil, err
 	}
 
-	handler := getLogHandler(level, conf.Logger.Format, conf.Env)
-	handler = handler.WithAttrs(attrs)
+	handler := getDefaultHandler(level, conf.Logger.Format, conf.Env)
+	if conf.Telemetry.Enabled {
+		handler = slogmulti.Fanout(
+			handler,
+			getTelemetryHandler(conf.Env, telemetry.LoggerProvider()),
+		)
+	}
 
 	return slog.New(handler), nil
 }
@@ -36,7 +40,7 @@ func parseLogLevel(rawLevel string) (slog.Level, error) {
 	return level, nil
 }
 
-func getLogHandler(level slog.Level, format string, env string) slog.Handler {
+func getDefaultHandler(level slog.Level, format string, env string) slog.Handler {
 	commonOptions := &slog.HandlerOptions{
 		Level:     level,
 		AddSource: env == "dev",
@@ -54,4 +58,12 @@ func getLogHandler(level slog.Level, format string, env string) slog.Handler {
 
 		return slog.NewJSONHandler(os.Stdout, commonOptions)
 	}
+}
+
+func getTelemetryHandler(env string, provider log.LoggerProvider) *otelslog.Handler {
+	return otelslog.NewHandler(
+		"",
+		otelslog.WithLoggerProvider(provider),
+		otelslog.WithSource(env == "dev"),
+	)
 }

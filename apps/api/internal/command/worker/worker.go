@@ -3,6 +3,7 @@ package worker
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/spf13/cobra"
 
@@ -51,10 +52,25 @@ func (c *Command) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to get 'jobs' flag: %w", err)
 	}
 
-	reg, err := registry.NewWorker(flags)
+	reg, err := registry.NewWorker(ctx, flags)
 	if err != nil {
 		return fmt.Errorf("failed to register worker command: %w", err)
 	}
+
+	defer func(reg registry.WorkerRegistry) {
+		if !reg.GetConfig().Telemetry.Enabled {
+			return
+		}
+
+		if err = reg.GetTelemetry().Shutdown(ctx); err != nil {
+			reg.GetLogger().
+				ErrorContext(
+					ctx,
+					"failed to shutdown telemetry service",
+					slog.Any("error", err),
+				)
+		}
+	}(reg)
 
 	reg.GetLogger().InfoContext(ctx, "starting worker")
 

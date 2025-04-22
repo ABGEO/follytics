@@ -1,6 +1,7 @@
 package registry
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -43,10 +44,10 @@ type Serve struct {
 
 var _ ServeRegistry = (*Serve)(nil)
 
-func NewServe(flags *pflag.FlagSet) (*Serve, error) {
+func NewServe(ctx context.Context, flags *pflag.FlagSet) (*Serve, error) {
 	reg := &Serve{}
 
-	baseRegistry, err := NewBase(flags)
+	baseRegistry, err := NewBase(ctx, flags)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +56,7 @@ func NewServe(flags *pflag.FlagSet) (*Serve, error) {
 	reg.createDependencies()
 	reg.createRoutes()
 
-	reg.restServer, err = server.NewRest(reg.GetLogger(), reg.GetConfig(), reg.GetDB(), reg.routes)
+	reg.restServer, err = server.NewRest(reg.GetLogger(), reg.GetConfig(), reg.GetDB(), reg.GetTelemetry(), reg.routes)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize REST Server: %w", err)
 	}

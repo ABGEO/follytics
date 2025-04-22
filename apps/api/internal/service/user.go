@@ -87,7 +87,7 @@ func (s *User) Sync(ctx context.Context) (*model.User, error) {
 			s.logger.ErrorContext(
 				ctx,
 				"unable to load user followers",
-				slog.Any("user_id", entity.ID),
+				slog.String("user_id", entity.ID.String()),
 				slog.Any("error", err),
 			)
 
@@ -102,7 +102,7 @@ func (s *User) Sync(ctx context.Context) (*model.User, error) {
 			s.logger.ErrorContext(
 				ctx,
 				"unable to store GitHub followers",
-				slog.Any("user_id", entity.ID),
+				slog.String("user_id", entity.ID.String()),
 				slog.Any("error", err),
 			)
 		}
@@ -127,7 +127,7 @@ func (s *User) GetRegularUsers(ctx context.Context, querier query.Querier) ([]*m
 }
 
 func (s *User) StoreGitHubFollowers(ctx context.Context, user *model.User, followers []*github.User) error {
-	logger := s.logger.With(slog.Any("user_id", user.ID))
+	logger := s.logger.With(slog.String("user_id", user.ID.String()))
 	logger.DebugContext(ctx, "storing GitHub followers for user")
 
 	changes := helper.NewUserChanges(
@@ -189,7 +189,7 @@ func (s *User) GetFollowEvents(
 }
 
 func (s *User) processFollowerChanges(ctx context.Context, user *model.User, changes *helper.UserChanges) error {
-	logger := s.logger.With(slog.Any("user_id", user.ID))
+	logger := s.logger.With(slog.String("user_id", user.ID.String()))
 
 	if !changes.HasChanges() {
 		logger.DebugContext(ctx, "no changes in user followers")
@@ -233,7 +233,7 @@ func (s *User) processNewFollowers(
 	followers []*model.User,
 	withTx repository.Option,
 ) error {
-	logger := s.logger.With(slog.Any("user_id", user.ID))
+	logger := s.logger.With(slog.String("user_id", user.ID.String()))
 
 	logger.DebugContext(ctx, "upserting new followers")
 
@@ -268,7 +268,7 @@ func (s *User) processRemovedFollowers(
 	followers []*model.User,
 	withTx repository.Option,
 ) error {
-	logger := s.logger.With(slog.Any("user_id", user.ID))
+	logger := s.logger.With(slog.String("user_id", user.ID.String()))
 
 	logger.DebugContext(ctx, "removing follower associations")
 
@@ -288,7 +288,7 @@ func (s *User) processRemovedFollowers(
 func (s *User) collectAndStoreGitHubFollowers(ctx context.Context, user *model.User) error {
 	const ghLimit = 100
 
-	logger := s.logger.With(slog.Any("user_id", user.ID))
+	logger := s.logger.With(slog.String("user_id", user.ID.String()))
 
 	logger.InfoContext(ctx, "storing user followers")
 

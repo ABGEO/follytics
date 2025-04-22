@@ -1,6 +1,8 @@
 package registry
 
 import (
+	"context"
+
 	"github.com/spf13/pflag"
 
 	"github.com/abgeo/follytics/internal/job"
@@ -34,10 +36,10 @@ type Worker struct {
 
 var _ WorkerRegistry = (*Worker)(nil)
 
-func NewWorker(flags *pflag.FlagSet) (*Worker, error) {
+func NewWorker(ctx context.Context, flags *pflag.FlagSet) (*Worker, error) {
 	reg := &Worker{}
 
-	baseRegistry, err := NewBase(flags)
+	baseRegistry, err := NewBase(ctx, flags)
 	if err != nil {
 		return nil, err
 	}

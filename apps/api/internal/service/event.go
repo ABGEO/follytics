@@ -64,7 +64,7 @@ func (s *Event) FollowersTimeline(ctx context.Context, userID uuid.UUID) (*dto.F
 
 			s.logger.With(
 				slog.Any("error", err),
-				slog.Any("user_id", userID),
+				slog.String("user_id", userID.String()),
 			).Error("failed to get user avatar")
 		}
 	}

@@ -70,6 +70,11 @@ type SyncFollowersJob struct {
 	GitHubRateLimitThreshold int `default:"100" mapstructure:"github_rate_limit_threshold" validate:"gt=0"`
 }
 
+type Telemetry struct {
+	Enabled      bool   `default:"false"          mapstructure:"enabled"       validate:"boolean"`
+	CollectorURL string `default:"127.0.0.1:4317" mapstructure:"collector_url"`
+}
+
 type Worker struct {
 	Job struct {
 		SyncFollowers SyncFollowersJob `mapstructure:"sync_followers"`
@@ -88,6 +93,7 @@ type Config struct {
 	DatabaseMigrator DatabaseMigrator `mapstructure:"database_migrator"`
 	GitHub           GitHub
 	Worker           Worker
+	Telemetry        Telemetry
 }
 
 func New(configPath string) (*Config, error) {

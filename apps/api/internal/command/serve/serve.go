@@ -49,13 +49,29 @@ func (c *Command) RegisterFlags() {
 		StringP("port", "p", "8080", "Server port")
 }
 
-func (c *Command) Run(_ context.Context) error {
-	reg, err := registry.NewServe(c.GetCmd().Flags())
+func (c *Command) Run(ctx context.Context) error {
+	reg, err := registry.NewServe(ctx, c.GetCmd().Flags())
 	if err != nil {
 		return fmt.Errorf("failed to register serve command: %w", err)
 	}
 
-	reg.GetLogger().Info(
+	defer func(reg registry.ServeRegistry) {
+		if !reg.GetConfig().Telemetry.Enabled {
+			return
+		}
+
+		if err = reg.GetTelemetry().Shutdown(ctx); err != nil {
+			reg.GetLogger().
+				ErrorContext(
+					ctx,
+					"failed to shutdown telemetry service",
+					slog.Any("error", err),
+				)
+		}
+	}(reg)
+
+	reg.GetLogger().InfoContext(
+		ctx,
 		"starting HTTP server",
 		slog.String("address", reg.GetConfig().Server.ListenAddr),
 		slog.String("port", reg.GetConfig().Server.Port),

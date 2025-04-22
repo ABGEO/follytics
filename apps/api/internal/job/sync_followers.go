@@ -169,7 +169,7 @@ func (j *SyncFollowers) processUsers(ctx context.Context, users []*model.User) {
 
 			if err := j.processUser(ctx, user); err != nil {
 				j.logger.ErrorContext(ctx, "failed to process user",
-					slog.Any("user_id", user.ID),
+					slog.String("user_id", user.ID.String()),
 					slog.Any("error", err),
 				)
 			}
@@ -181,7 +181,7 @@ func (j *SyncFollowers) processUsers(ctx context.Context, users []*model.User) {
 }
 
 func (j *SyncFollowers) processUser(ctx context.Context, user *model.User) error {
-	logger := j.logger.With(slog.Any("user_id", user.ID))
+	logger := j.logger.With(slog.String("user_id", user.ID.String()))
 	logger.DebugContext(ctx, "processing user")
 
 	followers, err := j.fetchUserFollowers(ctx, user)
@@ -198,7 +198,7 @@ func (j *SyncFollowers) processUser(ctx context.Context, user *model.User) error
 }
 
 func (j *SyncFollowers) fetchUserFollowers(ctx context.Context, user *model.User) ([]*github.User, error) {
-	logger := j.logger.With(slog.Any("user_id", user.ID))
+	logger := j.logger.With(slog.String("user_id", user.ID.String()))
 
 	// First, we have to fetch the user by ID, as the username could be outdated in our DB.
 	logger.DebugContext(ctx, "fetching user by ID")

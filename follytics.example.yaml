@@ -51,3 +51,7 @@ worker:
       batch_size: 10
       github_page_size: 100
       github_rate_limit_threshold: 100
+
+telemetry:
+  enabled: false
+  collector_url: 127.0.0.1:4317
