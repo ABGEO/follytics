@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"net"
 	"net/http"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -87,9 +88,22 @@ func registerMiddlewares(engine *gin.Engine, conf *config.Config, telemetry tele
 	}
 
 	if conf.Telemetry.Enabled {
+		ignoredPaths := []string{
+			conf.Healthcheck.Path,
+		}
+
 		engine.Use(otelgin.Middleware(
 			"api",
 			otelgin.WithTracerProvider(telemetry.TracerProvider()),
+			otelgin.WithGinFilter(func(ctx *gin.Context) bool {
+				for _, part := range ignoredPaths {
+					if strings.Contains(ctx.Request.URL.Path, part) {
+						return false
+					}
+				}
+
+				return true
+			}),
 		))
 
 		engine.Use(sloggin.NewWithConfig(logger, sloggin.Config{
@@ -97,6 +111,9 @@ func registerMiddlewares(engine *gin.Engine, conf *config.Config, telemetry tele
 			WithRequestID: true,
 			WithSpanID:    true,
 			WithTraceID:   true,
+			Filters: []sloggin.Filter{
+				sloggin.IgnorePathContains(ignoredPaths...),
+			},
 		}))
 	}
 }
