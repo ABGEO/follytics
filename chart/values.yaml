@@ -23,6 +23,199 @@ postgresql:
   volumePermissions:
     enabled: true
 
+opentelemetry-collector:
+  enabled: true
+
+  mode: deployment
+
+  image:
+    repository: "otel/opentelemetry-collector-contrib"
+    tag: "0.123.0"
+
+  config:
+    exporters:
+      otlp:
+        endpoint: "{{ .Release.Name }}-tempo:4317"
+        tls:
+          insecure: true
+      prometheus:
+        endpoint: 0.0.0.0:9090
+      loki:
+        endpoint: "http://{{ .Release.Name }}-loki:3100/loki/api/v1/push"
+        tls:
+          insecure: true
+
+    service:
+      pipelines:
+        logs:
+          exporters:
+            - loki
+          receivers:
+            - otlp
+        metrics:
+          exporters:
+            - prometheus
+          receivers:
+            - otlp
+        traces:
+          exporters:
+            - otlp
+          receivers:
+            - otlp
+
+  ports:
+    jaeger-compact:
+      enabled: false
+    jaeger-thrift:
+      enabled: false
+    jaeger-grpc:
+      enabled: false
+    zipkin:
+      enabled: false
+    metrics:
+      enabled: true
+      containerPort: 9090
+      servicePort: 9090
+      protocol: TCP
+
+tempo:
+  enabled: true
+
+  tempo:
+    reportingEnabled: false
+    retention: 168h # 7 Days
+
+  persistence:
+    enabled: true
+    size: 1Gi
+
+loki:
+  enabled: true
+
+  test:
+    enabled: false
+
+  loki:
+    auth_enabled: false
+
+    commonConfig:
+      replication_factor: 1
+    schemaConfig:
+      configs:
+        - from: 2024-04-01
+          store: tsdb
+          object_store: filesystem
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 168h # 7 Days
+
+    ingester:
+      chunk_encoding: snappy
+    tracing:
+      enabled: true
+    querier:
+      max_concurrent: 2
+    storage:
+      type: filesystem
+
+  deploymentMode: SingleBinary
+  singleBinary:
+    replicas: 1
+    persistence:
+      size: 1Gi
+
+#  chunksCache:
+#    writebackSizeLimit: 10MB
+
+  chunksCache:
+    enabled: false
+  resultsCache:
+    enabled: false
+  gateway:
+    enabled: false
+  lokiCanary:
+    enabled: false
+
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
+
+  ingester:
+    replicas: 0
+  querier:
+    replicas: 0
+  queryFrontend:
+    replicas: 0
+  queryScheduler:
+    replicas: 0
+  distributor:
+    replicas: 0
+  compactor:
+    replicas: 0
+  indexGateway:
+    replicas: 0
+  bloomCompactor:
+    replicas: 0
+  bloomGateway:
+    replicas: 0
+
+prometheus:
+  enabled: true
+
+  server:
+    persistentVolume:
+      size: 1Gi
+
+  serverFiles:
+    prometheus.yml:
+      scrape_configs:
+        - job_name: otel-collector
+          scrape_interval: 5s
+          static_configs:
+            - targets:
+                - "follytics-opentelemetry-collector.follytics.svc.cluster.local:9090"
+
+  alertmanager:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+
+grafana:
+  enabled: true
+
+  env:
+    PROMETHEUS_URL: "http://{{ .Release.Name }}-prometheus-server.{{ .Release.Namespace }}.svc.cluster.local:80"
+    LOKI_URL: "http://{{ .Release.Name }}-loki.{{ .Release.Namespace }}.svc.cluster.local:3100"
+    TEMPO_URL: "http://{{ .Release.Name }}-tempo.{{ .Release.Namespace }}.svc.cluster.local:3100"
+
+  persistence:
+    enabled: true
+    size: 1Gi
+
+  sidecar:
+    dashboards:
+      enabled: false
+      labelValue: "1"
+      searchNamespace: ALL
+      resource: configmap
+      folderAnnotation: grafana_dashboard_folder
+      provider:
+        foldersFromFilesStructure: true
+
+    datasources:
+      enabled: true
+      labelValue: "1"
+      searchNamespace: ALL
+      resource: configmap
+
 api:
   enabled: true
 
@@ -49,6 +242,10 @@ api:
             key: postgres-password
       DATABASE_DATABASE:
         value: postgres
+      TELEMETRY_ENABLED:
+        value: "true"
+      TELEMETRY_COLLECTOR_URL:
+        value: "{{ .Release.Name }}-opentelemetry-collector:4317"
     livenessProbe:
       enabled: true
       httpGet:
@@ -80,6 +277,10 @@ api:
                 key: postgres-password
           - name: DATABASE_DATABASE
             value: postgres
+          - name: TELEMETRY_ENABLED
+            value: "true"
+          - name: TELEMETRY_COLLECTOR_URL
+            value: "{{ .Release.Name }}-opentelemetry-collector:4317"
 
   service:
     ports:
@@ -157,6 +358,10 @@ worker:
                 key: postgres-password
           DATABASE_DATABASE:
             value: postgres
+          TELEMETRY_ENABLED:
+            value: "true"
+          TELEMETRY_COLLECTOR_URL:
+            value: "{{ .Release.Name }}-opentelemetry-collector:4317"
         volumes:
           - name: github-app
             secret:
