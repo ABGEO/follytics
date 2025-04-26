@@ -108,7 +108,7 @@ loki:
           schema: v13
           index:
             prefix: loki_index_
-            period: 168h # 7 Days
+            period: 24h
 
     ingester:
       chunk_encoding: snappy
