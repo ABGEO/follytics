@@ -103,8 +103,8 @@ importers:
         specifier: 20.8.1
         version: 20.8.1(@swc-node/register@1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.11.22(@swc/helpers@0.5.17))
       '@openapitools/openapi-generator-cli':
-        specifier: ^2.19.1
-        version: 2.19.1(encoding@0.1.13)
+        specifier: ^2.20.0
+        version: 2.20.0(encoding@0.1.13)
       '@swc-node/register':
         specifier: ~1.10.10
         version: 1.10.10(@swc/core@1.11.22(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3)
@@ -2210,8 +2210,8 @@ packages:
   '@nx/workspace@20.8.1':
     resolution: {integrity: sha512-Y6HlERFJbLHn1J9JHMsPDSRK5iBSH4hbw9TkqwkINeHBDX8bIilnO3tK6VVMIPTzTHJldxI+zQ1IrzVisZpJsA==}
 
-  '@openapitools/openapi-generator-cli@2.19.1':
-    resolution: {integrity: sha512-APP3EPI/m7bg220qS+7UAFiyLJFbNCjlsEEjrP2sLmW4Za44U8e3Lb2zDy3sbvJvIUnpYWe+hu9RbrxrPP9djQ==}
+  '@openapitools/openapi-generator-cli@2.20.0':
+    resolution: {integrity: sha512-Amtd7/9Lodaxnmfsru8R5n0CW9lyWOI40UsppGMfuNFkFFbabq51/VAJFsOHkNnDRwVUc7AGKWjN5icphDGlTQ==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -11543,7 +11543,7 @@ snapshots:
       - '@swc/core'
       - debug
 
-  '@openapitools/openapi-generator-cli@2.19.1(encoding@0.1.13)':
+  '@openapitools/openapi-generator-cli@2.20.0(encoding@0.1.13)':
     dependencies:
       '@nestjs/axios': 4.0.0(@nestjs/common@11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2))(axios@1.8.4)(rxjs@7.8.2)
       '@nestjs/common': 11.0.20(reflect-metadata@0.2.2)(rxjs@7.8.2)
