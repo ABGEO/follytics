@@ -163,10 +163,12 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Extract first tag
+        if: github.event_name != 'pull_request'
         id: first-tag
         run: echo "tag=$(echo '${{ steps.meta.outputs.tags }}' | head -n 1)" >> $GITHUB_OUTPUT
 
       - name: Run Trivy vulnerability scanner
+        if: github.event_name != 'pull_request'
         uses: aquasecurity/trivy-action@0.30.0
         with:
           image-ref: ${{ steps.first-tag.outputs.tag }}
