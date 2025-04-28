@@ -67,7 +67,7 @@
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@next/third-parties": "^15.3.1",
     "antd": "^5.24.8",
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
     "d3": "^7.9.0",
     "jsdom": "^26.1.0",
     "next": "15.3.1",
