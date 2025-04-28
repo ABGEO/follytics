@@ -34,7 +34,7 @@ type Base struct {
 
 var _ Registry = (*Base)(nil)
 
-func NewBase(ctx context.Context, flags *pflag.FlagSet) (*Base, error) {
+func NewBase(ctx context.Context, service string, flags *pflag.FlagSet) (*Base, error) {
 	var err error
 
 	reg := &Base{}
@@ -52,7 +52,7 @@ func NewBase(ctx context.Context, flags *pflag.FlagSet) (*Base, error) {
 	if reg.GetConfig().Telemetry.Enabled {
 		reg.telemetry, err = telemetry.New(
 			ctx,
-			"api",
+			service,
 			version.Version,
 			reg.GetConfig(),
 		)

@@ -50,7 +50,7 @@ func (c *Command) RegisterFlags() {
 }
 
 func (c *Command) Run(ctx context.Context) error {
-	reg, err := registry.NewServe(ctx, c.GetCmd().Flags())
+	reg, err := registry.NewServe(ctx, "api", c.GetCmd().Flags())
 	if err != nil {
 		return fmt.Errorf("failed to register serve command: %w", err)
 	}

@@ -52,7 +52,7 @@ func (c *Command) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to get 'jobs' flag: %w", err)
 	}
 
-	reg, err := registry.NewWorker(ctx, flags)
+	reg, err := registry.NewWorker(ctx, "worker", flags)
 	if err != nil {
 		return fmt.Errorf("failed to register worker command: %w", err)
 	}

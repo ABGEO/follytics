@@ -44,10 +44,10 @@ type Serve struct {
 
 var _ ServeRegistry = (*Serve)(nil)
 
-func NewServe(ctx context.Context, flags *pflag.FlagSet) (*Serve, error) {
+func NewServe(ctx context.Context, service string, flags *pflag.FlagSet) (*Serve, error) {
 	reg := &Serve{}
 
-	baseRegistry, err := NewBase(ctx, flags)
+	baseRegistry, err := NewBase(ctx, service, flags)
 	if err != nil {
 		return nil, err
 	}

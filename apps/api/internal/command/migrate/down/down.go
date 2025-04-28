@@ -41,7 +41,7 @@ func (c *Command) GetCmd() *cobra.Command {
 }
 
 func (c *Command) Run(ctx context.Context) error {
-	reg, err := registry.NewBase(ctx, c.GetCmd().Flags())
+	reg, err := registry.NewBase(ctx, "db-migrator", c.GetCmd().Flags())
 	if err != nil {
 		return fmt.Errorf("failed to register command: %w", err)
 	}

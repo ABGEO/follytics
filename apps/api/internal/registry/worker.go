@@ -36,10 +36,10 @@ type Worker struct {
 
 var _ WorkerRegistry = (*Worker)(nil)
 
-func NewWorker(ctx context.Context, flags *pflag.FlagSet) (*Worker, error) {
+func NewWorker(ctx context.Context, service string, flags *pflag.FlagSet) (*Worker, error) {
 	reg := &Worker{}
 
-	baseRegistry, err := NewBase(ctx, flags)
+	baseRegistry, err := NewBase(ctx, service, flags)
 	if err != nil {
 		return nil, err
 	}
