@@ -1,6 +1,6 @@
 npmName: 'sdk'
 npmVersion: 0.0.0
-axiosVersion: ^1.8.4
+axiosVersion: ^1.9.0
 licenseName: MIT
 supportsES6: true
 ensureUniqueParams: true
