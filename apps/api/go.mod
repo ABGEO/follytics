@@ -19,6 +19,7 @@ require (
 	github.com/spf13/pflag v1.0.6
 	github.com/spf13/viper v1.20.1
 	github.com/swaggo/files v1.0.1
+	github.com/swaggo/files/v2 v2.0.2
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.4
 	github.com/tavsec/gin-healthcheck v1.7.6
