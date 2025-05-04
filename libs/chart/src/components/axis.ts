@@ -11,7 +11,7 @@ function addAxis(
   yScale: d3.ScaleLinear<number, number>,
   margins: { left: number; bottom: number }
 ) {
-  const { width = DEFAULTS.width, height = DEFAULTS.height } = config;
+  const { height = DEFAULTS.height } = config;
 
   svg
     .append('g')
@@ -19,7 +19,7 @@ function addAxis(
     .call(
       d3
         .axisBottom<Date>(xScale)
-        .ticks(width / 50)
+        .ticks(d3.timeDay.every(1))
         .tickFormat(d3.timeFormat('%d %b'))
         .tickSizeOuter(0)
     );
@@ -27,7 +27,12 @@ function addAxis(
   svg
     .append('g')
     .attr('transform', `translate(${margins.left},0)`)
-    .call(d3.axisLeft(yScale).ticks(height / 50));
+    .call(
+      d3
+        .axisLeft(yScale)
+        .ticks(height / 50)
+        .tickFormat(d3.format('d'))
+    );
 }
 
 export { addAxis };
