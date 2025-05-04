@@ -12,8 +12,8 @@ importers:
         specifier: ^2.2.7
         version: 2.2.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.98.0(@swc/core@1.11.24(@swc/helpers@0.5.17))))
       '@ant-design/colors':
-        specifier: ^7.2.0
-        version: 7.2.0
+        specifier: ^8.0.0
+        version: 8.0.0
       '@ant-design/icons':
         specifier: ^6.0.0
         version: 6.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
