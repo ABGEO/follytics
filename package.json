@@ -19,7 +19,7 @@
     "@nx/eslint-plugin": "20.8.1",
     "@nx/jest": "20.8.1",
     "@nx/js": "20.8.1",
-    "@nx/next": "20.8.1",
+    "@nx/next": "21.0.0",
     "@nx/plugin": "20.8.1",
     "@nx/workspace": "20.8.1",
     "@openapitools/openapi-generator-cli": "^2.20.0",
