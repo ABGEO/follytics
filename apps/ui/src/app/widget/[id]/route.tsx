@@ -1,3 +1,4 @@
+import { context, propagation, trace } from '@opentelemetry/api';
 import { HttpStatusCode } from 'axios';
 import { NextRequest } from 'next/server';
 
@@ -60,17 +61,28 @@ function extractUserIdFromPath(request: NextRequest): string | null {
 async function fetchTimelineData(
   userId: string,
 ): Promise<ResponseHTTPResponseResponseFollowersTimeline | null> {
-  try {
-    const apiFactory = await getServerApiFactory();
+  const apiFactory = await getServerApiFactory();
+  const traceHeaders: Record<string, string> = {};
 
-    return await fetchUserFollowersTimeline(apiFactory, {
-      id: userId,
+  return await trace
+    .getTracer('widget')
+    .startActiveSpan('fetchUserFollowersTimeline', async (span) => {
+      try {
+        propagation.inject(context.active(), traceHeaders);
+
+        return await fetchUserFollowersTimeline(
+          apiFactory,
+          { id: userId },
+          { headers: { ...traceHeaders } },
+        );
+      } catch (err) {
+        console.error('Exception in fetchTimelineData:', err);
+
+        return null;
+      } finally {
+        span.end();
+      }
     });
-  } catch (err) {
-    console.error('Exception in fetchTimelineData:', err);
-
-    return null;
-  }
 }
 
 function mapTimelineData(

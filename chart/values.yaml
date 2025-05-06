@@ -125,8 +125,8 @@ loki:
     persistence:
       size: 1Gi
 
-#  chunksCache:
-#    writebackSizeLimit: 10MB
+  #  chunksCache:
+  #    writebackSizeLimit: 10MB
 
   chunksCache:
     enabled: false
@@ -398,6 +398,9 @@ ui:
         protocol: TCP
     securityContext:
       runAsUser: 1001
+    env:
+      OTEL_EXPORTER_OTLP_ENDPOINT:
+        value: "http://{{ .Release.Name }}-opentelemetry-collector:4318"
     envFrom:
       config:
         type: secret
