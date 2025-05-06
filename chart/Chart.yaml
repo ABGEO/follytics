@@ -11,7 +11,7 @@ dependencies:
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
     condition: opentelemetry-collector.enabled
   - name: tempo
-    version: 1.21.0
+    version: 1.21.1
     repository: https://grafana.github.io/helm-charts
     condition: tempo.enabled
   - name: loki
