@@ -18,7 +18,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   postgres:
-    image: postgres:17.4
+    image: 'postgres:17.4'
     volumes:
       - 'postgres_data:/var/lib/postgresql/data'
     environment:
@@ -26,7 +26,7 @@ services:
       POSTGRES_USER: follytics
       POSTGRES_PASSWORD: password
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U follytics']
+      test: [ 'CMD-SHELL', 'pg_isready -U follytics' ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -34,8 +34,22 @@ services:
       main:
         ipv4_address: 172.20.0.3
 
+  otel-lgtm:
+    image: 'grafana/otel-lgtm:0.11.1'
+    volumes:
+      - 'otel_lgtm_data:/data'
+    networks:
+      main:
+        ipv4_address: 172.20.0.4
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.otel_lgtm_grafana.rule=Host(`grafana.follytics.localhost`)"
+      - "traefik.http.services.otel_lgtm_grafana.loadbalancer.server.port=3000"
+
 volumes:
   postgres_data:
+    driver: local
+  otel_lgtm_data:
     driver: local
 
 networks:
