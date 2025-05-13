@@ -57,7 +57,7 @@
   },
   "engines": {
     "node": ">=22.15.0",
-    "pnpm": ">=9"
+    "pnpm": ">=10.11.0"
   },
   "dependencies": {
     "@ant-design/charts": "^2.2.7",
