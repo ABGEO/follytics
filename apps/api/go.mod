@@ -3,7 +3,7 @@ module github.com/abgeo/follytics
 go 1.24.3
 
 require (
-	ariga.io/atlas-go-sdk v0.7.0
+	ariga.io/atlas-go-sdk v0.7.1
 	ariga.io/atlas-provider-gorm v0.5.1
 	github.com/gin-contrib/cors v1.7.5
 	github.com/gin-gonic/gin v1.10.0
