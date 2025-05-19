@@ -13,7 +13,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/mcuadros/go-defaults v1.2.0
-	github.com/samber/slog-gin v1.15.0
+	github.com/samber/slog-gin v1.15.1
 	github.com/samber/slog-multi v1.4.0
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/pflag v1.0.6
