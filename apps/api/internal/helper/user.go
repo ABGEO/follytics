@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"github.com/google/go-github/v71/github"
+	"github.com/google/go-github/v72/github"
 
 	"github.com/abgeo/follytics/internal/model"
 )
