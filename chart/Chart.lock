@@ -1,7 +1,7 @@
 dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 16.7.0
+  version: 16.7.4
 - name: opentelemetry-collector
   repository: https://open-telemetry.github.io/opentelemetry-helm-charts
   version: 0.122.5
@@ -26,5 +26,5 @@ dependencies:
 - name: application
   repository: https://stakater.github.io/stakater-charts
   version: 6.0.3
-digest: sha256:95426b55bd96f9aa6420321e990430655cce6016bf1e4df540cd3fcd3336793e
-generated: "2025-05-08T15:52:13.695117875Z"
+digest: sha256:1049085d2f7d2850563f4221905fcfb2d3263d6903ee503e5fa4a380812e5fbb
+generated: "2025-05-19T14:05:52.925022239Z"
