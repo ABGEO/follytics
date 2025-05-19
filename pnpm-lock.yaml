@@ -19,10 +19,10 @@ importers:
         version: 6.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/nextjs-registry':
         specifier: ^1.0.2
-        version: 1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/v5-patch-for-react-19':
         specifier: ^1.0.3
-        version: 1.0.3(antd@5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.3(antd@5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@next/third-parties':
         specifier: ^15.3.2
         version: 15.3.2(next@15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
@@ -45,8 +45,8 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0(@opentelemetry/api-logs@0.201.1)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.201.1(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.201.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))
       antd:
-        specifier: ^5.25.1
-        version: 5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^5.25.2
+        version: 5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       axios:
         specifier: ^1.9.0
         version: 1.9.0
@@ -3538,8 +3538,8 @@ packages:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
 
-  antd@5.25.1:
-    resolution: {integrity: sha512-4KC7KuPCjr0z3Vuw9DsF+ceqJaPLbuUI3lOX1sY8ix25ceamp+P8yxOmk3Y2JHCD2ZAhq+5IQ/DTJRN2adWYKQ==}
+  antd@5.25.2:
+    resolution: {integrity: sha512-7R2nUvlHhey7Trx64+hCtGXOiy+DTUs1Lv5bwbV1LzEIZIhWb0at1AM6V3K108a5lyoR9n7DX3ptlLF7uYV/DQ==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -7419,8 +7419,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  rc-table@7.50.4:
-    resolution: {integrity: sha512-Y+YuncnQqoS5e7yHvfvlv8BmCvwDYDX/2VixTBEhkMDk9itS9aBINp4nhzXFKiBP/frG4w0pS9d9Rgisl0T1Bw==}
+  rc-table@7.50.5:
+    resolution: {integrity: sha512-FDZu8aolhSYd3v9KOc3lZOVAU77wmRRu44R0Wfb8Oj1dXRUsloFaXMSl6f7yuWZUxArJTli7k8TEOX2mvhDl4A==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
@@ -9088,10 +9088,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/nextjs-registry@1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/nextjs-registry@1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      antd: 5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next: 15.3.2(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -9116,9 +9116,9 @@ snapshots:
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.2
 
-  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      antd: 5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
@@ -13254,7 +13254,7 @@ snapshots:
 
   ansi-styles@6.2.1: {}
 
-  antd@5.25.1(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  antd@5.25.2(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@ant-design/colors': 7.2.0
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -13295,7 +13295,7 @@ snapshots:
       rc-slider: 11.1.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-steps: 6.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-switch: 4.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rc-table: 7.50.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rc-table: 7.50.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-tabs: 15.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-textarea: 1.10.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-tooltip: 6.4.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -17928,7 +17928,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  rc-table@7.50.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  rc-table@7.50.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.1
       '@rc-component/context': 1.4.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
