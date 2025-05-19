@@ -7,7 +7,7 @@ dependencies:
     version: 16.7.4
     repository: https://charts.bitnami.com/bitnami
   - name: opentelemetry-collector
-    version: 0.122.5
+    version: 0.125.0
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
     condition: opentelemetry-collector.enabled
   - name: tempo
@@ -20,7 +20,7 @@ dependencies:
     condition: loki.enabled
   - name: prometheus
     repository: https://prometheus-community.github.io/helm-charts
-    version: 27.12.1
+    version: 27.16.0
     condition: prometheus.enabled
   - name: grafana
     repository: https://grafana.github.io/helm-charts
@@ -29,15 +29,15 @@ dependencies:
   - name: application
     condition: api.enabled
     alias: api
-    version: 6.0.3
+    version: 6.2.0
     repository: https://stakater.github.io/stakater-charts
   - name: application
     condition: worker.enabled
     alias: worker
-    version: 6.0.3
+    version: 6.2.0
     repository: https://stakater.github.io/stakater-charts
   - name: application
     condition: ui.enabled
     alias: ui
-    version: 6.0.3
+    version: 6.2.0
     repository: https://stakater.github.io/stakater-charts

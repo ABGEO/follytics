@@ -4,7 +4,7 @@ dependencies:
   version: 16.7.4
 - name: opentelemetry-collector
   repository: https://open-telemetry.github.io/opentelemetry-helm-charts
-  version: 0.122.5
+  version: 0.125.0
 - name: tempo
   repository: https://grafana.github.io/helm-charts
   version: 1.21.1
@@ -13,18 +13,18 @@ dependencies:
   version: 6.29.0
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
-  version: 27.12.1
+  version: 27.16.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 9.0.0
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.0.3
+  version: 6.2.0
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.0.3
+  version: 6.2.0
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.0.3
-digest: sha256:1049085d2f7d2850563f4221905fcfb2d3263d6903ee503e5fa4a380812e5fbb
-generated: "2025-05-19T14:05:52.925022239Z"
+  version: 6.2.0
+digest: sha256:a809048e99e518c1176efef2eaf68778fec7b9868a6020fd3e75ae6f61e1d913
+generated: "2025-05-19T22:02:45.026205+04:00"
