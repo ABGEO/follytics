@@ -15,8 +15,9 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Follytics',
-  description: 'Follytics App',
+  title: 'Follytics - Track Your GitHub Followers Over Time',
+  description:
+    'Follytics is a free and open-source tool that lets you track, visualize, and analyze your GitHub followers using an event-sourcing pattern.',
 };
 
 type AppLayoutProps = {
