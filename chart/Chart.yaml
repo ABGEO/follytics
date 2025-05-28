@@ -7,7 +7,7 @@ dependencies:
     version: 16.7.5
     repository: https://charts.bitnami.com/bitnami
   - name: opentelemetry-collector
-    version: 0.125.0
+    version: 0.126.0
     repository: https://open-telemetry.github.io/opentelemetry-helm-charts
     condition: opentelemetry-collector.enabled
   - name: tempo
