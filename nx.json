@@ -26,7 +26,7 @@
         "watchDepsTargetName": "watch-deps"
       }
     },
-    "@nx-go/nx-go",
+    "@naxodev/gonx",
     {
       "plugin": "@nx/eslint/plugin",
       "options": {
