@@ -6,13 +6,13 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx-go/nx-go:build",
+      "executor": "@naxodev/gonx:build",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go"
       }
     },
     "serve": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["serve", "-c", "../../follytics.yaml"]
@@ -26,52 +26,52 @@
       }
     },
     "worker": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["worker", "-c", "../../follytics.yaml"]
       }
     },
     "migrate:apply": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["migrate", "apply", "-c", "../../follytics.yaml"]
       }
     },
     "migrate:down": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["migrate", "down", "-c", "../../follytics.yaml"]
       }
     },
     "migrate:generate": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["migrate", "generate", "-c", "../../follytics.yaml"]
       }
     },
     "migrate:status": {
-      "executor": "@nx-go/nx-go:serve",
+      "executor": "@naxodev/gonx:serve",
       "options": {
         "main": "{projectRoot}/cmd/follytics/follytics.go",
         "args": ["migrate", "status", "-c", "../../follytics.yaml"]
       }
     },
     "test": {
-      "executor": "@nx-go/nx-go:test"
+      "executor": "@naxodev/gonx:test"
     },
     "lint": {
-      "executor": "@nx-go/nx-go:lint",
+      "executor": "@naxodev/gonx:lint",
       "options": {
         "linter": "golangci-lint",
         "args": ["run", "--config=../../.golangci.yaml"]
       }
     },
     "lint:fix": {
-      "executor": "@nx-go/nx-go:lint",
+      "executor": "@naxodev/gonx:lint",
       "options": {
         "linter": "golangci-lint",
         "args": ["run", "--config=../../.golangci.yaml", "--fix"]
@@ -85,7 +85,7 @@
       }
     },
     "tidy": {
-      "executor": "@nx-go/nx-go:tidy"
+      "executor": "@naxodev/gonx:tidy"
     },
     "swag": {
       "executor": "@follytics/nx-helpers:swag",
