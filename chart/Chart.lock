@@ -19,12 +19,12 @@ dependencies:
   version: 9.2.1
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.2.0
+  version: 6.2.1
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.2.0
+  version: 6.2.1
 - name: application
   repository: https://stakater.github.io/stakater-charts
-  version: 6.2.0
-digest: sha256:a8562680362cfa9917d90ca4fa55f071975b5614082f324830eff37951666072
-generated: "2025-05-28T15:17:06.418849322Z"
+  version: 6.2.1
+digest: sha256:da44264cf718973c3afb19e55f07b946d3290be2c42af773eea5aca866c0847f
+generated: "2025-05-29T22:32:20.248014608Z"
