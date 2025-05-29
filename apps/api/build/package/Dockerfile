@@ -31,7 +31,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 FROM scratch
 
-COPY --from=arigaio/atlas:0.33.1-alpine /atlas /usr/bin/
+COPY --from=arigaio/atlas:0.34.0-alpine /atlas /usr/bin/
 
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
