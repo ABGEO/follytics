@@ -29,15 +29,15 @@ dependencies:
   - name: application
     condition: api.enabled
     alias: api
-    version: 6.2.0
+    version: 6.2.1
     repository: https://stakater.github.io/stakater-charts
   - name: application
     condition: worker.enabled
     alias: worker
-    version: 6.2.0
+    version: 6.2.1
     repository: https://stakater.github.io/stakater-charts
   - name: application
     condition: ui.enabled
     alias: ui
-    version: 6.2.0
+    version: 6.2.1
     repository: https://stakater.github.io/stakater-charts
