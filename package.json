@@ -64,7 +64,7 @@
     "@ant-design/icons": "^6.0.0",
     "@ant-design/nextjs-registry": "^1.0.2",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
-    "@naxodev/gonx": "^1.1.1",
+    "@naxodev/gonx": "^1.2.0",
     "@next/third-parties": "^15.3.3",
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/api-logs": "^0.201.1",
