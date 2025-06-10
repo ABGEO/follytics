@@ -10,7 +10,7 @@
     "axios": "^1.9.0"
   },
   "devDependencies": {
-    "@types/node": "^22.15.30",
+    "@types/node": "^22.15.31",
     "typescript": "^5.8.3"
   }
 }
