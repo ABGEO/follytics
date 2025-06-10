@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "rangeStrategy": "bump"
+  "extends": ["config:recommended"],
+  "rangeStrategy": "bump",
+  "commitMessagePrefix": "chore(deps): ",
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash"
 }
