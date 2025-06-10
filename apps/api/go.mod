@@ -1,6 +1,6 @@
 module github.com/abgeo/follytics
 
-go 1.24.3
+go 1.24.4
 
 require (
 	ariga.io/atlas-go-sdk v0.7.2
