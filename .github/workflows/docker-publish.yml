@@ -2,8 +2,8 @@ name: Build Docker Images
 
 on:
   push:
-    branches: [ "main" ]
-    tags: [ 'v*.*.*' ]
+    branches: ["main"]
+    tags: ["v*.*.*"]
 #  pull_request:
 #    branches: [ "main" ]
 
@@ -35,13 +35,11 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10.11
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Setup GoLang
@@ -124,7 +122,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@v3
         with:
-          cosign-release: 'v2.2.4'
+          cosign-release: "v2.2.4"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
