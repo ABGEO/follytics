@@ -4,7 +4,7 @@ go 1.24.4
 
 require (
 	ariga.io/atlas-go-sdk v0.7.2
-	ariga.io/atlas-provider-gorm v0.5.2
+	ariga.io/atlas-provider-gorm v0.5.3
 	github.com/gin-contrib/cors v1.7.5
 	github.com/gin-gonic/gin v1.10.1
 	github.com/go-playground/validator/v10 v10.26.0
