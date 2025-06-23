@@ -57,7 +57,7 @@
   "engines": {
     "node": ">=22.16.0"
   },
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.12.2",
   "dependencies": {
     "@ant-design/charts": "^2.4.0",
     "@ant-design/colors": "^8.0.0",
