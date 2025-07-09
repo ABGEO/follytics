@@ -59,7 +59,7 @@
   },
   "packageManager": "pnpm@10.12.4",
   "dependencies": {
-    "@ant-design/charts": "^2.4.0",
+    "@ant-design/charts": "^2.6.0",
     "@ant-design/colors": "^8.0.0",
     "@ant-design/icons": "^6.0.0",
     "@ant-design/nextjs-registry": "^1.0.2",
