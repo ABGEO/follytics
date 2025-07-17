@@ -16,7 +16,7 @@ require (
 	github.com/samber/slog-gin v1.15.1
 	github.com/samber/slog-multi v1.4.1
 	github.com/spf13/cobra v1.9.1
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.7
 	github.com/spf13/viper v1.20.1
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
