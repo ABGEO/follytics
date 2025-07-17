@@ -13,7 +13,7 @@ dependencies:
   version: 6.32.0
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
-  version: 27.26.0
+  version: 27.27.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 9.2.10
@@ -26,5 +26,5 @@ dependencies:
 - name: application
   repository: https://stakater.github.io/stakater-charts
   version: 6.5.0
-digest: sha256:5e1b09608106642618d4e63d3ab2a7d8f64cb2dc5ad2fae4460817f28b205121
-generated: "2025-07-17T12:50:00.070008873Z"
+digest: sha256:10da64571a8461c946585e0a3382485c1cc6783905d9c183777ec0dcfc3896eb
+generated: "2025-07-17T19:38:13.376914733Z"
