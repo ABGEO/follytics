@@ -77,6 +77,13 @@
         "args": ["run", "--config=../../.golangci.yaml", "--fix"]
       }
     },
+    "lint:fmt": {
+      "executor": "@naxodev/gonx:lint",
+      "options": {
+        "linter": "golangci-lint",
+        "args": ["fmt", "--config=../../.golangci.yaml"]
+      }
+    },
     "atlas:diff": {
       "executor": "nx:run-commands",
       "options": {

@@ -44,5 +44,6 @@ func (route *User) Register(router gin.IRouter) {
 		group.GET(":id/followers", route.handler.Followers)
 		group.GET(":id/follow-events", route.handler.FollowEvents)
 	}
+
 	router.GET("/users/:id/followers/timeline", route.handler.Timeline)
 }
