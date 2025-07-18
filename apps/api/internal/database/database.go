@@ -38,7 +38,7 @@ func New(conf *config.Config, logger *slog.Logger, telemetry telemetry.Provider)
 
 	if conf.Telemetry.Enabled {
 		plugin := tracing.NewPlugin(
-			tracing.WithDBName(conf.Database.Database),
+			tracing.WithDBSystem(conf.Database.Database),
 			tracing.WithoutQueryVariables(),
 			tracing.WithRecordStackTrace(),
 			tracing.WithTracerProvider(telemetry.TracerProvider()),
