@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ant-design/charts':
-        specifier: ^2.6.0
-        version: 2.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
+        specifier: ^2.6.1
+        version: 2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
       '@ant-design/colors':
         specifier: ^8.0.0
         version: 8.0.0
@@ -238,8 +238,8 @@ packages:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
 
-  '@ant-design/charts@2.6.0':
-    resolution: {integrity: sha512-q3AVp35W5tc4b0ApdMVNntsxp3ZnUus4LhZvjhB1EX6Iqe9cf6kjFOU0DdKLTL+3AsaP9B+ynwQr+yz5O/o1wQ==}
+  '@ant-design/charts@2.6.1':
+    resolution: {integrity: sha512-IIIFgg49VCO01mc7t2+wlMQnFNwjV0KqO2n9fhMwif/+r0W0ELOzdMbNkrzkZPEWp9p5YhN6cnlnkGeUt488cg==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -302,8 +302,8 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  '@ant-design/plots@2.6.0':
-    resolution: {integrity: sha512-l6sZLPoKPKWG6kdvHe+H7vUqNQk2i1xjsiBQe/8ABZ9KDRDnig+LzHBjHnVl0fvqmzDPI3O3RFEccl1tfA1i4A==}
+  '@ant-design/plots@2.6.1':
+    resolution: {integrity: sha512-X46qm2QcXJVV6hL+pcqtj9TsLEkOrow+uq7zDRQKbXWg9Um525GRnbF7PdaS89Rwoo3RdhrA3+T97VbQVYD0wQ==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -9120,10 +9120,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/charts@2.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
+  '@ant-design/charts@2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
     dependencies:
       '@ant-design/graphs': 2.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
-      '@ant-design/plots': 2.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@ant-design/plots': 2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lodash: 4.17.21
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -9206,7 +9206,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/plots@2.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/plots@2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/charts-util': 0.0.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@antv/event-emitter': 0.1.3
