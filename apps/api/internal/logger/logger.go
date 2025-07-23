@@ -53,6 +53,7 @@ func getDefaultHandler(level slog.Level, format string, env string) slog.Handler
 		return slog.NewJSONHandler(os.Stdout, commonOptions)
 	default:
 		if format != "" {
+			//nolint:noctx
 			slog.Warn("unknown log format, defaulting to JSON", slog.Any("format", format))
 		}
 

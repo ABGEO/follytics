@@ -63,7 +63,8 @@ func (j *SyncFollowers) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to get Rate Limits: %w", err)
 	}
 
-	j.logger.Info(
+	j.logger.InfoContext(
+		ctx,
 		"GitHub API Rate Limit information",
 		slog.Int("limit", rateLimits.Core.Limit),
 		slog.Int("remaining", rateLimits.Core.Remaining),
@@ -71,7 +72,7 @@ func (j *SyncFollowers) Run(ctx context.Context) error {
 	)
 
 	if rateLimits.Core.Remaining < j.conf.Worker.Job.SyncFollowers.GitHubRateLimitThreshold {
-		j.logger.Info("approaching GitHub API rate limit, shutting down")
+		j.logger.InfoContext(ctx, "approaching GitHub API rate limit, shutting down")
 
 		return nil
 	}

@@ -16,6 +16,7 @@ import (
 
 func main() {
 	if err := execute(); err != nil {
+		//nolint:noctx
 		slog.Error("failed to execute command", slog.Any("error", err))
 		os.Exit(1)
 	}

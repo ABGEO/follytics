@@ -26,9 +26,11 @@ func (w *GinWrapper) Write(data []byte) (int, error) {
 		w.logGinDebug(strings.TrimPrefix(message, "[GIN-debug] "))
 
 	case strings.HasPrefix(message, "[GIN-error]"):
+		//nolint:noctx
 		w.logger.Error(strings.TrimPrefix(message, "[GIN-error] "))
 
 	default:
+		//nolint:noctx
 		w.logger.Info(strings.TrimPrefix(message, "[GIN] "))
 	}
 
@@ -38,6 +40,7 @@ func (w *GinWrapper) Write(data []byte) (int, error) {
 func (w *GinWrapper) logGinDebug(message string) {
 	re := regexp.MustCompile(`^(\w+)\s+(\S+)\s+-->\s+(\S+)\s+\((\d+)\s+handlers\)$`)
 	if matches := re.FindStringSubmatch(message); len(matches) > 0 {
+		//nolint:noctx
 		w.logger.Debug(
 			"new handler added",
 			slog.String("method", matches[1]),
@@ -49,5 +52,6 @@ func (w *GinWrapper) logGinDebug(message string) {
 		return
 	}
 
+	//nolint:noctx
 	w.logger.Debug(message)
 }

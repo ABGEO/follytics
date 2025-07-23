@@ -33,6 +33,7 @@ func NewUser(
 }
 
 func (route *User) Register(router gin.IRouter) {
+	//nolint:noctx
 	route.logger.Debug("setting up route")
 
 	group := router.Group("/users")
