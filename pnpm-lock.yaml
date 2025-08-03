@@ -24,8 +24,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3(antd@5.26.6(date-fns@2.30.0)(luxon@3.6.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@naxodev/gonx':
-        specifier: ^2.0.0
-        version: 2.0.0(@swc-node/register@1.10.10(@swc/core@1.13.1(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.13.1(@swc/helpers@0.5.17))
+        specifier: ^2.0.2
+        version: 2.0.2(@swc-node/register@1.10.10(@swc/core@1.13.1(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.13.1(@swc/helpers@0.5.17))
       '@next/third-parties':
         specifier: ^15.4.3
         version: 15.4.3(next@15.4.3(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
@@ -2101,8 +2101,8 @@ packages:
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
 
-  '@naxodev/gonx@2.0.0':
-    resolution: {integrity: sha512-nyt8WpQIkaIV4/qT1dS7bTSKCrEYLznUAVW16Po/h6ciqkQvQcynqugPIYntYYivOcmgkcq193acISvs2TCTIQ==}
+  '@naxodev/gonx@2.0.2':
+    resolution: {integrity: sha512-cDUJpB4RJbk8ZIQ08Qxl1Jtyx1WYrst1reJGo2x1OIfsnatan77zXvdH/RbSSEkrmXRnrYWCmA8PsXXnKHk7fQ==}
 
   '@nestjs/axios@4.0.1':
     resolution: {integrity: sha512-68pFJgu+/AZbWkGu65Z3r55bTsCPlgyKaV4BSG8yUAD72q1PPuyVRgUwFv6BxdnibTUHlyxm06FmYWNC+bjN7A==}
@@ -11379,7 +11379,7 @@ snapshots:
       '@emnapi/runtime': 1.4.4
       '@tybys/wasm-util': 0.9.0
 
-  '@naxodev/gonx@2.0.0(@swc-node/register@1.10.10(@swc/core@1.13.1(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.13.1(@swc/helpers@0.5.17))':
+  '@naxodev/gonx@2.0.2(@swc-node/register@1.10.10(@swc/core@1.13.1(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.13.1(@swc/helpers@0.5.17))':
     dependencies:
       '@melkeydev/go-blueprint': 0.10.11
       '@nx/devkit': 21.3.2(nx@21.3.2(@swc-node/register@1.10.10(@swc/core@1.13.1(@swc/helpers@0.5.17))(@swc/types@0.1.23)(typescript@5.8.3))(@swc/core@1.13.1(@swc/helpers@0.5.17)))
