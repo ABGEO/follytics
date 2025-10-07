@@ -8,14 +8,14 @@
     "build": {
       "executor": "@naxodev/gonx:build",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go"
+        "main": "cmd/follytics/follytics.go"
       }
     },
     "serve": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["serve", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["serve", "-c", "../../../../follytics.yaml"]
       }
     },
     "serve:live": {
@@ -28,36 +28,36 @@
     "worker": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["worker", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["worker", "-c", "../../../../follytics.yaml"]
       }
     },
     "migrate:apply": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["migrate", "apply", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["migrate", "apply", "-c", "../../../../follytics.yaml"]
       }
     },
     "migrate:down": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["migrate", "down", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["migrate", "down", "-c", "../../../../follytics.yaml"]
       }
     },
     "migrate:generate": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["migrate", "generate", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["migrate", "generate", "-c", "../../../../follytics.yaml"]
       }
     },
     "migrate:status": {
       "executor": "@naxodev/gonx:serve",
       "options": {
-        "main": "{projectRoot}/cmd/follytics/follytics.go",
-        "args": ["migrate", "status", "-c", "../../follytics.yaml"]
+        "main": "cmd/follytics/follytics.go",
+        "args": ["migrate", "status", "-c", "../../../../follytics.yaml"]
       }
     },
     "test": {

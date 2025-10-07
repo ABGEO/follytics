@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/google/go-github/v73/github"
+	"github.com/google/go-github/v75/github"
 	"gorm.io/datatypes"
 
 	"github.com/abgeo/follytics/internal/config"
