@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: 'traefik:v3.4'
+    image: 'traefik:v3.5'
     command:
       - '--api.insecure=true'
       - '--providers.docker=true'
@@ -18,7 +18,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   postgres:
-    image: 'postgres:17.5'
+    image: 'postgres:17.6'
     volumes:
       - 'postgres_data:/var/lib/postgresql/data'
     environment:
@@ -35,7 +35,7 @@ services:
         ipv4_address: 172.20.0.3
 
   otel-lgtm:
-    image: 'grafana/otel-lgtm:0.11.6'
+    image: 'grafana/otel-lgtm:0.11.10'
     volumes:
       - 'otel_lgtm_data:/data'
     networks:

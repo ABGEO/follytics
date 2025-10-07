@@ -1,6 +1,9 @@
 postgresql:
   enabled: true
 
+  image:
+    repository: bitnamilegacy/postgresql
+
   architecture: replication
   replication:
     applicationName: follytics
@@ -22,6 +25,8 @@ postgresql:
 
   volumePermissions:
     enabled: true
+    image:
+      repository: bitnamilegacy/os-shell
 
 opentelemetry-collector:
   enabled: true
@@ -30,7 +35,7 @@ opentelemetry-collector:
 
   image:
     repository: "otel/opentelemetry-collector-contrib"
-    tag: "0.130.1"
+    tag: "0.137.0"
 
   config:
     exporters:
@@ -40,8 +45,8 @@ opentelemetry-collector:
           insecure: true
       prometheus:
         endpoint: 0.0.0.0:9090
-      loki:
-        endpoint: "http://{{ .Release.Name }}-loki:3100/loki/api/v1/push"
+      otlphttp/loki:
+        endpoint: "http://{{ .Release.Name }}-loki:3100/otlp/v1/logs"
         tls:
           insecure: true
 
@@ -49,7 +54,7 @@ opentelemetry-collector:
       pipelines:
         logs:
           exporters:
-            - loki
+            - otlphttp/loki
           receivers:
             - otlp
         metrics:
