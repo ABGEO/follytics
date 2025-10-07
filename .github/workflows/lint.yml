@@ -131,7 +131,7 @@ jobs:
 
       - name: Set up Helm
         if: steps.check_chart.outputs.chart_changed == 'true'
-        uses: azure/setup-helm@v4.3.0
+        uses: azure/setup-helm@v4.3.1
 
       - name: Set up chart-testing
         if: steps.check_chart.outputs.chart_changed == 'true'
