@@ -71,7 +71,7 @@
     "@opentelemetry/instrumentation": "^0.203.0",
     "@opentelemetry/resources": "^2.0.1",
     "@opentelemetry/sdk-logs": "^0.203.0",
-    "@vercel/otel": "^1.13.0",
+    "@vercel/otel": "^1.14.0",
     "antd": "^5.26.6",
     "axios": "^1.10.0",
     "d3": "^7.9.0",
