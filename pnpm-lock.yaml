@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ant-design/charts':
-        specifier: ^2.6.1
-        version: 2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
+        specifier: ^2.6.6
+        version: 2.6.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
       '@ant-design/colors':
         specifier: ^8.0.0
         version: 8.0.0
@@ -238,8 +238,8 @@ packages:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
 
-  '@ant-design/charts@2.6.1':
-    resolution: {integrity: sha512-IIIFgg49VCO01mc7t2+wlMQnFNwjV0KqO2n9fhMwif/+r0W0ELOzdMbNkrzkZPEWp9p5YhN6cnlnkGeUt488cg==}
+  '@ant-design/charts@2.6.6':
+    resolution: {integrity: sha512-Mw2XqB9c7JoENyewJmtxU+5TU2sW5VEyct2f6n4HjJ/6hBo4ht3qdu965G3UrNLyiRctd47Qje32u+8DeFZ6Bg==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -270,8 +270,8 @@ packages:
     resolution: {integrity: sha512-eqvpP7xEDm2S7dUzl5srEQCBTXZMmY3ekf97zI+M2DHOYyKdJGH0qua0JACHTqbkRnD/KHFQP9J1uMJ/XWVzzA==}
     engines: {node: '>=8.x'}
 
-  '@ant-design/graphs@2.1.0':
-    resolution: {integrity: sha512-JavZyJVDRyO5wjReqz3CRYhml5MMpOe+fT4ucebdkfOfWYTlOG+W9vxtNSITJmCGHUVphQkQo9r1CPkZysDT0g==}
+  '@ant-design/graphs@2.1.1':
+    resolution: {integrity: sha512-qT3Oo8BWeoAmZEy9gfR6uIk+rczbNJ3sWXKonoOD5koATWv7dY0kgvS1JnhdM1QW4FkfPPJTeQVSlRRUtvWDwA==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -302,8 +302,8 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  '@ant-design/plots@2.6.1':
-    resolution: {integrity: sha512-X46qm2QcXJVV6hL+pcqtj9TsLEkOrow+uq7zDRQKbXWg9Um525GRnbF7PdaS89Rwoo3RdhrA3+T97VbQVYD0wQ==}
+  '@ant-design/plots@2.6.6':
+    resolution: {integrity: sha512-yUcvW/b7FPiIKwCpC0AOYQhHVKFCOpthlizsJx2Tuq7OEzTCLSWjRjT8o8sEWo3CCtIAtAuLY4GOfGdGGz1f0A==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -8981,10 +8981,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/charts@2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
+  '@ant-design/charts@2.6.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
     dependencies:
-      '@ant-design/graphs': 2.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
-      '@ant-design/plots': 2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@ant-design/graphs': 2.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
+      '@ant-design/plots': 2.6.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lodash: 4.17.21
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -9025,7 +9025,7 @@ snapshots:
 
   '@ant-design/fast-color@3.0.0': {}
 
-  '@ant-design/graphs@2.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
+  '@ant-design/graphs@2.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))':
     dependencies:
       '@ant-design/charts-util': 0.0.1-alpha.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@antv/g6': 5.0.45(workerize-loader@2.0.2(webpack@5.99.0(@swc/core@1.13.1(@swc/helpers@0.5.17))))
@@ -9067,7 +9067,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/plots@2.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/plots@2.6.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/charts-util': 0.0.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@antv/event-emitter': 0.1.3
