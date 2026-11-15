@@ -7,6 +7,7 @@ import { createApiFactory } from '../api/api-factory';
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     GitHub({
+      issuer: 'https://github.com/login/oauth',
       authorization: {
         params: { prompt: 'consent' },
       },
